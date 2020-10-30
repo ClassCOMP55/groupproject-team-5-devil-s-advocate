@@ -14,7 +14,7 @@ public class SomePane extends GraphicsPane {
 	public SomePane(MainApplication app) {
 		this.program = app;
 
-		img = new GImage("Mario_D_R.png", 100, 100);
+		img = new GImage("Mario/Mario_D_R.png", 100, 100);
 		para = new GParagraph("welcome\nto my\nsecret room!", 150, 300);
 		para.setFont("Arial-24");
 	}
