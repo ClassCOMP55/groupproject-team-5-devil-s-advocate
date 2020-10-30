@@ -6,7 +6,7 @@ public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
 	public static final String MUSIC_FOLDER = "sounds";
-	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
+	private static final String[] SOUND_FILES = { "breakblock.mp3", "jump.mp3" };
 	
 	private SomePane somePane;
 	private MenuPane menu;
@@ -21,7 +21,7 @@ public class MainApplication extends GraphicsApplication {
 		somePane = new SomePane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
-		GImage mario = new GImage("Mario_D_R.png", 300, 100);
+		GImage mario = new GImage("", 300, 100);
 		add(mario);
 	}
 
