@@ -1,7 +1,12 @@
 package starter;
 
 public class Immovable {
-// This is going to be where we put the visual representation of the Pipe, Platform, and ground
+	/* TODO Auto-generated method stub
+	***Need to generate the following objects in this class***
+	-Pipe
+	-Platform
+	-Ground
+    */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
