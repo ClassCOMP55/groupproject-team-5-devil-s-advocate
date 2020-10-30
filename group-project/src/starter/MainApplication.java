@@ -1,4 +1,7 @@
 package starter;
+
+import acm.graphics.GImage;
+
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
@@ -18,6 +21,8 @@ public class MainApplication extends GraphicsApplication {
 		somePane = new SomePane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
+		GImage mario = new GImage("Mario_D_R.png", 300, 100);
+		add(mario);
 	}
 
 	public void switchToMenu() {
