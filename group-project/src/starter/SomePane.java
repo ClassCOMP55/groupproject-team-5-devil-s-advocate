@@ -21,7 +21,7 @@ public class SomePane extends GraphicsPane {
 
 	@Override
 	public void showContents() {
-		program.add(img);
+		program.add(img);  
 		program.add(para);
 	}
 
