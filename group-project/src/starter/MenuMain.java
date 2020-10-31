@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
-public class MenuPane extends GraphicsPane {
+public class MenuMain extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
 	private GButton rect;
@@ -16,7 +16,7 @@ public class MenuPane extends GraphicsPane {
 	private GImage Mario;
 
 	
-	public MenuPane(MainApplication app) {
+	public MenuMain(MainApplication app) {
 		super();
 		program = app;
 		
@@ -25,7 +25,7 @@ public class MenuPane extends GraphicsPane {
 		MarioLogo = new GImage("Background/MarioLogo.png", 150, 100);
 		Mario = new GImage("Mario/Mario_S_L.png", 400, 300);
 		
-		rect = new GButton("Next", 200, 350, 200, 200);
+		rect = new GButton("Play", 250, 350, 300, 100);
 		rect.setFillColor(Color.RED);
 		
 	}
@@ -37,11 +37,12 @@ public class MenuPane extends GraphicsPane {
 		program.add(Mario);
 		program.add(rect);
 
-
 	}
 
 	@Override
 	public void hideContents() {
+		program.remove(MarioLogo);
+		program.remove(Mario);
 		program.remove(rect);
 	}
 

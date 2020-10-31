@@ -9,7 +9,7 @@ public class MainApplication extends GraphicsApplication {
 	private static final String[] SOUND_FILES = { "in/dead.mp3", "in/theme.mp3" };
 	
 	private SomePane somePane;
-	private MenuPane menu;
+	private MenuMain menu;
 	private int count;
 
 	public void init() {
@@ -19,7 +19,7 @@ public class MainApplication extends GraphicsApplication {
 	public void run() {
 		System.out.println("Hello, world!");
 		somePane = new SomePane(this);
-		menu = new MenuPane(this);
+		menu = new MenuMain(this);
 		switchToMenu();
 		GImage mario = new GImage("", 300, 100);
 		add(mario);
