@@ -5,8 +5,8 @@ import acm.graphics.GImage;
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
-	public static final String MUSIC_FOLDER = "sounds";
-	private static final String[] SOUND_FILES = { "breakblock.mp3", "jump.mp3" };
+	public static final String MUSIC_FOLDER = "sound";
+	private static final String[] SOUND_FILES = { "in/dead.mp3", "in/theme.mp3" };
 	
 	private SomePane somePane;
 	private MenuPane menu;

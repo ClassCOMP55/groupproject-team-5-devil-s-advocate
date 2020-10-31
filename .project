@@ -14,4 +14,16 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>media/sound/in/dead.mp3</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Desktop/sounds/dead.mp3</locationURI>
+		</link>
+		<link>
+			<name>media/sound/in/theme.mp3</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Desktop/sounds/theme.mp3</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
