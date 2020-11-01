@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
-public class MenuMain extends GraphicsPane {
+public class MainMenu extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
 	private GButton rect;
@@ -16,7 +16,7 @@ public class MenuMain extends GraphicsPane {
 	private GImage Mario;
 
 	
-	public MenuMain(MainApplication app) {
+	public MainMenu(MainApplication app) {
 		super();
 		program = app;
 		
