@@ -8,7 +8,7 @@ public class MainApplication extends GraphicsApplication {
 	public static final String MUSIC_FOLDER = "sound";
 	private static final String[] SOUND_FILES = { "in/dead.mp3", "in/theme.mp3" };
 	
-	private SomePane somePane;
+	private InstructionsPane somePane;
 	private MainMenu menu;
 	private int count;
 
@@ -18,7 +18,7 @@ public class MainApplication extends GraphicsApplication {
 
 	public void run() {
 		System.out.println("Hello, world!");
-		somePane = new SomePane(this);
+		somePane = new InstructionsPane(this);
 		menu = new MainMenu(this);
 		switchToMenu();
 		GImage mario = new GImage("", 300, 100);
