@@ -11,6 +11,8 @@ public class MainApplication extends GraphicsApplication {
 	private InstructionsPane InstructionsPane;
 	private MainMenu menu;
 	private DeadScreen DeadScreen;
+	private WinScreen WinScreen; 
+
 	
 	private int count;
 
@@ -22,6 +24,7 @@ public class MainApplication extends GraphicsApplication {
 		System.out.println("Hello, world!");
 		InstructionsPane = new InstructionsPane(this);
 		DeadScreen = new DeadScreen(this);
+		WinScreen = new WinScreen(this);
 		menu = new MainMenu(this);
 		switchToMenu();
 		GImage mario = new GImage("", 300, 100);
@@ -42,6 +45,11 @@ public class MainApplication extends GraphicsApplication {
 	public void switchToDead() {
 		playRandomSound();
 		switchToScreen(DeadScreen);
+	}
+	
+	public void switchToWin() {
+		playRandomSound();
+		switchToScreen(WinScreen);
 	}
 
 	private void playRandomSound() {

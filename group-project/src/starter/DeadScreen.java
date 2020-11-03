@@ -59,7 +59,7 @@ public class DeadScreen extends GraphicsPane {
 		public void mousePressed(MouseEvent e) {
 			GObject obj = program.getElementAt(e.getX(), e.getY());
 			if (obj == quitButton) {
-				program.switchToInstructions();
+				program.switchToWin();
 			}
 		}
 	}
