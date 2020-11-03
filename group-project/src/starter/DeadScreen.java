@@ -26,11 +26,12 @@ public class DeadScreen extends GraphicsPane {
 		//change images
 		
 		DeadScreen = new GImage("background/DeadScreen.png", 0, 0);
-		FlyingMario = new GImage("Mario/Mario_Dead.png",0,250);
-		FlyingMario.setSize(75.0,100.0);
+		FlyingMario = new GImage("Mario/Mario_Dead.png",0,225);
+		FlyingMario.setSize(75.0,125.0);
 		
-		Mario_Dead = new GLabel("Oh no, you just died",150,50);
+		Mario_Dead = new GLabel("Oh no! you just died!",175,100);
 		Mario_Dead.setColor(Color.RED);
+        Mario_Dead.setFont("Arial-48");
 		
 		playAgainButton = new GButton("Play Again", 250, 375, 300, 75);
 		playAgainButton.setFillColor(Color.RED);
@@ -45,7 +46,9 @@ public class DeadScreen extends GraphicsPane {
 			//Change images 
 			program.add(DeadScreen);
 			program.add(FlyingMario);
-						
+
+			program.add(Mario_Dead);
+
 			program.add(playAgainButton);
 			program.add(quitButton);
 		}
@@ -54,6 +57,8 @@ public class DeadScreen extends GraphicsPane {
 			// TODO Auto-generated method stub
 			program.remove(DeadScreen);
 			program.remove(FlyingMario);
+			
+			program.remove(Mario_Dead);
 
 			program.remove(playAgainButton);
 			program.remove(quitButton);
