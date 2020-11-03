@@ -26,16 +26,19 @@ public class WinScreen extends GraphicsPane {
         
         WinScreen = new GImage("background/WinScreen.png", 0, 0);
         
-        Mario = new GImage("Mario/Mario_S_R.png", 150, 30);
-        Mario_Win = new GLabel("You have passed the level!",150,50);
+        Mario = new GImage("Mario/Mario_S_R.png", 365, 250);
+        Mario.setSize(75.0,125.0);
+        
+        Mario_Win = new GLabel("You have passed the level!", 100, 100);
+        Mario_Win.setFont("Arial-48");
         
         Mario_Win.setColor(Color.RED);
         
-        playAgainButton = new GButton("Play Again", 200, 375, 300, 75);
-        playAgainButton.setFillColor(Color.RED);
-        
-        quitButton = new GButton("Quit", 250, 475, 300, 75);
-        quitButton.setFillColor(Color.RED);
+        playAgainButton = new GButton("Play Again", 250, 375, 300, 75);
+		playAgainButton.setFillColor(Color.RED);
+		
+		quitButton = new GButton("Quit", 250, 475, 300, 75);
+		quitButton.setFillColor(Color.RED);
         
     }
         @Override
