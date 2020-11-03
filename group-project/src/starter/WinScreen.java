@@ -11,8 +11,9 @@ public class WinScreen extends GraphicsPane {
     private MainApplication program; // you will use program to get access to
     //we will change these images                                    // all of the GraphicsProgram calls
     private GImage WinScreen;
-    private GLabel Mario_Win;
-    private GImage Mario; 
+    private GImage Mario;
+    
+    private GLabel Mario_Win; 
     
     private GButton playAgainButton;// keep buttons
     private GButton quitButton;
@@ -24,9 +25,10 @@ public class WinScreen extends GraphicsPane {
         program = app;
         
         WinScreen = new GImage("background/WinScreen.png", 0, 0);
-        Mario = new GImage("Mario/Mario_S_R.png", 150, 30);
         
+        Mario = new GImage("Mario/Mario_S_R.png", 150, 30);
         Mario_Win = new GLabel("You have passed the level!",150,50);
+        
         Mario_Win.setColor(Color.RED);
         
         playAgainButton = new GButton("Play Again", 200, 375, 300, 75);
