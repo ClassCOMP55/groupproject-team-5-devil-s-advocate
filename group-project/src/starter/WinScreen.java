@@ -11,6 +11,8 @@ public class WinScreen extends GraphicsPane {
     private MainApplication program; // you will use program to get access to
     //we will change these images                                    // all of the GraphicsProgram calls
     private GImage WinScreen;
+    private GImage Mario;
+    
     private GLabel Mario_Win;
     
     private GButton playAgainButton;// keep buttons
@@ -24,6 +26,7 @@ public class WinScreen extends GraphicsPane {
         //change images
         
         WinScreen = new GImage("background/DeadScreen.png", 0, 0);
+        
         
         Mario_Win = new GLabel("Oh no, you just died",150,50);
         Mario_Win.setColor(Color.RED);
