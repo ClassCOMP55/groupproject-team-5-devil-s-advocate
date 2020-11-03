@@ -25,7 +25,7 @@ public class MainApplication extends GraphicsApplication {
 		add(mario);
 	}
 
-	public void switchToMenu() {
+	public void switchToMenu() { // change/time the audio in the switchTo functions 
 		playRandomSound();
 		count++;
 		switchToScreen(menu);
