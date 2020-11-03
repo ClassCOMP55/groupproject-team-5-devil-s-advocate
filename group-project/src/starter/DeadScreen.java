@@ -11,7 +11,7 @@ public class DeadScreen extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 	//we will change these images									// all of the GraphicsProgram calls
 	private GImage DeadScreen;
-	private GLabel Mario_Dead;
+	private GLabel Mario_Dead; 
 	
 	private GButton playAgainButton;// keep buttons
 	private GButton quitButton;

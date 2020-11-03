@@ -59,6 +59,7 @@ public class MainMenu extends GraphicsPane {
 
 	@Override
 	public void hideContents() {
+		program.remove(background);
 		program.remove(marioLogo);
 		program.remove(ground);
 		program.remove(cloud1);

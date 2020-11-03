@@ -10,6 +10,8 @@ public class MainApplication extends GraphicsApplication {
 	
 	private InstructionsPane InstructionsPane;
 	private MainMenu menu;
+	private DeadScreen DeadScreen;
+	
 	private int count;
 
 	public void init() {
@@ -19,6 +21,7 @@ public class MainApplication extends GraphicsApplication {
 	public void run() {
 		System.out.println("Hello, world!");
 		InstructionsPane = new InstructionsPane(this);
+		DeadScreen = new DeadScreen(this);
 		menu = new MainMenu(this);
 		switchToMenu();
 		GImage mario = new GImage("", 300, 100);
@@ -34,6 +37,11 @@ public class MainApplication extends GraphicsApplication {
 	public void switchToInstructions() {
 		playRandomSound();
 		switchToScreen(InstructionsPane);
+	}
+	
+	public void switchToDead() {
+		playRandomSound();
+		switchToScreen(DeadScreen);
 	}
 
 	private void playRandomSound() {

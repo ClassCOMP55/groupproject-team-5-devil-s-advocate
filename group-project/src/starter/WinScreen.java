@@ -1,5 +1,6 @@
 package starter;
 
+import java.awt.event.MouseEvent;
 import java.awt.Color;
 
 import acm.graphics.GImage;
