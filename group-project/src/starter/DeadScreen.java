@@ -11,7 +11,7 @@ public class DeadScreen extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 	//we will change these images									// all of the GraphicsProgram calls
 	private GImage DeadScreen;
-	private GLabel Mario_Dead; 
+	private GLabel Mario_Dead;
 	
 	private GButton playAgainButton;// keep buttons
 	private GButton quitButton;
@@ -25,7 +25,8 @@ public class DeadScreen extends GraphicsPane {
 		
 		DeadScreen = new GImage("background/DeadScreen.png", 0, 0);
 		
-
+		Mario_Dead = new GLabel("Oh no, you just died",150,50);
+		Mario_Dead.setColor(Color.RED);
 		
 		playAgainButton = new GButton("Play Again", 250, 325, 300, 75);
 		playAgainButton.setFillColor(Color.RED);
