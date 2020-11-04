@@ -14,26 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>media/sound/in/endflag.mp3</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Desktop/sounds/endflag.mp3</locationURI>
-		</link>
-		<link>
-			<name>media/sound/in/gameover.mp3</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Desktop/sounds/gameover.mp3</locationURI>
-		</link>
-		<link>
-			<name>media/sound/in/jump.mp3</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Desktop/sounds/jump.mp3</locationURI>
-		</link>
-		<link>
-			<name>media/sound/in/levelpass.mp3</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Desktop/sounds/levelpass.mp3</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>
