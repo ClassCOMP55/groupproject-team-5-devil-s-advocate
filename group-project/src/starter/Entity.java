@@ -17,7 +17,7 @@ public class Entity {
 		this.move = move;
 	}
 	
-	public void displayImage(Graphics g) {
+	public void displayImage(Graphics b) {
 		
 		
 	}
