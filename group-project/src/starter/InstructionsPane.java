@@ -38,7 +38,7 @@ public class InstructionsPane extends GraphicsPane {
 
 		title = new GButton("INSTRUCTIONS & CONTROLS",100,100,600,75);
 		title.setFillColor(Color.RED);
-		continueButton = new GButton("Press here to continue\n",450,555,300,40);
+		continueButton = new GButton("PRESS HERE TO CONTINUE\n",450,555,300,40);
 		continueButton.setFillColor(Color.LIGHT_GRAY);
 		
 
