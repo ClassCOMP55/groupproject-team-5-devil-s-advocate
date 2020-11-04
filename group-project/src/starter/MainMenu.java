@@ -59,6 +59,7 @@ public class MainMenu extends GraphicsPane {
 
 	@Override
 	public void hideContents() {
+		program.remove(background);
 		program.remove(marioLogo);
 		program.remove(ground);
 		program.remove(cloud1);
@@ -73,7 +74,11 @@ public class MainMenu extends GraphicsPane {
 	public void mousePressed(MouseEvent e) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == playButton) {
-			program.switchToSome();
+			program.switchToInstructions();
 		}
-	}
+		
+		if(obj== exitButton) {  //exiting from the application...
+			System.exit(0);
+			}
+		}
 }

@@ -16,8 +16,12 @@ public class MainApplication extends GraphicsApplication {
 	public static Sprite player;
 	private Graphics g;
 	
-	private InstructionsPane somePane;
+	private InstructionsPane InstructionsPane;
 	private MainMenu menu;
+	private DeadScreen DeadScreen;
+	private WinScreen WinScreen; 
+
+	
 	private int count;
 	
 
@@ -29,7 +33,9 @@ public class MainApplication extends GraphicsApplication {
 
 	public void run() {
 		System.out.println("Hello, world!");
-		somePane = new InstructionsPane(this);
+		InstructionsPane = new InstructionsPane(this);
+		DeadScreen = new DeadScreen(this);
+		WinScreen = new WinScreen(this);
 		menu = new MainMenu(this);
 		switchToMenu();
 		GImage mario = new GImage("", 300, 100);
@@ -39,29 +45,38 @@ public class MainApplication extends GraphicsApplication {
 		add(gPlayer);
 	}
 
-	public void switchToMenu() {
+	public void switchToMenu() { // change/time the audio in the switchTo functions 
 		playRandomSound();
-		count++;
-		switchToScreen(menu);
+		count++;            // Move to next audio file...
+		switchToScreen(menu); 
 	}
 
-	public void switchToSome() {
+	public void switchToInstructions() {
 		playRandomSound();
-		switchToScreen(somePane);
+		count ++;
+		switchToScreen(InstructionsPane);
+		stopRandomSound(); 	// to stop the theme sound before switching to menu page...
+	}
+	
+	public void switchToDead() {
+		playRandomSound();
+		switchToScreen(DeadScreen);
+	}
+	
+	public void switchToWin() {
+		playRandomSound();
+		switchToScreen(WinScreen); 
 	}
 
 	private void playRandomSound() {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
-	
-//	public void render() {                                     *** This is Ade'...Please leave this code, trying to figure out how to use buffere strategy
-//		BufferStrategy buffStrat = Canvas.getBufferStrategy();
-//		if (buffStrat == null) {
-//			Canvas.createBufferStrategy(3);
-//			return;
-//		}
-//		Graphics g = buffStrat.getDrawGraphics();
-//		//g.drawImage(player.getBufferedImage(),250, 250, 32, 32, null);
-//	}
+
+
+	public void stopRandomSound() {				// function to stop the random sound from being played...
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+	}
 }
+	
