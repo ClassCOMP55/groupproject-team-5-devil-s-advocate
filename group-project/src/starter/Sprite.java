@@ -1,22 +1,17 @@
 package starter;
 
-public class Sprite {
-	/* TODO Auto-generated method stub
-	***Need to add the following values in this class***
-	-images:  ArrayList<image>
-	-filePath: String
-    */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+import java.awt.image.BufferedImage;
 
+public class Sprite {
+
+	public SpriteSheet sheet;
+	public BufferedImage image;
+	
+	public Sprite(SpriteSheet sheet, int x, int y) {
+		image = sheet.getSprite(x, y);
 	}
 	
-	/* TODO Auto-generated method stub
-	***Need to generate the following methods in this class***
-	-addImage(String filePath)
-	-removeImage(int index)
-	-getImage(int index)
-	-setFilePath(string Path)
-	-getFilePath(): String
-    */
+	public BufferedImage getBufferedImage() {
+		return image;
+	}
 }
