@@ -35,7 +35,6 @@ public class InstructionsPane extends GraphicsPane {
 		content = new GImage("Background/Content.png",10,225);
 		returnIcon = new GImage("Background/Return.png",5,5);
 		returnIcon.setSize(45.0,45.0);
-
 		title = new GButton("INSTRUCTIONS & CONTROLS",100,100,600,75);
 		title.setFillColor(Color.RED);
 		continueButton = new GButton("PRESS HERE TO CONTINUE\n",450,555,300,40);
