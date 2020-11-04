@@ -75,7 +75,10 @@ public class MainMenu extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == playButton) {
 			program.switchToInstructions();
-			
 		}
-	}
+		
+		if(obj== exitButton) {  //exiting from the application...
+			System.exit(0);
+			}
+		}
 }

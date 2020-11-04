@@ -83,9 +83,11 @@ public class InstructionsPane extends GraphicsPane {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == returnIcon) {
 			program.switchToMenu();
+			program.stopRandomSound(); 		//stop the ongoing sound...
 		}
 		if(obj == continueButton) {
 			program.switchToDead();
+			program.stopRandomSound();     //stop the ongoing sound...
 		}
 		
 	}

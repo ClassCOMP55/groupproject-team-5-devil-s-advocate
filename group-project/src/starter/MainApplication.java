@@ -33,13 +33,15 @@ public class MainApplication extends GraphicsApplication {
 
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
 		playRandomSound();
-		count++;
-		switchToScreen(menu);
+		count++;            // Move to next audio file...
+		switchToScreen(menu); 
 	}
 
 	public void switchToInstructions() {
 		playRandomSound();
+		count ++;
 		switchToScreen(InstructionsPane);
+		stopRandomSound(); 	// to stop the theme sound before switching to menu page...
 	}
 	
 	public void switchToDead() {
@@ -49,11 +51,17 @@ public class MainApplication extends GraphicsApplication {
 	
 	public void switchToWin() {
 		playRandomSound();
-		switchToScreen(WinScreen);
+		switchToScreen(WinScreen); 
 	}
 
 	private void playRandomSound() {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
+
+	public void stopRandomSound() {				// function to stop the random sound from being played...
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+	}
+	
 }
