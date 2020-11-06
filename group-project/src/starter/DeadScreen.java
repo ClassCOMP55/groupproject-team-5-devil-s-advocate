@@ -10,6 +10,9 @@ import acm.graphics.GObject;
 
 
 public class DeadScreen extends GraphicsPane {	
+	
+	public static final int WINDOW_WIDTH = 800;
+	public static final int WINDOW_HEIGHT = 600;
 	public static final int BREAK_MS = 30;
 	public static final int INIT_X_VELOCITY = 5;
 	
