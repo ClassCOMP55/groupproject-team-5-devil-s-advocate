@@ -10,7 +10,7 @@ public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
 	public static final String MUSIC_FOLDER = "sound";
-	private static final String[] SOUND_FILES = { "in/dead.mp3", "in/theme.mp3" };
+	private static final String[] SOUND_FILES = { "in/levelPass.mp3", "in/theme.mp3" };
 	public static SpriteSheet sheet;
 	public static Sprite player;
 	private Graphics g;
