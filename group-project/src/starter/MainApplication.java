@@ -4,7 +4,6 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.Component;
-
 import acm.graphics.GImage;
 
 public class MainApplication extends GraphicsApplication {
@@ -27,7 +26,7 @@ public class MainApplication extends GraphicsApplication {
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		sheet = new SpriteSheet("/SpriteSheet/SpriteSheet.png");//Code to read in first sprite sheet
+		sheet = new SpriteSheet("/SpriteSheet/SpriteSheet.png");//Code to read in the first sprite sheet
 		player = new Sprite (sheet, 1, 1);
 	}
 
@@ -37,7 +36,7 @@ public class MainApplication extends GraphicsApplication {
 		DeadScreen = new DeadScreen(this);
 		WinScreen = new WinScreen(this);
 		menu = new MainMenu(this);
-		switchToMenu();
+		switchToMenu();                                      //Timer after menu then gameloop 
 		GImage mario = new GImage("", 300, 100);
 		add(mario);
 		GImage gPlayer = new GImage(player.getBufferedImage(), 250, 100);

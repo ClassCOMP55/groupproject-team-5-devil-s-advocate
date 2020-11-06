@@ -20,7 +20,7 @@ public class SpriteSheet {
 	}
 	
 	public BufferedImage getSprite(int x, int y) {
-		return sheet.getSubimage(x*32-32, y*32-32, 32, 32);//Rethink sizing depending on the agreed upon size of sprites
+		return sheet.getSubimage(x*32-32, y*32-32, 32, 32);
 	}
 
 }
