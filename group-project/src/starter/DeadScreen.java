@@ -35,7 +35,7 @@ public class DeadScreen extends GraphicsPane {
 		
 		DeadScreen = new GImage("background/DeadScreen.png", 0, 0);
 		Mario_Dead_Rotate = new GImage("Mario/Mario_Dead_Rotate.gif",0,225);
-		Mario_Dead_Rotate.setSize(75.0,125.0);
+		Mario_Dead_Rotate.setSize(100.0,140.0);
 		
 		Mario_Dead = new GLabel("Oh no! you just died!",175,100);
 		Mario_Dead.setColor(Color.RED);
