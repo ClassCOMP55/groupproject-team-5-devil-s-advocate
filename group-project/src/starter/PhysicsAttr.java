@@ -1,6 +1,9 @@
 package starter;
 
+import java.awt.Rectangle;
+
 public class PhysicsAttr {
+	
 	/**
 	 * There should be three main types of Entities in our game: 
 	 *  - main character 
@@ -26,7 +29,7 @@ public class PhysicsAttr {
 	 *  
 	 *  String xDirection, yDirection
 	 *  These variables will be used to tell the PhysicsEngine the direction to move the 
-	 *  Entity. These variables DO NOT reflect which direction the Entity is traveling.
+	 *  Entity. These variables DO NOT reflect which direction the Entity is travelling.
 	 *  ==
 	 *  Main Character: Initialize to empty string (xDirection = "")
 	 *  Enemies + other movable Entities: Initialize to (xDirection = "")
@@ -47,6 +50,12 @@ public class PhysicsAttr {
 	 *  Main Character: Initialize to false
 	 *  Enemies + other movable Entities: Initialize to false
 	 *  Immovable Entities: Initialize to false
+	 *  
+	 *  Rectangle[] hitboxes
+	 *  Used to store four Rectangles that represents the hitboxes on the four sides of the 
+	 *  Entity.
+	 *  ==
+	 *  No initialization needed
 	 */
 	
 	public double xVel, yVel;
@@ -54,5 +63,7 @@ public class PhysicsAttr {
     public String xDirection, yDirection;
     public boolean immovable;
     public boolean hitTop, hitBottom, hitLeft, hitRight;
+    public Rectangle[] hitboxes = new Rectangle[4];
+    
 }
 
