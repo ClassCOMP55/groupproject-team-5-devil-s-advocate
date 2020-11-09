@@ -11,6 +11,8 @@
 //	private ArrayList<entity> movable = new ArrayList<entity>(); // data type "entity" testing only
 //	private ArrayList<entity> immovable = new ArrayList<entity>(); // data type "entity" testing only
 //	
+//  private LinkedList<Entity> entity = new LinkedList<Entity>();
+//
 //	/**
 //	 * Constructor
 //	 * @param mainEnt = Entity to be controlled with keyboard aka main character 

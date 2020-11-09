@@ -19,15 +19,18 @@ public class MainApplication extends GraphicsApplication {
 	private MainMenu menu;
 	private DeadScreen DeadScreen;
 	private WinScreen WinScreen; 
-
 	
+	public Player futureMario;
+	public Entity futureEnemy;
 	private int count;
 	
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		sheet = new SpriteSheet("/SpriteSheet/SpriteSheet.png");//Code to read in the first sprite sheet
-		player = new Sprite (sheet, 1, 1);
+		//player = new Sprite (sheet, 1, 1);
+		futureMario = new Player(450, 150, 50, 50, true, Id.player);//**This what entity will roughly look like in implementation
+		futureEnemy = new Entity(150, 150, 50, 50, true, Id.enemy);
 	}
 
 	public void run() {
@@ -37,11 +40,8 @@ public class MainApplication extends GraphicsApplication {
 		WinScreen = new WinScreen(this);
 		menu = new MainMenu(this);
 		switchToMenu();                                      //Timer after menu then gameloop 
-		GImage mario = new GImage("", 300, 100);
-		add(mario);
-		GImage gPlayer = new GImage(player.getBufferedImage(), 250, 100);
-		gPlayer.setSize(50, 50);
-		add(gPlayer);
+		add(futureMario.display());
+		add(futureEnemy.display());
 	}
 
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
