@@ -49,10 +49,10 @@ public class PhysicsEngine {
 		processKeys(keysPressed);
 		calculateXVelocity();
 		calculateGravity();
-		mainEntity.object.move(mainEntity.xVel, mainEntity.yVel);
+		mainEntity.entity.move(mainEntity.xVel, mainEntity.yVel);
 		detectCollision();
 		for (Entity e : movable) {
-			e.object.move(e.xVel, e.yVel);
+			e.entity.move(e.xVel, e.yVel);
 		}
 
 	}
@@ -119,19 +119,19 @@ public class PhysicsEngine {
 		for (Entity e : immovable) {
 			// Interaction between main and immovable
 			if (getLeftHitbox(mainEntity).intersects(getHitbox(e))) {
-				mainEntity.object.setLocation(e.object.getX() + e.object.getWidth() + 1, mainEntity.object.getY());
+				mainEntity.entity.setLocation(e.entity.getX() + e.entity.getWidth() + 1, mainEntity.entity.getY());
 				System.out.println("Left contact");
 			}
 			
 			if (getRightHitbox(mainEntity).intersects(getHitbox(e))) {
-				mainEntity.object.setLocation(e.object.getX() - e.object.getWidth() - 1, mainEntity.object.getY());
+				mainEntity.entity.setLocation(e.entity.getX() - e.entity.getWidth() - 1, mainEntity.entity.getY());
 				System.out.println("Right contact");
 			}
 			
 			if (getBottomHitbox(mainEntity).intersects(getHitbox(e))) {
-				mainEntity.attr.enableGravity = false;
-				mainEntity.attr.yDirection = "stop";
-				mainEntity.object.setLocation(mainEntity.object.getX(), e.object.getY() - mainEntity.object.getHeight() - 1);
+				mainEntity.enableGravity = false;
+				mainEntity.yDirection = "stop";
+				mainEntity.entity.setLocation(mainEntity.entity.getX(), e.entity.getY() - mainEntity.entity.getHeight() - 1);
 				i = 0;
 				System.out.println("Bottom contact");
 			}
@@ -167,29 +167,29 @@ public class PhysicsEngine {
 	//Rectangle(int x, int y, int width, int height)
 	
 	public Rectangle getHitbox(Entity ent) {
-		GObject obj = ent.object;
-		return new Rectangle((int)obj.getX(), (int)obj.getY(), (int)obj.getWidth(), (int)obj.getHeight());
+		//GObject obj = ent.object;
+		return new Rectangle((int)ent.entity.getX(), (int)ent.entity.getY(), (int)ent.entity.getWidth(), (int)ent.entity.getHeight());
 	}
 	
 	public Rectangle getTopHitbox(Entity ent) {
-		GObject obj = ent.object;
-		return new Rectangle((int)obj.getX() + 2, (int)obj.getY(), (int)obj.getWidth() - 4, 2);
+		//GObject obj = ent.object;
+		return new Rectangle((int)ent.entity.getX() + 2, (int)ent.entity.getY(), (int)ent.entity.getWidth() - 4, 2);
 	}
 	
 	public Rectangle getBottomHitbox(Entity ent) {
-		GObject obj = ent.object;
-		return new Rectangle((int)obj.getX() + 2, (int)obj.getY() + (int)obj.getHeight() + 2, (int)obj.getWidth() - 4, 2);
+		//GObject obj = ent.object;
+		return new Rectangle((int)ent.entity.getX() + 2, (int)ent.entity.getY() + (int)ent.entity.getHeight() + 2, (int)ent.entity.getWidth() - 4, 2);
 	}
 	
 	
 	public Rectangle getLeftHitbox(Entity ent) {
-		GObject obj = ent.object;
-		return new Rectangle((int)obj.getX(), (int)obj.getY() + 7, 2, (int)obj.getHeight() - 14); // height default 4
+		//GObject obj = ent.object;
+		return new Rectangle((int)ent.entity.getX(), (int)ent.entity.getY() + 7, 2, (int)ent.entity.getHeight() - 14); // height default 4
 	}
 	
 	public Rectangle getRightHitbox(Entity ent) {
-		GObject obj = ent.object;
-		return new Rectangle((int)obj.getX() + (int)obj.getWidth() - 2, (int)obj.getY() + 7, 2, (int)obj.getHeight() - 14);
+		//GObject obj = ent.object;
+		return new Rectangle((int)ent.entity.getX() + (int)ent.entity.getWidth() - 2, (int)ent.entity.getY() + 7, 2, (int)ent.entity.getHeight() - 14);
 	}
 	
 	public GRect debugReturnHitBoxes() {
