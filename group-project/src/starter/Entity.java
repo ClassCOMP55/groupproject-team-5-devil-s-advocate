@@ -20,7 +20,6 @@ public class Entity {
 	 * there my be some ways to sift through what actuallky needs to be seperated if any.
 	 * 
 	 */ 
-	
 	public double xVel, yVel;
     public double xVelMax, yVelMax;
     public String xDirection, yDirection;
