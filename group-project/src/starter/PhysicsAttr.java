@@ -1,9 +1,6 @@
 package starter;
 
-import java.awt.Rectangle;
-
 public class PhysicsAttr {
-	
 	/**
 	 * There should be three main types of Entities in our game: 
 	 *  - main character 
@@ -35,14 +32,6 @@ public class PhysicsAttr {
 	 *  Enemies + other movable Entities: Initialize to (xDirection = "")
 	 *  Immovable Entities: Do not initialize
 	 *  
-	 *  boolean immovable
-	 *  This variable will be used to tell PhysicsEngine whether the object is Immovable or
-	 *  not. Immovable objects will be skipped in the movement loop.
-	 *  ==
-	 *  Main Character: Initialize to false
-	 *  Enemies + other movable Entities: Initialize to false
-	 *  Immovable Entities: Initialize to true
-	 *  
 	 *  boolean hitTop, hitBottom, hitLeft, hitRight
 	 *  These variables will be used to track the statuses for the hitboxes on the four sides
 	 *  of an Entity.
@@ -51,19 +40,17 @@ public class PhysicsAttr {
 	 *  Enemies + other movable Entities: Initialize to false
 	 *  Immovable Entities: Initialize to false
 	 *  
-	 *  Rectangle[] hitboxes
-	 *  Used to store four Rectangles that represents the hitboxes on the four sides of the 
-	 *  Entity.
-	 *  ==
-	 *  No initialization needed
+	 *  boolean enableGravity = true;
+	 *  This variable keeps track of whether to turn on gravity or not. true when freefalling,
+	 *  false when on on ground or other objects.
+	 *  == 
+	 *  No need to be initialized
 	 */
 	
 	public double xVel, yVel;
     public double xVelMax, yVelMax;
     public String xDirection, yDirection;
-    public boolean immovable;
     public boolean hitTop, hitBottom, hitLeft, hitRight;
-    public Rectangle[] hitboxes = new Rectangle[4];
-    
+    public boolean enableGravity = true;
 }
 
