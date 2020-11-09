@@ -14,6 +14,7 @@ public class Entity {
 	public boolean move;
 	public Id id;
 	public PhysicsAttr physics;
+	GRect entity;
 	/**
 	 * I've added all the attributes from physics directly into the class,
 	 * there my be some ways to sift through what actuallky needs to be seperated if any.
@@ -40,9 +41,8 @@ public class Entity {
 //		locationY += yVel;
 //	}
 	
-	
 	public GRect display() {
-		GRect entity = new GRect(width, height);
+		entity = new GRect(width, height);
 		entity.setLocation(locationX, locationY);
 		entity.setFillColor(Color.red);
 		entity.setFilled(true);
