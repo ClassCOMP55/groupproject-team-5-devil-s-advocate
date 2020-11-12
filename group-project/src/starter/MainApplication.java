@@ -10,7 +10,8 @@ public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
 	public static final String MUSIC_FOLDER = "sound";
-	private static final String[] SOUND_FILES = { "in/levelPass.mp3", "in/theme.mp3" };
+	private static final String CLICK = "in/clique.mp3"; 			// imported a new .mp3 file for click sound...
+	private static final String[] SOUND_FILES = { "in/theme.mp3", "in/dead.mp3" };
 	public static SpriteSheet sheet;
 	public static Sprite player;
 	private Graphics g;
@@ -46,7 +47,8 @@ public class MainApplication extends GraphicsApplication {
 
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
 		playRandomSound();
-		count++;            // Move to next audio file...
+		count++;							// Move to next audio file...
+		
 		switchToScreen(menu); 
 	}
 
@@ -54,11 +56,14 @@ public class MainApplication extends GraphicsApplication {
 		playRandomSound();
 		count ++;
 		switchToScreen(InstructionsPane);
-		stopRandomSound(); 	// to stop the theme sound before switching to menu page...
+		playClickSound();					// called function to play click sound...
+		stopRandomSound(); 					// to stop the theme sound before switching to menu page...
 	}
 	
 	public void switchToDead() {
+		count++;
 		playRandomSound();
+		playClickSound();
 		switchToScreen(DeadScreen);
 	}
 	
@@ -76,6 +81,11 @@ public class MainApplication extends GraphicsApplication {
 	public void stopRandomSound() {				// function to stop the random sound from being played...
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+	}
+	
+	public void playClickSound() {				//function to play the button sound...
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, CLICK);
 	}
 }
 	

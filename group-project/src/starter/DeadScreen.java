@@ -76,10 +76,12 @@ public class DeadScreen extends GraphicsPane {
 		public void mousePressed(MouseEvent e) {
 			GObject obj = program.getElementAt(e.getX(), e.getY());
 			if (obj == quitButton) { 
+				program.playClickSound();
 				program.switchToMenu();          // Back to menu after clicking quit...
 				program.stopRandomSound();  	//stop the ongoing sound...
 			}
 			if (obj== playAgainButton) {
+				program.playClickSound();
 				program.switchToMenu();
 				program.stopRandomSound();
 			}
