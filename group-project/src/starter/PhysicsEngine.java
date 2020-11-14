@@ -1,62 +1,72 @@
 package starter;
 import acm.graphics.*;
-import java.awt.Rectangle;
 import java.util.*;
+
 public class PhysicsEngine {
 	private Entity mainEntity; // Entity to be controlled with keyboard aka main character
 	private boolean enableXDecel = false;
-	int jumpTime = 15; // Used to jump how long you are allowed to press the jump key
+	private int jumpTime = 15; // Used to jump how long you are allowed to press the jump key
+	private int i = 0; // Used to track how long the jump key has been pressed
 	
-	// TODO Replace entity with Entity class and redo needed stuff
-	private ArrayList<Entity> movable = new ArrayList<Entity>(); // data type "entity" testing only
-	private ArrayList<Entity> immovable = new ArrayList<Entity>(); // data type "entity" testing only
+	// TODO Create an Entity/GRect/GRectangle for winningSpace, to see if player has passed the level
 	
-
+	/**
+	 * ArrayLists to store objects that are movable and immovable
+	 * movable - stores movable objects like enemies
+	 * immovable - stores immovable objects like walls and platforms
+	 */
+	private ArrayList<Entity> movable = new ArrayList<Entity>();
+	private ArrayList<Entity> immovable = new ArrayList<Entity>();
+	
 	/**
 	 * Constructor
 	 * @param mainEnt = Entity to be controlled with keyboard aka main character 
-	 * @return 
 	 */
-	void physTest(Entity mainEnt) {
+	PhysicsEngine(Entity mainEnt) {
 		mainEntity = mainEnt;
 	}
 	
-	public void addMovable(ArrayList<Entity> ent) {
+	public void addMovable(Entity... ent) {
 		for (Entity e : ent) {
 			movable.add(e);
 		}
 	}
-	
-	public void addImmovable(ArrayList<Entity> ent) {
+	public void addImmovable(Entity... ent) {
 		for (Entity e : ent) {
 			immovable.add(e);
 		}
 	}
-
-	public void removeMovable(Entity entity) {
-		movable.remove(entity);
+	public void removeMovable(Entity Entity) {
+		movable.remove(Entity);
+	}
+	public void removeImmovable(Entity Entity) {
+		immovable.remove(Entity);
 	}
 	
-	public void removeImmovable(Entity entity) {
-		immovable.remove(entity);
-	}
 	/**
 	 * The update() function is where all the physics and movements will be calculated. This function must
 	 * be called by a game loop or a timer, which update the calculations every * seconds. The physics
-	 * engine is also responsible for the movement of the Movable class.
+	 * engine is also responsible for the movement.
 	 */	
 	public void update(Boolean[] keysPressed) {
 		processKeys(keysPressed);
 		calculateXVelocity();
 		calculateGravity();
-		mainEntity.entity.move(mainEntity.xVel, mainEntity.yVel);
 		detectCollision();
+		mainEntity.move(mainEntity.xVel, mainEntity.yVel);
 		for (Entity e : movable) {
-			e.entity.move(e.xVel, e.yVel);
+			e.move(e.xVel, e.yVel);
 		}
+		detectCollision();
+		System.out.println(mainEntity.yVel);
 
 	}
 	
+	/**
+	 * Processes keys to determine which keys are pressed on the keyboard
+	 * @param keysPressed - pass an array of Boolean values of which keys are pressed
+	 * [0] = W, [1] = A, [2] = S, [3] = D
+	 */
 	private void processKeys(Boolean[] keysPressed) {
 		boolean w = keysPressed[0];
 		boolean a = keysPressed[1];
@@ -95,105 +105,89 @@ public class PhysicsEngine {
 			enableXDecel = false;
 		}
 	}
-	
-	int i = 0;
-	
+
+	// Calculates gravity and jumping
 	private void calculateGravity() {
 		if (mainEntity.yDirection == "jump") {
+			System.out.println("Jump");
 			i++;
 			if (i < jumpTime) {
 				mainEntity.yVel = -12;
 			}
 		}
 		
-		if (mainEntity.enableGravity) {
-			if (mainEntity.yVel < mainEntity.yVelMax) {
-				mainEntity.yVel++;
-			}
-		} else {
-			mainEntity.yVel = 0;
+		if (mainEntity.yVel < mainEntity.yVelMax) {
+			mainEntity.yVel++;
 		}
+
 	}
 	
+	// Detects collision for movement blocking, enemies and 
 	private void detectCollision() {
 		for (Entity e : immovable) {
-			// Interaction between main and immovable
-			if (getLeftHitbox(mainEntity).intersects(getHitbox(e))) {
-				mainEntity.entity.setLocation(e.entity.getX() + e.entity.getWidth() + 1, mainEntity.entity.getY());
-				System.out.println("Left contact");
+			// Collision between the left side of mainEntity and the right side of immovable objects
+			if (getLeftHitbox(mainEntity).intersects(getRightHitbox(e))) {
+				mainEntity.setLocation(e.getX() + e.getWidth() + 1, mainEntity.getY());
 			}
 			
-			if (getRightHitbox(mainEntity).intersects(getHitbox(e))) {
-				mainEntity.entity.setLocation(e.entity.getX() - e.entity.getWidth() - 1, mainEntity.entity.getY());
-				System.out.println("Right contact");
+			// Collision between the right side of mainEntity and the left side of immovable objects
+			if (getRightHitbox(mainEntity).intersects(getLeftHitbox(e))) {
+				mainEntity.setLocation(e.getX() - mainEntity.getWidth() - 1, mainEntity.getY());
 			}
 			
-			if (getBottomHitbox(mainEntity).intersects(getHitbox(e))) {
-				mainEntity.enableGravity = false;
+			// Collision between the bottom side of mainEntity and the top side of immovable objects
+			if (getBottomHitbox(mainEntity).intersects(getTopHitbox(e))) {
 				mainEntity.yDirection = "stop";
-				mainEntity.entity.setLocation(mainEntity.entity.getX(), e.entity.getY() - mainEntity.entity.getHeight() - 1);
 				i = 0;
-				System.out.println("Bottom contact");
+				mainEntity.setLocation(mainEntity.getX(), e.getY() - mainEntity.getHeight() - 1);
 			}
 			
-			// Interaction between movable and immovable
+			// Collision between the top side of mainEntity and the bottom side of immovable objects
+			if (getTopHitbox(mainEntity).intersects(getBottomHitbox(e))) {
+				i = 15;
+				mainEntity.setLocation(mainEntity.getX(), e.getY() + e.getHeight() + 1);
+				mainEntity.yVel = 0;
+			}
 			
+			// TODO Add logic for collision detection for enemies and immovable, enemies and mainEntity
+			// 		and mainEntity and winningSpace
 		}	
 	}
 	
+	// Used to set movement directions for the mainEntity
 	public void moveLeft() {
 		mainEntity.xDirection = "left";
 		enableXDecel = true;
 	}
-	
 	public void moveRight() {
 		mainEntity.xDirection = "right";
 		enableXDecel = true;
 	}
-	
 	public void moveStop() {
 		mainEntity.xDirection = "stop";
 	}
-	
 	public void moveJump() {
 		mainEntity.yDirection = "jump";
 	}
-	
 	public void moveJumpStop() {
 		mainEntity.yDirection = "stop";
 		i = jumpTime;
 	}
 	
-	//Rectangle(int x, int y, int width, int height)
-	
-	public Rectangle getHitbox(Entity ent) {
-		//GObject obj = ent.object;
-		return new Rectangle((int)ent.entity.getX(), (int)ent.entity.getY(), (int)ent.entity.getWidth(), (int)ent.entity.getHeight());
+	// Returns the hitboxes of the Entity passed to it
+	public GRectangle getHitbox(Entity ent) {
+		return new GRectangle(ent.getX(), ent.getY(), ent.getWidth(), ent.getHeight());
 	}
-	
-	public Rectangle getTopHitbox(Entity ent) {
-		//GObject obj = ent.object;
-		return new Rectangle((int)ent.entity.getX() + 2, (int)ent.entity.getY(), (int)ent.entity.getWidth() - 4, 2);
+	public GRectangle getTopHitbox(Entity ent) {
+		return new GRectangle(ent.getX(), ent.getY(), ent.getWidth(), 5);
 	}
-	
-	public Rectangle getBottomHitbox(Entity ent) {
-		//GObject obj = ent.object;
-		return new Rectangle((int)ent.entity.getX() + 2, (int)ent.entity.getY() + (int)ent.entity.getHeight() + 2, (int)ent.entity.getWidth() - 4, 2);
+	public GRectangle getBottomHitbox(Entity ent) {
+		return new GRectangle(ent.getX(), ent.getY() + ent.getHeight() - 5, ent.getWidth(), 5);
 	}
-	
-	
-	public Rectangle getLeftHitbox(Entity ent) {
-		//GObject obj = ent.object;
-		return new Rectangle((int)ent.entity.getX(), (int)ent.entity.getY() + 7, 2, (int)ent.entity.getHeight() - 14); // height default 4
+	public GRectangle getLeftHitbox(Entity ent) {
+		return new GRectangle(ent.getX(), ent.getY(), 5, ent.getHeight());
 	}
-	
-	public Rectangle getRightHitbox(Entity ent) {
-		//GObject obj = ent.object;
-		return new Rectangle((int)ent.entity.getX() + (int)ent.entity.getWidth() - 2, (int)ent.entity.getY() + 7, 2, (int)ent.entity.getHeight() - 14);
-	}
-	
-	public GRect debugReturnHitBoxes() {
-		
-		return null;
+	public GRectangle getRightHitbox(Entity ent) {
+		return new GRectangle(ent.getX() + ent.getWidth() - 5, ent.getY(), 5, ent.getHeight());
 	}
 }
