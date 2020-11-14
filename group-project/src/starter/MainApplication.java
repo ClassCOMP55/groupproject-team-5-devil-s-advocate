@@ -29,7 +29,7 @@ public class MainApplication extends GraphicsApplication {
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		sheet = new SpriteSheet("/SpriteSheet/noBack.png");//Code to read in the first sprite sheet
+		sheet = new SpriteSheet("/SpriteSheet/SpriteChar.png");//Code to read in the first sprite sheet
 		player = new Sprite (sheet, 2,0);
 		futureMario = new Player(450, 150, 50, 50, true, Id.player);//**This what entity will roughly look like in implementation
 		futureEnemy = new Entity(150, 150, 50, 50, true, Id.enemy);
