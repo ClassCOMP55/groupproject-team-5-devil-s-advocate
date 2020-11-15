@@ -24,6 +24,21 @@ public class GameScreen extends GraphicsPane {
     //initially set our gamcam to be centered correctly at the start of of map
     //gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
+	//public void update(float dt){
+	//	handleInput(dt);
+	//	
+	//	gamecam.update();
+	//	renderer.setView(gamecam);
+	//}
+	
+	//public void render(float delta){
+	//update(delta);
+	//
+	//Gdx.gl.glClearColor(0,0,0,1);
+	//Gdx.gl.glClearColor(GL20.GL_COLOR_BUFFER_BIT);
+	//
+	//renderer.render();
+	
 
 
 	@Override
