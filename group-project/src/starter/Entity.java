@@ -26,16 +26,7 @@ public class Entity {
 		this.movable = movable;
 		this.id = id;
 	}
-	
-	/**
-	 * Returns the entity object. TRY NOT TO USE THIS, INSTEAD ACCESS THE ENTITY OBJECT
-	 * DIRECTLY INSTEAD. Written for backwards compatibility with older code.
-	 * @return
-	 */
-	public GRect display() {
-		return entity;
-	}
-	
+
 	/**
 	 * This function passes to GObject's move()
 	 * @param x - pixels to move in x direction
