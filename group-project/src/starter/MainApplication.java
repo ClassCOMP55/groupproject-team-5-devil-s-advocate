@@ -20,6 +20,7 @@ public class MainApplication extends GraphicsApplication {
 	private MainMenu menu;
 	private DeadScreen DeadScreen;
 	private WinScreen WinScreen; 
+	private GameScreen GameScreen; 
 	
 	public Player futureMario;
 	public Entity futureEnemy;
@@ -75,6 +76,12 @@ public class MainApplication extends GraphicsApplication {
 		playRandomSound();
 		switchToScreen(WinScreen); 
 	}
+	
+	public void switchToGameScreen() {
+		playRandomSound();
+		switchToScreen(GameScreen);
+	}
+
 
 	private void playRandomSound() {
 		AudioPlayer audio = AudioPlayer.getInstance();
