@@ -2,6 +2,7 @@ package starter;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import org.tiledreader.*;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
