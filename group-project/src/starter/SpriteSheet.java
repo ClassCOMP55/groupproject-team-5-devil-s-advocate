@@ -15,12 +15,10 @@ public class SpriteSheet {
 			System.out.println("Error in reading from sprite sheet");
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
-	public BufferedImage getSprite(int x, int y) {
-		return sheet.getSubimage(x * 32, y * 32, 32, 32);
+	public BufferedImage getSprite(int x, int y, int w, int h) {
+		return sheet.getSubimage(x * w, y * h, w, h);
 	}
 
 }
