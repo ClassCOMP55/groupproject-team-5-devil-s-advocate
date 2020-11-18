@@ -5,7 +5,7 @@ import acm.graphics.*;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class TMXLevelReader {
+public class Level {
 	private static FileSystemTiledReader reader = new FileSystemTiledReader(); //reads in the TMX file 
 	private static TiledMap map; //stores the TMX file
 	private static ArrayList<TiledLayer> allLayers = new ArrayList<TiledLayer>();
@@ -21,7 +21,7 @@ public class TMXLevelReader {
 	 * @param pathToTMX - Path to tmx files under levels folder
 	 * @param pathToSpriteSheet - Path to sprite sheet, MUST BE UNDER /SpriteSheet/ FOLDER, because java is dumb when it comes to file paths
 	 */
-	TMXLevelReader(String pathToTMX, String pathToSpriteSheet, int windowHeight) {
+	Level(String pathToTMX, String pathToSpriteSheet, int windowHeight) {
 		map = readFile(pathToTMX);
 		tileWidth = map.getWidth();
 		tileHeight = map.getHeight();
