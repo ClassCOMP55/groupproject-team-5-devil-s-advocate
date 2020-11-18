@@ -70,6 +70,7 @@ public class TMXLevelReader {
 				}
 			} else if (layer instanceof HashTileLayer) {
 				tempHTL = (HashTileLayer)layer;
+				arrayOfPoints = tempHTL.getTileLocations().toArray(new Point[tempHTL.getTileLocations().size()]);
 				for (Point point : arrayOfPoints) {
 					if (tempHTL.getTile(point.x, point.y) != null) {
 						tilesetX = tempHTL.getTile(point.x, point.y).getTilesetX();
