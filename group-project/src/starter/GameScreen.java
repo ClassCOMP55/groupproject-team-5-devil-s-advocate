@@ -1,57 +1,52 @@
 package starter;
 
-import java.awt.Color;
-import java.awt.event.MouseEvent;
-import org.tiledreader.*;
+import acm.program.GraphicsProgram;
+import acm.graphics.*;
 
-import acm.graphics.GImage;
-import acm.graphics.GLabel;
-import acm.graphics.GObject;
-
-public class GameScreen extends GraphicsPane {
-	//private TmxMapLoader maploader;
-    //private TiledMap map;
-    //private OrthogonalTiledMapRenderer renderer;
-	private MainApplication program; 
+public class GameScreen extends GraphicsProgram {
+	Level reader;
+	private final int WINDOW_SIZE = 700;
+	GCompound compound = new GCompound();
 	
-	
-	public GameScreen (MainApplication app) {
-		program = app; 
-	}
-	//maploader = new TmxMapLoader();
-    //map = maploader.load("level1.tmx");
-    //renderer = new OrthogonalTiledMapRenderer(map, 1  / MarioBros.PPM);
-
-    //initially set our gamcam to be centered correctly at the start of of map
-    //gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
-
-	//public void update(float dt){
-	//	handleInput(dt);
-	//	
-	//	gamecam.update();
-	//	renderer.setView(gamecam);
-	//}
-	
-	//public void render(float delta){
-	//update(delta);
-	//
-	//Gdx.gl.glClearColor(0,0,0,1);
-	//Gdx.gl.glClearColor(GL20.GL_COLOR_BUFFER_BIT);
-	//
-	//renderer.render();
-	
-
-
-	@Override
-	public void showContents() {
-		// TODO Auto-generated method stub
-		
+	public void init() {
+		setSize(WINDOW_SIZE,WINDOW_SIZE);
+		requestFocus();
+		reader = new Level("/levels/test/Test_Level.tmx", "/SpriteSheet/tileset.png", WINDOW_SIZE);
+		for (GImage image : reader.allGImages) {
+			compound.add(image);
+		}
+		add(compound);
 	}
 
+	public void run() {
+		gameLoop();
+	}
+	
+	private void gameLoop() {
+	    long now;
+	    long updateTime;
+	    long wait;
 
-	@Override
-	public void hideContents() {
-		// TODO Auto-generated method stub
+	    final int TARGET_FPS = 60;
+	    final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+
+	    while (true) {
+	        now = System.nanoTime();
+
+	        updateTime = System.nanoTime() - now;
+	        wait = (OPTIMAL_TIME - updateTime) / 1000000;
+	        
+//	        if (-compound.getX() == compound.getWidth() - WINDOW_SIZE) {
+//	        	
+//	        } else {
+//	        	compound.move(-1,0);
+//	        }
+	        
+	        try {
+	            Thread.sleep(wait);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 }
-

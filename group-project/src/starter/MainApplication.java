@@ -76,7 +76,7 @@ public class MainApplication extends GraphicsApplication {
 	
 	public void switchToGameScreen() {
 		playRandomSound();
-		switchToScreen(GameScreen);
+		//switchToScreen(GameScreen); ***Professor will look at a GraphicsProgram to GraphicsPane conversion***
 	}
 
 
