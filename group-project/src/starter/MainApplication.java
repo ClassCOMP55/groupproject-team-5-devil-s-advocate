@@ -41,6 +41,7 @@ public class MainApplication extends GraphicsApplication {
 		DeadScreen = new DeadScreen(this);
 		WinScreen = new WinScreen(this);
 		menu = new MainMenu(this);
+		GameScreen = new GameScreen(this);
 		switchToMenu();                                      //Timer after menu then gameloop 
 //		players = new GImage(player.getBufferedImage(), 450, 125);
 //		players.setSize(60, 60);
