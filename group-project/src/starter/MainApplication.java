@@ -42,9 +42,9 @@ public class MainApplication extends GraphicsApplication {
 		WinScreen = new WinScreen(this);
 		menu = new MainMenu(this);
 		switchToMenu();                                      //Timer after menu then gameloop 
-		players = new GImage(player.getBufferedImage(), 450, 125);
-		players.setSize(60, 60);
-		add(players);//Sprite of the Mario that is represented by GImage
+//		players = new GImage(player.getBufferedImage(), 450, 125);
+//		players.setSize(60, 60);
+//		add(players);//Sprite of the Mario that is represented by GImage
 	}
 
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
@@ -62,6 +62,12 @@ public class MainApplication extends GraphicsApplication {
 		stopRandomSound(); 					// to stop the theme sound before switching to menu page...
 	}
 	
+	public void switchToGameScreen() {
+		count++;
+		playRandomSound();
+		switchToScreen(GameScreen); //Professor will look at a GraphicsProgram to GraphicsPane conversion***
+	}
+	
 	public void switchToDead() {
 		count++;
 		playRandomSound();
@@ -74,10 +80,6 @@ public class MainApplication extends GraphicsApplication {
 		switchToScreen(WinScreen); 
 	}
 	
-	public void switchToGameScreen() {
-		playRandomSound();
-		//switchToScreen(GameScreen); ***Professor will look at a GraphicsProgram to GraphicsPane conversion***
-	}
 
 
 	private void playRandomSound() {
