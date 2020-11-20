@@ -13,12 +13,14 @@ public class DeadScreen extends GraphicsPane {
 	private GImage DeadScreen;
 	private GImage FlyingMario;
 	private GImage Mario_Dead_Rotate;
+	private static final double PROGRAM_WIDTH = MainApplication.WINDOW_WIDTH;
+	private static final double PROGRAM_HEIGHT = MainApplication.WINDOW_HEIGHT;
+
 	
 	private GLabel Mario_Dead; 
 	
 	private GButton playAgainButton;// keep buttons
 	private GButton quitButton;
-	
 	
 	public DeadScreen(MainApplication app) {
 		program = app;
@@ -27,15 +29,16 @@ public class DeadScreen extends GraphicsPane {
 		DeadScreen = new GImage("background/DeadScreen.png", 0, 0);
 		Mario_Dead_Rotate = new GImage("Mario/Mario_Dead_Rotate.gif",0,225);
 		Mario_Dead_Rotate.setSize(100.0,140.0);
+		Mario_Dead_Rotate.move(PROGRAM_HEIGHT-255, -50);		// Displaying Mario_Dead_Rotate.gif in the center of the screen. Looks Better...
 		
-		Mario_Dead = new GLabel("Oh no! you just died!",175,100);
+		Mario_Dead = new GLabel("Oh no! You just died!",175,100);
 		Mario_Dead.setColor(Color.RED);
         Mario_Dead.setFont("Arial-48");
 		
 		playAgainButton = new GButton("Play Again", 250, 375, 300, 75);
 		playAgainButton.setFillColor(Color.RED);
 		
-		quitButton = new GButton("Quit", 250, 475, 300, 75);
+		quitButton = new GButton("Exit", 250, 475, 300, 75);
 		quitButton.setFillColor(Color.RED);
 		
 	}
@@ -70,11 +73,14 @@ public class DeadScreen extends GraphicsPane {
 				program.playClickSound();
 				program.switchToMenu();          // Back to menu after clicking quit...
 				program.stopRandomSound();  	//stop the ongoing sound...
+				System.exit(0);
 			}
 			if (obj== playAgainButton) {
+				
 				program.playClickSound();
+				
 				program.switchToMenu();
-				program.stopRandomSound();
+				program.playThemeSound();
 			}
 		}
 	}

@@ -10,7 +10,9 @@ public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
 	public static final String MUSIC_FOLDER = "sound";
-	private static final String CLICK = "in/clique.mp3"; 			// imported a new .mp3 file for click sound...
+	private static final String CLICK = "in/clique.mp3"; 	
+	private static final String THEME = "in/theme.mp3";
+	private static final String DEAD = "in/dead.mp3";// imported a new .mp3 file for click sound...
 	private static final String[] SOUND_FILES = { "in/theme.mp3", "in/dead.mp3" };
 	public static SpriteSheet sheet;
 	public static Sprite player;
@@ -49,18 +51,23 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
-		playRandomSound();
-		count++;							// Move to next audio file...
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, DEAD);
+		audio.playSound(MUSIC_FOLDER, THEME);
+									
 		
 		switchToScreen(menu); 
+		audio.playSound(MUSIC_FOLDER, THEME);
 	}
 
 	public void switchToInstructions() {
-		playRandomSound();
-		count ++;
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, THEME);
+
 		switchToScreen(InstructionsPane);
+		
 		playClickSound();					// called function to play click sound...
-		stopRandomSound(); 					// to stop the theme sound before switching to menu page...
+		 					// to stop the theme sound before switching to menu page...
 	}
 	
 	public void switchToGameScreen() {
@@ -70,10 +77,13 @@ public class MainApplication extends GraphicsApplication {
 	}
 	
 	public void switchToDead() {
-		count++;
-		playRandomSound();
+		
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, THEME);		// plays the in-game music...
+		audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
 		playClickSound();
 		switchToScreen(DeadScreen);
+	
 	}
 	
 	public void switchToWin() {
@@ -81,13 +91,10 @@ public class MainApplication extends GraphicsApplication {
 		switchToScreen(WinScreen); 
 	}
 	
-
-
 	private void playRandomSound() {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
-
 
 	public void stopRandomSound() {				// function to stop the random sound from being played...
 		AudioPlayer audio = AudioPlayer.getInstance();
@@ -97,6 +104,10 @@ public class MainApplication extends GraphicsApplication {
 	public void playClickSound() {				//function to play the button sound...
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, CLICK);
+	}
+	public void playThemeSound() {				//function to play the theme sound...
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, THEME);
 	}
 }
 	

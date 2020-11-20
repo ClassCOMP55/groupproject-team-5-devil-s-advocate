@@ -81,13 +81,14 @@ public class InstructionsPane extends GraphicsPane {
 		//para.setText("you need\nto click\non the eyes\nto go back");
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == returnIcon) {
-			program.playClickSound();       //play the clique.mp3 sound on button click...
-			program.switchToGameScreen();
-			program.stopRandomSound(); 		//stop the ongoing sound...
+			program.playClickSound();  
+			program.playThemeSound();//play the clique.mp3 sound on button click...
+			program.switchToMenu();
+					
 		}
 		if(obj == continueButton) {
 			program.playClickSound();		//play the clique.mp3 sound on button click...
-			program.switchToGameScreen();
+			program.switchToDead();
 			program.stopRandomSound();     //stop the ongoing sound...
 		}
 		
