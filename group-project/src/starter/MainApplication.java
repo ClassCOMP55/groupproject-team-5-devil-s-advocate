@@ -1,11 +1,8 @@
 package starter;
 
-import java.awt.Canvas;
+
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferStrategy;
-import java.awt.Component;
-
 import acm.graphics.GCompound;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
@@ -27,7 +24,6 @@ public class MainApplication extends GraphicsApplication {
 	private MainMenu menu;
 	private DeadScreen DeadScreen;
 	private WinScreen WinScreen; 
-	private GameScreen GameScreen; 
 	
 	public Player futureMario;
 	public Entity futureEnemy;

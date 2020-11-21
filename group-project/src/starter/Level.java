@@ -14,6 +14,7 @@ public class Level {
 	private static double tileSizeOnScreen;
 	private static Point[] arrayOfPoints;
 	public static ArrayList<GImage> allGImages = new ArrayList<GImage>();
+	public static ArrayList<GRect> hitboxes = new ArrayList<GRect>();
 	private static final int TILESET_WIDTH_AND_HEIGHT = 18; // This is the value to determine the margins for the tilemap we are using. Only change when using a new tilemap
 	
 	/**
@@ -54,6 +55,7 @@ public class Level {
 		int tilesetX, tilesetY;
 		ArrayTileLayer tempATL;
 		HashTileLayer tempHTL;
+		TiledObjectLayer tempTOL;
 		
 		for (TiledLayer layer : allLayers) { 
 			if (layer instanceof ArrayTileLayer) {
@@ -80,7 +82,12 @@ public class Level {
 						allGImages.add(temp);
 					}
 				}
-			}	
+			} else if (layer instanceof TiledObjectLayer) {
+				tempTOL = (TiledObjectLayer)layer;
+				for (TiledObject tileObj : tempTOL.getObjects()) {
+					hitboxes.add(new GRect(tileObj.getX(), tileObj.getY(), tileObj.getWidth(), tileObj.getHeight()));
+				}
+			}
 		}
 		System.out.println("Conversion to GImages done");
 		
