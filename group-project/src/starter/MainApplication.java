@@ -43,7 +43,7 @@ public class MainApplication extends GraphicsApplication {
 
 	public void run() {
 		System.out.println("Hello, world!");
-		InstructionsPane = new InstructionsPane(this);
+		InstructionsPane = new InstructionsPane();
 		DeadScreen = new DeadScreen(this);
 		WinScreen = new WinScreen(this);
 		menu = new MainMenu();
@@ -59,11 +59,12 @@ public class MainApplication extends GraphicsApplication {
 		audio.stopSound(MUSIC_FOLDER, DEAD);
 		audio.playSound(MUSIC_FOLDER, THEME);
 									
-		if (currScreen != "Menu") {
+		if (currScreen != "MainMenu") {
+			removeAll();
 			for (GObject a : menu.objects) {
 				add(a);
 			}
-			currScreen = "Menu";
+			currScreen = "MainMenu";
 		}
 		
 		audio.playSound(MUSIC_FOLDER, THEME);
@@ -73,7 +74,14 @@ public class MainApplication extends GraphicsApplication {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, THEME);
 
-		switchToScreen(InstructionsPane);
+		if (currScreen != "InstructionsPane") {
+			removeAll(); //removes all the contents of the previous screen
+			for (GObject a : InstructionsPane.objects) {
+				add(a);
+			}
+			currScreen = "InstructionsPane";
+			
+		}
 		
 		playClickSound();					// called function to play click sound...
 		 					// to stop the theme sound before switching to menu page...
@@ -129,6 +137,20 @@ public class MainApplication extends GraphicsApplication {
 		if(obj == menu.exitButton) {  //exiting from the application...
 			System.exit(0);
 		}
+		
+		if (obj == InstructionsPane.returnIcon) {
+			playClickSound();  
+			playThemeSound();//play the clique.mp3 sound on button click...
+			switchToMenu();
+					
+		}
+		if(obj == InstructionsPane.continueButton) {
+			playClickSound();		//play the clique.mp3 sound on button click...
+			switchToDead();
+			stopRandomSound();     //stop the ongoing sound...
+		}
 	}
+	
+
 }
 	

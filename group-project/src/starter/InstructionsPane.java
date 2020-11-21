@@ -1,30 +1,29 @@
 package starter;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
-public class InstructionsPane extends GraphicsPane {
-	private MainApplication program; // you will use program to get access to
-										// all of the GraphicsProgram calls
+public class InstructionsPane{
 	
 	private GImage background;
 	private GImage ground;
 	private GImage cloud1;
 	private GImage cloud2;
 	private GImage content;
-	private GImage returnIcon;
 	
-	private GButton title;
-	private GButton continueButton;
+	public GImage returnIcon;
+	public GButton title;
+	public GButton continueButton;
 
-	
 	private GParagraph para;//part of starter code
+	
+	public ArrayList<GObject> objects = new ArrayList<GObject>();
 
-	public InstructionsPane(MainApplication app) {
-		this.program = app;
-		
+	public InstructionsPane() {
+
 		background = new GImage("Background/SolidBlueBackground.png", 0, 0);
 		ground = new GImage("Background/Ground.png", 0,550);
 		ground.setSize(800.0,75.0);
@@ -43,54 +42,15 @@ public class InstructionsPane extends GraphicsPane {
 
 		para = new GParagraph("Back to Menu", 50, 35);//part of starter code
 		para.setFont("Arial-24");//part of starter code
-	}
-
-	@Override
-	public void showContents() {
-		program.add(background);
-
-		program.add(ground);
-		program.add(cloud1);
-		program.add(cloud2);
-		program.add(content);
-		program.add(returnIcon);
-
-		program.add(title);
-		program.add(continueButton);
-
-		program.add(para);
-	}
-
-	@Override
-	public void hideContents() {
-		program.remove(background);
-		program.remove(ground);
-		program.remove(cloud1);
-		program.remove(cloud2);
-		program.remove(content);
-		program.remove(returnIcon);
-
-		program.remove(title);
-		program.remove(continueButton);
-
-		program.remove(para);
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		//para.setText("you need\nto click\non the eyes\nto go back");
-		GObject obj = program.getElementAt(e.getX(), e.getY());
-		if (obj == returnIcon) {
-			program.playClickSound();  
-			program.playThemeSound();//play the clique.mp3 sound on button click...
-			program.switchToMenu();
-					
-		}
-		if(obj == continueButton) {
-			program.playClickSound();		//play the clique.mp3 sound on button click...
-			program.switchToDead();
-			program.stopRandomSound();     //stop the ongoing sound...
-		}
 		
+		objects.add(background);
+		objects.add(ground);
+		objects.add(cloud1);
+		objects.add(cloud2);
+		objects.add(content);
+		objects.add(returnIcon);
+		objects.add(title);
+		objects.add(continueButton);
+		objects.add(para);
 	}
 }
