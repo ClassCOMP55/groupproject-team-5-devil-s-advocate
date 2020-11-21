@@ -159,7 +159,7 @@ public class MainApplication extends GraphicsApplication {
 		
 		if (obj == DeadScreen.quitButton) { 
 			playClickSound();
-			switchToMenu();          // Back to menu after clicking quit...
+			switchToMenu();          // Back to menu after clicking quit...for graphics application
 			stopRandomSound();  	//stop the ongoing sound...
 			System.exit(0);
 		}

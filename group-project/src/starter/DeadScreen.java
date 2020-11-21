@@ -50,5 +50,6 @@ public class DeadScreen {
 
 		objects.add(playAgainButton);
 		objects.add(quitButton);
+		//for graphics application 
 	}
 }
