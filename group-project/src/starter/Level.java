@@ -14,7 +14,7 @@ public class Level {
 	private static double tileSizeOnScreen;
 	private static Point[] arrayOfPoints;
 	public static ArrayList<GImage> allGImages = new ArrayList<GImage>();
-	public static ArrayList<GRect> hitboxes = new ArrayList<GRect>();
+	public static ArrayList<Entity> hitboxes = new ArrayList<Entity>();
 	private static final int TILESET_WIDTH_AND_HEIGHT = 18; // This is the value to determine the margins for the tilemap we are using. Only change when using a new tilemap
 	
 	/**
@@ -84,13 +84,19 @@ public class Level {
 				}
 			} else if (layer instanceof TiledObjectLayer) {
 				tempTOL = (TiledObjectLayer)layer;
-				for (TiledObject tileObj : tempTOL.getObjects()) {
-					hitboxes.add(new GRect(tileObj.getX(), tileObj.getY(), tileObj.getWidth(), tileObj.getHeight()));
+				ArrayList<TiledObject> tileObjs = new ArrayList<TiledObject>();
+				for (TiledObject e : tempTOL.getObjects()) {
+					tileObjs.add(e);
+				}
+				for (TiledObject e : tileObjs) {
+					Entity temp = new Entity(e.getX() * tileSizeOnScreen, e.getY() * tileSizeOnScreen, e.getWidth() * tileSizeOnScreen, e.getHeight() * tileSizeOnScreen, false, Id.immovable);
+					hitboxes.add(temp);
 				}
 			}
 		}
 		System.out.println("Conversion to GImages done");
-		
-		// TODO Add processing to return an ArrayList of hitboxes
+	}
+	public double returnTileSizeOnScreen() {
+		return tileSizeOnScreen;
 	}
 }
