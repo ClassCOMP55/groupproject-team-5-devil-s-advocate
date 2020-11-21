@@ -16,6 +16,7 @@ public class Level {
 	public static ArrayList<GImage> allGImages = new ArrayList<GImage>();
 	public static ArrayList<Entity> hitboxes = new ArrayList<Entity>();
 	private static final int TILESET_WIDTH_AND_HEIGHT = 18; // This is the value to determine the margins for the tilemap we are using. Only change when using a new tilemap
+
 	
 	/**
 	 * Constructor for the TMXLevelReader class
