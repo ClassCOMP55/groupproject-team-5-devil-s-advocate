@@ -13,6 +13,7 @@ public class Entity {
     public boolean hitTop = false, hitBottom = false, hitLeft = false, hitRight = false;
 	public Id id;
 	public GRect entity;
+	public GImage EntImage;//Murad commit
 
     Entity() {} // Constructor to not do anything
     
@@ -25,6 +26,18 @@ public class Entity {
 		this.height = height;
 		this.movable = movable;
 		this.id = id;
+	}
+	//Murad commit below
+	Entity(double x, double y, double width, double height, boolean movable, Id id, GImage EntImage) {
+		entity = new GRect(x, y, width, height);
+		setLocation(x, y);
+		locationX = x;
+		locationY = y;
+		this.width = width;
+		this.height = height;
+		this.movable = movable;
+		this.id = id;
+		this.EntImage = EntImage;
 	}
 
 	/**
