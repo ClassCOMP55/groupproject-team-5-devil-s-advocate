@@ -66,20 +66,22 @@ public class MainApplication extends GraphicsApplication {
 	    long wait;
 	    final int TARGET_FPS = 60;
 	    final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+	    
 	    while (true) {
-	        now = System.nanoTime();
+	    	now = System.nanoTime();
+	    	updateTime = System.nanoTime() - now;
+	    	wait = (OPTIMAL_TIME - updateTime) / 1000000;
 
-	        updateTime = System.nanoTime() - now;
-	        wait = (OPTIMAL_TIME - updateTime) / 1000000;
-	        
-	        // Game code here
-	        levelCompound.move(-1, 0); //moves the camera 
-	        
-	        try {
-	            Thread.sleep(wait);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
+	    	// Game code here
+	    	if (currScreen == "GameScreen") {
+	    		levelCompound.move(-1, 0); //moves the camera 
+	    	}
+
+	    	try {
+	    		Thread.sleep(wait);
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
 	    }
 	}
 	
@@ -124,6 +126,7 @@ public class MainApplication extends GraphicsApplication {
 			levelCompound.add(a);
 		}
 		add(levelCompound);
+		currScreen = "GameScreen";
 		// gameLoop();
 	}
 	
