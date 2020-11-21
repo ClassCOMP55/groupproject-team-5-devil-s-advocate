@@ -15,6 +15,7 @@ public class MainApplication extends GraphicsApplication {
 	private static final String CLICK = "in/clique.mp3"; 	
 	private static final String THEME = "in/theme.mp3";
 	private static final String DEAD = "in/dead.mp3";// imported a new .mp3 file for click sound...
+	private static final String WIN = "in/levelPass.mp3";
 	private static final String[] SOUND_FILES = { "in/theme.mp3", "in/dead.mp3" };
 	public static SpriteSheet sheet;
 	public static Sprite player;
@@ -45,7 +46,7 @@ public class MainApplication extends GraphicsApplication {
 		System.out.println("Hello, world!");
 		InstructionsPane = new InstructionsPane();
 		DeadScreen = new DeadScreen();
-		WinScreen = new WinScreen(this);
+		WinScreen = new WinScreen();
 		menu = new MainMenu();
 		GameScreen = new GameScreen(this);
 		switchToMenu();                                      //Timer after menu then gameloop 
@@ -109,10 +110,22 @@ public class MainApplication extends GraphicsApplication {
 	
 	}
 	
+	
 	public void switchToWin() {
-		playRandomSound();
-		switchToScreen(WinScreen); 
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, WIN);		// plays the Win-screen sound...
+		playClickSound();
+		
+		if (currScreen != "WinScreen") {
+			removeAll(); //removes all the contents of the previous screen
+			for (GObject a : WinScreen.objects) {
+				add(a);
+			}
+			currScreen = "WinScreen";
+		}
+	
 	}
+
 	
 	private void playRandomSound() {
 		AudioPlayer audio = AudioPlayer.getInstance();
@@ -159,17 +172,28 @@ public class MainApplication extends GraphicsApplication {
 		
 		if (obj == DeadScreen.quitButton) { 
 			playClickSound();
-			switchToMenu();          // Back to menu after clicking quit...for graphics application
+			switchToMenu();   //If you quit the game, why are we calling the menu again?
 			stopRandomSound();  	//stop the ongoing sound...
 			System.exit(0);
 		}
 		if (obj== DeadScreen.playAgainButton) {
-			
 			playClickSound();
-			
+			//switchToMenu();
+			switchToWin();//added to test WinScreen ***remove and uncomment line 181 for normal behavior** 
+		} 
+		if (obj== WinScreen.playAgainButton) {
+			playClickSound();
 			switchToMenu();
 			playThemeSound();
 		}
-	}
+        if (obj == WinScreen.quitButton) {
+        	playClickSound();
+			stopRandomSound();  	//stop the ongoing sound...
+			System.exit(0);
+            //switchToInstructions();
+        }
+    }
+	
 }
+
 	
