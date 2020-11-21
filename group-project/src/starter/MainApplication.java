@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.Component;
+
+import acm.graphics.GCompound;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
@@ -34,6 +36,8 @@ public class MainApplication extends GraphicsApplication {
 	
 	private String currScreen = "";
 	
+	private Level levelOne = new Level("/levels/test/Test_Level.tmx", "/SpriteSheet/tileset.png", WINDOW_HEIGHT);
+	private GCompound levelCompound = new GCompound();
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -48,13 +52,35 @@ public class MainApplication extends GraphicsApplication {
 		DeadScreen = new DeadScreen();
 		WinScreen = new WinScreen();
 		menu = new MainMenu();
-		GameScreen = new GameScreen(this);
 		switchToMenu();                                      //Timer after menu then gameloop 
 		players = new GImage(player.getBufferedImage(), 450, 125);
 		players.setSize(60, 60);
 		add(players);//Sprite of the Mario that is represented by GImage
 	}
 
+	private void gameLoop() {
+	    long now;
+	    long updateTime;
+	    long wait;
+	    final int TARGET_FPS = 60;
+	    final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+	    while (true) {
+	        now = System.nanoTime();
+
+	        updateTime = System.nanoTime() - now;
+	        wait = (OPTIMAL_TIME - updateTime) / 1000000;
+	        
+	        // Game code here
+	        levelCompound.move(1, 0);
+	        
+	        try {
+	            Thread.sleep(wait);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.stopSound(MUSIC_FOLDER, DEAD);
@@ -91,7 +117,12 @@ public class MainApplication extends GraphicsApplication {
 	public void switchToGameScreen() {
 		count++;
 		playRandomSound();
-		switchToScreen(GameScreen); //Professor will look at a GraphicsProgram to GraphicsPane conversion***
+		removeAll();
+		for (GImage a : levelOne.allGImages) {
+			levelCompound.add(a);
+		}
+		add(levelCompound);
+		// gameLoop();
 	}
 	
 	public void switchToDead() {
@@ -109,7 +140,6 @@ public class MainApplication extends GraphicsApplication {
 		}
 	
 	}
-	
 	
 	public void switchToWin() {
 		AudioPlayer audio = AudioPlayer.getInstance();
@@ -166,7 +196,7 @@ public class MainApplication extends GraphicsApplication {
 		
 		if(obj == InstructionsPane.continueButton) {
 			playClickSound();		//play the clique.mp3 sound on button click...
-			switchToDead();
+			switchToGameScreen();
 			stopRandomSound();     //stop the ongoing sound...
 		}
 		
