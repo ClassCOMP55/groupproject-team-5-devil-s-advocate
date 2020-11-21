@@ -1,11 +1,14 @@
 package starter;
 
-
+import java.awt.Canvas;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.awt.image.BufferStrategy;
+import java.awt.Component;
 import acm.graphics.GCompound;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
+import jdk.internal.util.xml.impl.Input;
 
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
@@ -19,11 +22,16 @@ public class MainApplication extends GraphicsApplication {
 	public static SpriteSheet sheet;
 	public static Sprite player;
 	private Graphics g;
+	private boolean w = false;
+	private boolean a = false;
+	private boolean s = false;
+	private boolean d = false;
 	
 	private InstructionsPane InstructionsPane;
 	private MainMenu menu;
 	private DeadScreen DeadScreen;
 	private WinScreen WinScreen; 
+	private GameScreen GameScreen; 
 	
 	public Player futureMario;
 	public Entity futureEnemy;
@@ -51,7 +59,8 @@ public class MainApplication extends GraphicsApplication {
 		switchToMenu();                                      //Timer after menu then gameloop 
 		players = new GImage(player.getBufferedImage(), 450, 125);
 		players.setSize(60, 60);
-		add(players);//Sprite of the Mario that is represented by GImage
+		//add(players);//Sprite of the Mario that is represented by GImage
+		addKeyListeners(new Input());
 		gameLoop();
 
 	}
@@ -67,10 +76,11 @@ public class MainApplication extends GraphicsApplication {
 	    	now = System.nanoTime();
 	    	updateTime = System.nanoTime() - now;
 	    	wait = (OPTIMAL_TIME - updateTime) / 1000000;
-
+	    	
 	    	// Game code here
 	    	if (currScreen == "GameScreen") {
-	    		levelCompound.move(-1, 0); //moves the camera 
+	    		add(players);
+	    		//levelCompound.move(-1, 0); //moves the camera 
 	    	}
 
 	    	try {
@@ -224,7 +234,51 @@ public class MainApplication extends GraphicsApplication {
             //switchToInstructions();
         }
     }
+	private class Input implements KeyListener {
+		public void keyPressed(KeyEvent e) {
+			switch (e.getKeyCode()) {
+			case KeyEvent.VK_W:
+				w = true;
+				break;
+			case KeyEvent.VK_A:
+				a = true;
+				break;
+			case KeyEvent.VK_S:
+				s = true;
+				break;
+			case KeyEvent.VK_D:
+				d = true;
+				break;
+			}
+		}
+		@Override
+		public void keyReleased(KeyEvent e) {
+			switch (e.getKeyCode()) {
+			case KeyEvent.VK_W:
+				w = false;
+				break;
+			case KeyEvent.VK_A:
+				a = false;
+				break;
+			case KeyEvent.VK_S:
+				s = false;
+				break;
+			case KeyEvent.VK_D:
+				d = false;
+				break;
+			}
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
 	
 }
+	
+}
+
+	
 
 	
