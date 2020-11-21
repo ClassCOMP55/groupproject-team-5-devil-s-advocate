@@ -50,9 +50,9 @@ public class MainApplication extends GraphicsApplication {
 		menu = new MainMenu();
 		GameScreen = new GameScreen(this);
 		switchToMenu();                                      //Timer after menu then gameloop 
-//		players = new GImage(player.getBufferedImage(), 450, 125);
-//		players.setSize(60, 60);
-//		add(players);//Sprite of the Mario that is represented by GImage
+		players = new GImage(player.getBufferedImage(), 450, 125);
+		players.setSize(60, 60);
+		add(players);//Sprite of the Mario that is represented by GImage
 	}
 
 	public void switchToMenu() { // change/time the audio in the switchTo functions 

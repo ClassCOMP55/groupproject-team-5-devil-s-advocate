@@ -15,7 +15,7 @@ public class Sprite {
 	 * After the sprite sheet is obtained, this class turns it into a buffered image
 	 */
 	public Sprite(SpriteSheet sheet, int x, int y) {
-		// image = sheet.getSprite(x, y);
+		 image = sheet.getSprite(x, y);
 	}
 	
 	public BufferedImage getBufferedImage() {
