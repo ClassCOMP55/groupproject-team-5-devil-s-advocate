@@ -2,34 +2,35 @@ package starter;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GObject;
 
-public class DeadScreen extends GraphicsPane {	
+public class DeadScreen {
 	
-	private MainApplication program; // you will use program to get access to
+	private MainApplication object; // you will use object to get access to
 	private GImage DeadScreen;
 	private GImage FlyingMario;
 	private GImage Mario_Dead_Rotate;
-	private static final double PROGRAM_WIDTH = MainApplication.WINDOW_WIDTH;
-	private static final double PROGRAM_HEIGHT = MainApplication.WINDOW_HEIGHT;
+	private static final double object_WIDTH = MainApplication.WINDOW_WIDTH;
+	private static final double object_HEIGHT = MainApplication.WINDOW_HEIGHT;
 
 	
 	private GLabel Mario_Dead; 
 	
-	private GButton playAgainButton;// keep buttons
-	private GButton quitButton;
+	public GButton playAgainButton;// keep buttons
+	public GButton quitButton;
 	
-	public DeadScreen(MainApplication app) {
-		program = app;
-		//change images
+	public ArrayList<GObject> objects = new ArrayList<GObject>();
+	
+	public DeadScreen() {
 		
 		DeadScreen = new GImage("background/DeadScreen.png", 0, 0);
 		Mario_Dead_Rotate = new GImage("Mario/Mario_Dead_Rotate.gif",0,225);
 		Mario_Dead_Rotate.setSize(100.0,140.0);
-		Mario_Dead_Rotate.move(PROGRAM_HEIGHT-255, -50);		// Displaying Mario_Dead_Rotate.gif in the center of the screen. Looks Better...
+		Mario_Dead_Rotate.move(object_HEIGHT-255, -50);		// Displaying Mario_Dead_Rotate.gif in the center of the screen. Looks Better...
 		
 		Mario_Dead = new GLabel("Oh no! You just died!",175,100);
 		Mario_Dead.setColor(Color.RED);
@@ -41,46 +42,13 @@ public class DeadScreen extends GraphicsPane {
 		quitButton = new GButton("Exit", 250, 475, 300, 75);
 		quitButton.setFillColor(Color.RED);
 		
+		objects.add(DeadScreen);
+		
+		objects.add(Mario_Dead_Rotate);
+
+		objects.add(Mario_Dead);
+
+		objects.add(playAgainButton);
+		objects.add(quitButton);
 	}
-		@Override
-		public void showContents() {
-			// TODO Auto-generated method stub
-			program.add(DeadScreen);
-			program.add(Mario_Dead_Rotate);
-
-			program.add(Mario_Dead);
-
-			program.add(playAgainButton);
-			program.add(quitButton);
-		}
-		@Override
-		public void hideContents() {
-			// TODO Auto-generated method stub
-			program.remove(DeadScreen);
-			program.remove(Mario_Dead_Rotate);
-			
-			program.remove(Mario_Dead);
-
-			program.remove(playAgainButton);
-			program.remove(quitButton);
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			GObject obj = program.getElementAt(e.getX(), e.getY());
-			if (obj == quitButton) { 
-				program.playClickSound();
-				program.switchToMenu();          // Back to menu after clicking quit...
-				program.stopRandomSound();  	//stop the ongoing sound...
-				System.exit(0);
-			}
-			if (obj== playAgainButton) {
-				
-				program.playClickSound();
-				
-				program.switchToMenu();
-				program.playThemeSound();
-			}
-		}
-	}
+}

@@ -44,7 +44,7 @@ public class MainApplication extends GraphicsApplication {
 	public void run() {
 		System.out.println("Hello, world!");
 		InstructionsPane = new InstructionsPane();
-		DeadScreen = new DeadScreen(this);
+		DeadScreen = new DeadScreen();
 		WinScreen = new WinScreen(this);
 		menu = new MainMenu();
 		GameScreen = new GameScreen(this);
@@ -94,12 +94,18 @@ public class MainApplication extends GraphicsApplication {
 	}
 	
 	public void switchToDead() {
-		
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.stopSound(MUSIC_FOLDER, THEME);		// plays the in-game music...
 		audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
 		playClickSound();
-		switchToScreen(DeadScreen);
+		
+		if (currScreen != "DeadScreen") {
+			removeAll(); //removes all the contents of the previous screen
+			for (GObject a : DeadScreen.objects) {
+				add(a);
+			}
+			currScreen = "DeadScreen";
+		}
 	
 	}
 	
@@ -144,13 +150,26 @@ public class MainApplication extends GraphicsApplication {
 			switchToMenu();
 					
 		}
+		
 		if(obj == InstructionsPane.continueButton) {
 			playClickSound();		//play the clique.mp3 sound on button click...
 			switchToDead();
 			stopRandomSound();     //stop the ongoing sound...
 		}
+		
+		if (obj == DeadScreen.quitButton) { 
+			playClickSound();
+			switchToMenu();          // Back to menu after clicking quit...
+			stopRandomSound();  	//stop the ongoing sound...
+			System.exit(0);
+		}
+		if (obj== DeadScreen.playAgainButton) {
+			
+			playClickSound();
+			
+			switchToMenu();
+			playThemeSound();
+		}
 	}
-	
-
 }
 	
