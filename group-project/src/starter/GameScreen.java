@@ -47,7 +47,6 @@ public class GameScreen extends GraphicsPane {
 		for (GImage image : reader.allGImages) {
 			program.add(image);
 		}
-		gameLoop();
 	}
 
 	@Override

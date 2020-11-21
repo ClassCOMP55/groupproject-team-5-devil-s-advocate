@@ -56,6 +56,8 @@ public class MainApplication extends GraphicsApplication {
 		players = new GImage(player.getBufferedImage(), 450, 125);
 		players.setSize(60, 60);
 		add(players);//Sprite of the Mario that is represented by GImage
+		gameLoop();
+
 	}
 
 	private void gameLoop() {
@@ -71,7 +73,7 @@ public class MainApplication extends GraphicsApplication {
 	        wait = (OPTIMAL_TIME - updateTime) / 1000000;
 	        
 	        // Game code here
-	        levelCompound.move(1, 0);
+	        levelCompound.move(-1, 0); //moves the camera 
 	        
 	        try {
 	            Thread.sleep(wait);
