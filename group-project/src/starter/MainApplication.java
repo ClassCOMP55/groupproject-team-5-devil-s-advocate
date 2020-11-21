@@ -2,9 +2,11 @@ package starter;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.Component;
 import acm.graphics.GImage;
+import acm.graphics.GObject;
 
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
@@ -29,6 +31,8 @@ public class MainApplication extends GraphicsApplication {
 	public GImage players;
 	private int count;
 	
+	private String currScreen = "";
+	
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -42,7 +46,7 @@ public class MainApplication extends GraphicsApplication {
 		InstructionsPane = new InstructionsPane(this);
 		DeadScreen = new DeadScreen(this);
 		WinScreen = new WinScreen(this);
-		menu = new MainMenu(this);
+		menu = new MainMenu();
 		GameScreen = new GameScreen(this);
 		switchToMenu();                                      //Timer after menu then gameloop 
 //		players = new GImage(player.getBufferedImage(), 450, 125);
@@ -55,8 +59,13 @@ public class MainApplication extends GraphicsApplication {
 		audio.stopSound(MUSIC_FOLDER, DEAD);
 		audio.playSound(MUSIC_FOLDER, THEME);
 									
+		if (currScreen != "Menu") {
+			for (GObject a : menu.objects) {
+				add(a);
+			}
+			currScreen = "Menu";
+		}
 		
-		switchToScreen(menu); 
 		audio.playSound(MUSIC_FOLDER, THEME);
 	}
 
@@ -108,6 +117,18 @@ public class MainApplication extends GraphicsApplication {
 	public void playThemeSound() {				//function to play the theme sound...
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, THEME);
+	}
+	
+	@Override
+	public void mousePressed(MouseEvent e) {
+		GObject obj = getElementAt(e.getX(), e.getY());
+		if (obj == menu.playButton) {
+			switchToInstructions();
+		}
+
+		if(obj == menu.exitButton) {  //exiting from the application...
+			System.exit(0);
+		}
 	}
 }
 	
