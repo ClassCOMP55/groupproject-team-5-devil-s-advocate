@@ -178,8 +178,8 @@ public class MainApplication extends GraphicsApplication {
 		}
 		if (obj== DeadScreen.playAgainButton) {
 			playClickSound();
-			//switchToMenu();
-			switchToWin();//added to test WinScreen ***remove and uncomment line 181 for normal behavior** 
+			switchToMenu();
+			// switchToWin();//added to test WinScreen ***remove and uncomment line 181 for normal behavior** 
 		} 
 		if (obj== WinScreen.playAgainButton) {
 			playClickSound();
