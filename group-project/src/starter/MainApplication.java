@@ -32,6 +32,8 @@ public class MainApplication extends GraphicsApplication {
 	private DeadScreen DeadScreen;
 	private WinScreen WinScreen; 
 	private GameScreen GameScreen; 
+	private PhysicsEngine Physics;
+	private Entity Mario; 
 	
 	public Player futureMario;
 	public Entity futureEnemy;
@@ -71,6 +73,16 @@ public class MainApplication extends GraphicsApplication {
 	    long wait;
 	    final int TARGET_FPS = 60;
 	    final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+	    
+	    Mario = new Entity(100, 400, 50, 50, true, Id.player, players);
+        //add(Mario.EntImage);
+        Physics = new PhysicsEngine (Mario);
+        for (Entity a: levelOne.hitboxes) {
+            Physics.addImmovable(a);
+        }
+        Mario.xVel = Mario.yVel = 0;
+        Mario.xVelMax = Mario.yVelMax = 10;
+        Mario.xDirection = Mario.yDirection = "";
 	    
 	    while (true) {
 	    	now = System.nanoTime();
