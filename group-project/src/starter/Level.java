@@ -105,7 +105,7 @@ public class Level {
 	public double returnTileSizeOnScreen() {
 		return tileSizeOnScreen;
 	}
-	
+
 	public static void generateHitboxesDebug() {
 		 GRect temp;
 		 for (Entity e : hitboxes) {
