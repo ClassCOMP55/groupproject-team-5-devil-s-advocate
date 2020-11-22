@@ -2,8 +2,9 @@ package starter;
 
 import org.tiledreader.*;
 import acm.graphics.*;
-import java.awt.Point;
-import java.util.ArrayList;
+import java.awt.*;
+import java.util.*;
+import java.awt.color.*;
 
 public class Level {
 	private static FileSystemTiledReader reader = new FileSystemTiledReader(); //reads in the TMX file 
@@ -15,6 +16,7 @@ public class Level {
 	private static Point[] arrayOfPoints;
 	public static ArrayList<GImage> allGImages = new ArrayList<GImage>();
 	public static ArrayList<Entity> hitboxes = new ArrayList<Entity>();
+	public static ArrayList<GRect> hitboxes_debug = new ArrayList<GRect>();
 	private static final int TILESET_WIDTH_AND_HEIGHT = 18; // This is the value to determine the margins for the tilemap we are using. Only change when using a new tilemap
 
 	
@@ -68,6 +70,7 @@ public class Level {
 						tilesetY = tempATL.getTile(point.x, point.y).getTilesetY();
 						GImage temp = new GImage(sheet.getSprite(tilesetX, tilesetY, TILESET_WIDTH_AND_HEIGHT, TILESET_WIDTH_AND_HEIGHT), point.x * tileSizeOnScreen, point.y * tileSizeOnScreen);
 						temp.setSize(tileSizeOnScreen, tileSizeOnScreen);
+						
 						allGImages.add(temp);
 					}
 				}
@@ -90,14 +93,27 @@ public class Level {
 					tileObjs.add(e);
 				}
 				for (TiledObject e : tileObjs) {
-					Entity temp = new Entity(e.getX() * tileSizeOnScreen, e.getY() * tileSizeOnScreen, e.getWidth() * tileSizeOnScreen, e.getHeight() * tileSizeOnScreen, false, Id.immovable);
+					Entity temp = new Entity((e.getX() / 16) * tileSizeOnScreen, (e.getY() / 16) * tileSizeOnScreen, (e.getWidth() / 16) * tileSizeOnScreen, (e.getHeight() / 16) * tileSizeOnScreen, false, Id.immovable);
+					System.out.println("X: " + (e.getX() / 16) * tileSizeOnScreen + " Y: " + (e.getY() / 16) * tileSizeOnScreen + " Width: " + (e.getWidth() / 16) * tileSizeOnScreen + " Height: " + (e.getHeight() / 16) * tileSizeOnScreen);
 					hitboxes.add(temp);
 				}
 			}
 		}
 		System.out.println("Conversion to GImages done");
+		generateHitboxesDebug();
 	}
 	public double returnTileSizeOnScreen() {
 		return tileSizeOnScreen;
+	}
+	
+	public static void generateHitboxesDebug() {
+		 GRect temp;
+		 for (Entity e : hitboxes) {
+			 temp = new GRect(e.getX(), e.getY(), e.getWidth(), e.getHeight());
+			 temp.setFilled(true);
+			 temp.setFillColor(new Color(240, 224, 46, 162));
+			 hitboxes_debug.add(temp);
+		 }
+		 System.out.println("Debug hitbox overlays generated");
 	}
 }
