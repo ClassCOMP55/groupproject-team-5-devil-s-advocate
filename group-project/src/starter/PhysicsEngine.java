@@ -54,7 +54,6 @@ public class PhysicsEngine {
 		calculateGravity();
 		detectCollision();
 		mainEntity.move(mainEntity.xVel, mainEntity.yVel);
-		//mainEntity.EntImage.move(mainEntity.xVel, mainEntity.yVel);
 		for (Entity e : movable) {
 			e.move(e.xVel, e.yVel);
 		}
@@ -157,10 +156,12 @@ public class PhysicsEngine {
 	
 	// Used to set movement directions for the mainEntity
 	public void moveLeft() {
+		mainEntity.lastDirection = "left";
 		mainEntity.xDirection = "left";
 		enableXDecel = true;
 	}
 	public void moveRight() {
+		mainEntity.lastDirection = "right";
 		mainEntity.xDirection = "right";
 		enableXDecel = true;
 	}

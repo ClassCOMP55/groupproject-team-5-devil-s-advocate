@@ -10,12 +10,15 @@ public class Entity {
 	public double width, height;
 	public double xVel, yVel;
     public double xVelMax, yVelMax;
-    public String xDirection, yDirection;
+    public String xDirection, yDirection, lastDirection;
 	public boolean movable;
     public boolean hitTop = false, hitBottom = false, hitLeft = false, hitRight = false;
 	public Id id;
 	public GRect entity;
 	public GImage EntImage;
+	public static GImage EntImages[] = new GImage[8];
+	private static int rcount = 0;
+	private static int lcount = 4;
 
     Entity() {} // Constructor to not do anything
     
@@ -30,7 +33,7 @@ public class Entity {
 		this.id = id;
 	}
 	//Murad commit below
-	Entity(double x, double y, double width, double height, boolean movable, Id id, Image EntImage) {
+	Entity(double x, double y, double width, double height, boolean movable, Id id, GImage EntImages[]) {
 		entity = new GRect(x, y, width, height);
 		setLocation(x, y);
 		locationX = x;
@@ -39,7 +42,9 @@ public class Entity {
 		this.height = height;
 		this.movable = movable;
 		this.id = id;
-		this.EntImage = new GImage (EntImage, x, y);
+		for (int i = 0; i < EntImages.length; i++) {
+			this.EntImages[i] = EntImages[i];
+		}
 		
 	}
 
@@ -52,10 +57,44 @@ public class Entity {
 		entity.move(x, y);
 	}
 	
-	public GImage display() {
-		EntImage.setSize(50, 50);
-		EntImage.setLocation(entity.getX(), entity.getY());
+	
+	/**
+	 * This function allows a GImage object to be returned for viewing on the screen in MainApplication.
+	 * Extra functionality added to ensure mario faces in the last direction moved.
+	 */
+	public GImage display() {//maybe turn this into a case statment?
+		if (lastDirection == "" || lastDirection == "right") {
+			EntImage = EntImages[0];
+			EntImage.setSize(50, 50);
+			EntImage.setLocation(entity.getX(), entity.getY());
+		}
+		else {
+			EntImage = EntImages[4];
+			EntImage.setSize(50, 50);
+			EntImage.setLocation(entity.getX(), entity.getY());
+		}
+		if (xDirection == "right") {
+			EntImages[rcount].setSize(50, 50);
+			EntImage = EntImages[rcount];
+			rcount++;
+			if (rcount > 3) {
+				rcount = 0;
+			}
+			EntImage.setLocation(entity.getX(), entity.getY());
+			return EntImage;
+		}
+		if (xDirection == "left") {
+			EntImages[lcount].setSize(50, 50);
+			EntImage = EntImages[lcount];
+			lcount++;
+			if (lcount > 7) {
+				lcount = 4;
+			}
+			EntImage.setLocation(entity.getX(), entity.getY());
+			return EntImage;
+		}
 		return EntImage;
+		
 	}
 	/**
 	 * This function passes to GObject's setFilled(), only applies if entity is GRect

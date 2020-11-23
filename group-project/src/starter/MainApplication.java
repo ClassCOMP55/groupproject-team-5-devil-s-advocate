@@ -21,7 +21,11 @@ public class MainApplication extends GraphicsApplication {
 	private static final String WIN = "in/levelPass.mp3";
 	private static final String[] SOUND_FILES = { "in/theme.mp3", "in/dead.mp3" };
 	public static SpriteSheet sheet;
+	public static SpriteSheet sheetNew;
 	public static Sprite player;
+	public static Sprite playerNew;
+	public static Sprite playerArray[]= new Sprite[8];
+	public static GImage playerGImage[] = new GImage[8];
 	private Graphics g;
 	private boolean w = false;
 	private boolean a = false;
@@ -46,7 +50,14 @@ public class MainApplication extends GraphicsApplication {
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		sheet = new SpriteSheet("/SpriteSheet/SpriteChar.png");//Code to read in the first sprite sheet
-		player = new Sprite (sheet, 2,0);
+		sheetNew = new SpriteSheet("/SpriteSheet/MarioFinalChar.png");//C
+		player = new Sprite (sheet, 2,0);//Old code ***delete when animation works***
+		playerNew = new Sprite (sheetNew, 0, 1);
+		for (int i = 0; i < playerArray.length; i++) {
+			playerArray[i] = new Sprite (sheetNew, i, 0);
+			playerGImage[i] = new GImage (playerArray[i].getBufferedImage());
+		}
+		
 		
 	}
 
@@ -56,10 +67,7 @@ public class MainApplication extends GraphicsApplication {
 		DeadScreen = new DeadScreen();
 		WinScreen = new WinScreen();
 		menu = new MainMenu();
-		switchToMenu();                                      //Timer after menu then gameloop 
-//		players = new GImage(player.getBufferedImage(), 450, 125);
-//		players.setSize(60, 60);
-		//add(players);//Sprite of the Mario that is represented by GImage
+		switchToMenu();                                     
 		addKeyListeners(new Input());
 		gameLoop();
 
@@ -71,15 +79,14 @@ public class MainApplication extends GraphicsApplication {
 	    long wait;
 	    final int TARGET_FPS = 60;
 	    final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
-	    Image dImage = player.getBufferedImage();
-	    Mario = new Entity(100, 400, 50, 50, true, Id.player, player.getBufferedImage());
+	    Mario = new Entity(100, 400, 50, 50, true, Id.player, playerGImage);
         Physics = new PhysicsEngine (Mario);
         for (Entity a: levelOne.hitboxes) {
             Physics.addImmovable(a);
         }
         Mario.xVel = Mario.yVel = 0;
         Mario.xVelMax = Mario.yVelMax = 10;
-        Mario.xDirection = Mario.yDirection = "";
+        Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
 	    
 	    while (true) {
 	    	now = System.nanoTime();
@@ -89,12 +96,11 @@ public class MainApplication extends GraphicsApplication {
 	    	// Game code here
 	    	if (currScreen == "GameScreen") {
 	    		Boolean keysPressed[] = {w, a, s, d};
-//	    		add(Mario.EntImage);
-//	    		add(Mario.entity);
-	    		add(Mario.display());
+	    		players = Mario.display();
+	    		add(players);
+	    		add(levelCompound);
+	    		players.sendToFront();
 	    		Physics.update(keysPressed);
-	    		//g.drawImage(dImage, (int) Mario.entity.getX(), (int) Mario.entity.getY(), 50, 50, null);
-	    		//Mario.EntImage.move
 	    		//levelCompound.move(-1, 0); //moves the camera 
 	    	}
 
