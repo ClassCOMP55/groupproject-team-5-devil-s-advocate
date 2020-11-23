@@ -6,9 +6,7 @@ import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.Component;
-import acm.graphics.GCompound;
-import acm.graphics.GImage;
-import acm.graphics.GObject;
+import acm.graphics.*;
 import jdk.internal.util.xml.impl.Input;
 
 public class MainApplication extends GraphicsApplication {
@@ -87,7 +85,8 @@ public class MainApplication extends GraphicsApplication {
         Mario.xVel = Mario.yVel = 0;
         Mario.xVelMax = Mario.yVelMax = 10;
         Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
-	    
+        GRect temp = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
+        
 	    while (true) {
 	    	now = System.nanoTime();
 	    	updateTime = System.nanoTime() - now;
@@ -99,8 +98,11 @@ public class MainApplication extends GraphicsApplication {
 	    		players = Mario.display();
 	    		add(players);
 	    		add(levelCompound);
+	    		add(temp); // Hitbox visualizer, can be deleted
 	    		players.sendToFront();
+	    		temp.sendToFront(); // Hitbox visualizer, can be deleted
 	    		Physics.update(keysPressed);
+	    		temp.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
 	    		//levelCompound.move(-1, 0); //moves the camera 
 	    	}
 
