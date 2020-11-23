@@ -2,6 +2,7 @@ package starter;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.Component;
@@ -34,9 +35,6 @@ public class MainApplication extends GraphicsApplication {
 	private GameScreen GameScreen; 
 	private PhysicsEngine Physics;
 	private Entity Mario; 
-	
-	public Player futureMario;
-	public Entity futureEnemy;
 	public GImage players;
 	private int count;
 	
@@ -59,8 +57,8 @@ public class MainApplication extends GraphicsApplication {
 		WinScreen = new WinScreen();
 		menu = new MainMenu();
 		switchToMenu();                                      //Timer after menu then gameloop 
-		players = new GImage(player.getBufferedImage(), 450, 125);
-		players.setSize(60, 60);
+//		players = new GImage(player.getBufferedImage(), 450, 125);
+//		players.setSize(60, 60);
 		//add(players);//Sprite of the Mario that is represented by GImage
 		addKeyListeners(new Input());
 		gameLoop();
@@ -73,9 +71,8 @@ public class MainApplication extends GraphicsApplication {
 	    long wait;
 	    final int TARGET_FPS = 60;
 	    final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
-	    
-	    Mario = new Entity(100, 400, 50, 50, true, Id.player, players);
-        //add(Mario.EntImage);
+	    Image dImage = player.getBufferedImage();
+	    Mario = new Entity(100, 400, 50, 50, true, Id.player, player.getBufferedImage());
         Physics = new PhysicsEngine (Mario);
         for (Entity a: levelOne.hitboxes) {
             Physics.addImmovable(a);
@@ -91,7 +88,13 @@ public class MainApplication extends GraphicsApplication {
 	    	
 	    	// Game code here
 	    	if (currScreen == "GameScreen") {
-	    		add(players);
+	    		Boolean keysPressed[] = {w, a, s, d};
+//	    		add(Mario.EntImage);
+//	    		add(Mario.entity);
+	    		add(Mario.display());
+	    		Physics.update(keysPressed);
+	    		//g.drawImage(dImage, (int) Mario.entity.getX(), (int) Mario.entity.getY(), 50, 50, null);
+	    		//Mario.EntImage.move
 	    		//levelCompound.move(-1, 0); //moves the camera 
 	    	}
 
@@ -104,9 +107,9 @@ public class MainApplication extends GraphicsApplication {
 	}
 	
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.stopSound(MUSIC_FOLDER, DEAD);
-		audio.playSound(MUSIC_FOLDER, THEME);
+		//AudioPlayer audio = AudioPlayer.getInstance();
+		//audio.stopSound(MUSIC_FOLDER, DEAD);
+		//audio.playSound(MUSIC_FOLDER, THEME);
 									
 		if (currScreen != "MainMenu") {
 			removeAll();
@@ -116,12 +119,12 @@ public class MainApplication extends GraphicsApplication {
 			currScreen = "MainMenu";
 		}
 		
-		audio.playSound(MUSIC_FOLDER, THEME);
+		//audio.playSound(MUSIC_FOLDER, THEME);
 	}
 
 	public void switchToInstructions() {
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, THEME);
+		//AudioPlayer audio = AudioPlayer.getInstance();
+		//audio.playSound(MUSIC_FOLDER, THEME);
 
 		if (currScreen != "InstructionsPane") {
 			removeAll(); //removes all the contents of the previous screen
@@ -138,7 +141,7 @@ public class MainApplication extends GraphicsApplication {
 	
 	public void switchToGameScreen() {
 		count++;
-		playRandomSound();
+		//playRandomSound();
 		removeAll();
 		for (GImage a : levelOne.allGImages) {
 			levelCompound.add(a);
@@ -149,9 +152,9 @@ public class MainApplication extends GraphicsApplication {
 	}
 	
 	public void switchToDead() {
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.stopSound(MUSIC_FOLDER, THEME);		// plays the in-game music...
-		audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
+		//AudioPlayer audio = AudioPlayer.getInstance();
+		//audio.stopSound(MUSIC_FOLDER, THEME);		// plays the in-game music...
+		//audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
 		playClickSound();
 		
 		if (currScreen != "DeadScreen") {
@@ -181,22 +184,22 @@ public class MainApplication extends GraphicsApplication {
 
 	
 	private void playRandomSound() {
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+		//AudioPlayer audio = AudioPlayer.getInstance();
+		//audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
 
 	public void stopRandomSound() {				// function to stop the random sound from being played...
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+		//AudioPlayer audio = AudioPlayer.getInstance();
+		//audio.stopSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
 	
 	public void playClickSound() {				//function to play the button sound...
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, CLICK);
+		//AudioPlayer audio = AudioPlayer.getInstance();
+		//audio.playSound(MUSIC_FOLDER, CLICK);
 	}
 	public void playThemeSound() {				//function to play the theme sound...
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, THEME);
+		//AudioPlayer audio = AudioPlayer.getInstance();
+		//audio.playSound(MUSIC_FOLDER, THEME);
 	}
 	
 	@Override

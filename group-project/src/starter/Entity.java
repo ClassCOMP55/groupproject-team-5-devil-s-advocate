@@ -1,6 +1,8 @@
 package starter;
 
 import java.awt.Color;
+import java.awt.Image;
+
 import acm.graphics.*;
 
 public class Entity {
@@ -13,7 +15,7 @@ public class Entity {
     public boolean hitTop = false, hitBottom = false, hitLeft = false, hitRight = false;
 	public Id id;
 	public GRect entity;
-	public GImage EntImage;//Murad commit
+	public GImage EntImage;
 
     Entity() {} // Constructor to not do anything
     
@@ -28,7 +30,7 @@ public class Entity {
 		this.id = id;
 	}
 	//Murad commit below
-	Entity(double x, double y, double width, double height, boolean movable, Id id, GImage EntImage) {
+	Entity(double x, double y, double width, double height, boolean movable, Id id, Image EntImage) {
 		entity = new GRect(x, y, width, height);
 		setLocation(x, y);
 		locationX = x;
@@ -37,7 +39,8 @@ public class Entity {
 		this.height = height;
 		this.movable = movable;
 		this.id = id;
-		this.EntImage = EntImage;
+		this.EntImage = new GImage (EntImage, x, y);
+		
 	}
 
 	/**
@@ -49,6 +52,11 @@ public class Entity {
 		entity.move(x, y);
 	}
 	
+	public GImage display() {
+		EntImage.setSize(50, 50);
+		EntImage.setLocation(entity.getX(), entity.getY());
+		return EntImage;
+	}
 	/**
 	 * This function passes to GObject's setFilled(), only applies if entity is GRect
 	 * @param a - whether object is filled with color or not
@@ -80,6 +88,7 @@ public class Entity {
 	 */
 	public void setLocation(double x, double y) {
 		entity.setLocation(x, y);
+		
 	}
 	
 	/**
