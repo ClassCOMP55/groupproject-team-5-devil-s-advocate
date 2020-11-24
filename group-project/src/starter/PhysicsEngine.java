@@ -5,7 +5,7 @@ import java.util.*;
 public class PhysicsEngine {
 	private Entity mainEntity; // Entity to be controlled with keyboard aka main character
 	private boolean enableXDecel = false;
-	private int jumpTime = 15; // Used to jump how long you are allowed to press the jump key
+	private int jumpTime = 13; // Used to jump how long you are allowed to press the jump key
 	private int i = 0; // Used to track how long the jump key has been pressed
 	
 	// TODO Create an Entity/GRect/GRectangle for winningSpace, to see if player has passed the level
@@ -128,11 +128,13 @@ public class PhysicsEngine {
 			// Collision between the left side of mainEntity and the right side of immovable objects
 			if (getLeftHitbox(mainEntity).intersects(getRightHitbox(e))) {
 				mainEntity.setLocation(e.getX() + e.getWidth() + 1, mainEntity.getY());
+				mainEntity.xVel = 0;
 			}
 			
 			// Collision between the right side of mainEntity and the left side of immovable objects
 			if (getRightHitbox(mainEntity).intersects(getLeftHitbox(e))) {
 				mainEntity.setLocation(e.getX() - mainEntity.getWidth() - 1, mainEntity.getY());
+				mainEntity.xVel = 0;
 			}
 			
 			// Collision between the bottom side of mainEntity and the top side of immovable objects
