@@ -57,7 +57,7 @@ public class MainApplication extends GraphicsApplication {
 		}
 		
 		// Moved most of the initialization stuff from other functions into here
-		Mario = new Entity(100, 400, 50, 50, true, Id.player, playerGImage);
+		Mario = new Entity(100, 400, 27, 50, true, Id.player, playerGImage);
         Physics = new PhysicsEngine (Mario);
         for (Entity a: levelOne.hitboxes) {
             Physics.addImmovable(a);

@@ -35,7 +35,7 @@ public class Entity {
 		this.id = id;
 	}
 	
-	//Murad commit below
+	
 	Entity(double x, double y, double width, double height, boolean movable, Id id, GImage EntImages[]) {
 		entity = new GRect(x, y, width, height);
 		setLocation(x, y);
@@ -139,7 +139,7 @@ public class Entity {
 			
 			break;
 		}
-		EntImage.setLocation(entity.getX(), entity.getY());
+		EntImage.setLocation(entity.getX()-14, entity.getY()+2);
 	}
 	
 	/**
