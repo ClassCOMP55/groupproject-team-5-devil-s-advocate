@@ -10,13 +10,15 @@ public class Entity {
 	public double width, height;
 	public double xVel, yVel;
     public double xVelMax, yVelMax;
-    public String xDirection, yDirection, lastDirection;
+    public String xDirection, yDirection;
+    public String lastDirection = "right"; // Just initializied this to prevent null errors
 	public boolean movable;
     public boolean hitTop = false, hitBottom = false, hitLeft = false, hitRight = false;
 	public Id id;
 	public GRect entity;
 	public GImage EntImage;
 	public static GImage EntImages[] = new GImage[8];
+	private static Image EntityImages[] = new Image[8]; // Stores the Images of the Mario's movement frames, NOT GImages
 	private static int rcount = 0;
 	private static int lcount = 4;
 
@@ -32,6 +34,7 @@ public class Entity {
 		this.movable = movable;
 		this.id = id;
 	}
+	
 	//Murad commit below
 	Entity(double x, double y, double width, double height, boolean movable, Id id, GImage EntImages[]) {
 		entity = new GRect(x, y, width, height);
@@ -43,9 +46,18 @@ public class Entity {
 		this.movable = movable;
 		this.id = id;
 		for (int i = 0; i < EntImages.length; i++) {
-			this.EntImages[i] = EntImages[i];
+			/**
+			 * Commented the line below out because switching images no longer use GImages,
+			 * Images are used instead.
+			 */
+			// this.EntImages[i] = EntImages[i];
+			/**
+			 * The line below is where the array of EntImages from the constructor is converted into Images.
+			 */
+			this.EntityImages[i] = EntImages[i].getImage().getScaledInstance(50, 50, Image.SCALE_REPLICATE);
 		}
-		
+		EntImage = EntImages[0];
+		EntImage.setSize(50, 50);
 	}
 
 	/**
@@ -57,45 +69,79 @@ public class Entity {
 		entity.move(x, y);
 	}
 	
-	
 	/**
 	 * This function allows a GImage object to be returned for viewing on the screen in MainApplication.
 	 * Extra functionality added to ensure mario faces in the last direction moved.
 	 */
-	public GImage display() {//maybe turn this into a case statment?
-		if (lastDirection == "" || lastDirection == "right") {
-			EntImage = EntImages[0];
-			EntImage.setSize(50, 50);
-			EntImage.setLocation(entity.getX(), entity.getY());
-		}
-		else {
-			EntImage = EntImages[4];
-			EntImage.setSize(50, 50);
-			EntImage.setLocation(entity.getX(), entity.getY());
-		}
-		if (xDirection == "right") {
-			EntImages[rcount].setSize(50, 50);
-			EntImage = EntImages[rcount];
+//	public void display() { //maybe turn this into a case statment?
+//		if (lastDirection == "" || lastDirection == "right") {
+//			EntImage = EntImages[0];
+//			EntImage.setSize(50, 50);
+//			EntImage.setLocation(entity.getX(), entity.getY());
+//		}
+//		else {
+//			EntImage = EntImages[4];
+//			EntImage.setSize(50, 50);
+//			EntImage.setLocation(entity.getX(), entity.getY());
+//		}
+//		if (xDirection == "right") {
+//			EntImages[rcount].setSize(50, 50);
+//			EntImage = EntImages[rcount];
+//			rcount++;
+//			if (rcount > 3) {
+//				rcount = 0;
+//			}
+//			EntImage.setLocation(entity.getX(), entity.getY());
+//		}
+//		if (xDirection == "left") {
+//			EntImages[lcount].setSize(50, 50);
+//			EntImage = EntImages[lcount];
+//			lcount++;
+//			if (lcount > 7) {
+//				lcount = 4;
+//			}
+//			EntImage.setLocation(entity.getX(), entity.getY());
+//		}
+//	}
+	
+	public void display() {
+		switch (xDirection) {
+		case "left":
+			
+			EntImage.setImage(EntityImages[lcount]);
+			lcount++;
+			lastDirection = "left";
+			if (lcount > 7) {
+				lcount = 4;
+			}
+			
+			break;
+		case "right":
+			
+			EntImage.setImage(EntityImages[rcount]);
 			rcount++;
 			if (rcount > 3) {
 				rcount = 0;
 			}
-			EntImage.setLocation(entity.getX(), entity.getY());
-			return EntImage;
-		}
-		if (xDirection == "left") {
-			EntImages[lcount].setSize(50, 50);
-			EntImage = EntImages[lcount];
-			lcount++;
-			if (lcount > 7) {
-				lcount = 4;
+			lastDirection = "right";
+			
+			break;
+		case "stop":
+			
+			switch (lastDirection) {
+			case "left":
+				EntImage.setImage(EntityImages[4]);
+				break;
+			case "right":
+				EntImage.setImage(EntityImages[0]);
+				break;
 			}
-			EntImage.setLocation(entity.getX(), entity.getY());
-			return EntImage;
+			
+			break;
 		}
-		return EntImage;
-		
+		EntImage.setLocation(entity.getX(), entity.getY());
 	}
+	
 	/**
 	 * This function passes to GObject's setFilled(), only applies if entity is GRect
 	 * @param a - whether object is filled with color or not
@@ -126,8 +172,7 @@ public class Entity {
 	 * @param y - Y coordinate
 	 */
 	public void setLocation(double x, double y) {
-		entity.setLocation(x, y);
-		
+		entity.setLocation(x, y);	
 	}
 	
 	/**

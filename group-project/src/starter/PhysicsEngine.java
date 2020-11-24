@@ -58,8 +58,6 @@ public class PhysicsEngine {
 			e.move(e.xVel, e.yVel);
 		}
 		detectCollision();
-		System.out.println(mainEntity.yVel);
-
 	}
 	
 	/**
@@ -109,7 +107,6 @@ public class PhysicsEngine {
 	// Calculates gravity and jumping
 	private void calculateGravity() {
 		if (mainEntity.yDirection == "jump") {
-			System.out.println("Jump");
 			i++;
 			if (i < jumpTime) {
 				mainEntity.yVel = -12;

@@ -36,13 +36,13 @@ public class MainApplication extends GraphicsApplication {
 	private WinScreen WinScreen; 
 	private GameScreen GameScreen; 
 	private PhysicsEngine Physics;
-	private Entity Mario; 
-	public GImage players;
+	private Entity Mario;
+	private GRect Mario_debug_hitbox;
 	private int count;
 	
 	private String currScreen = "";
 	
-	private Level levelOne = new Level("/levels/test/Test_Level.tmx", "/SpriteSheet/tileset.png", WINDOW_HEIGHT);
+	private Level levelOne = new Level("/levels/OfficialLevel1/OfficialLevel1..tmx", "/SpriteSheet/tileset.png", WINDOW_HEIGHT);
 	private GCompound levelCompound = new GCompound();
 
 	public void init() {
@@ -56,7 +56,16 @@ public class MainApplication extends GraphicsApplication {
 			playerGImage[i] = new GImage (playerArray[i].getBufferedImage());
 		}
 		
-		
+		// Moved most of the initialization stuff from other functions into here
+		Mario = new Entity(100, 400, 50, 50, true, Id.player, playerGImage);
+        Physics = new PhysicsEngine (Mario);
+        for (Entity a: levelOne.hitboxes) {
+            Physics.addImmovable(a);
+        }
+        Mario.xVel = Mario.yVel = 0;
+        Mario.xVelMax = Mario.yVelMax = 10;
+        Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
+        Mario_debug_hitbox = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
 	}
 
 	public void run() {
@@ -68,7 +77,6 @@ public class MainApplication extends GraphicsApplication {
 		switchToMenu();                                     
 		addKeyListeners(new Input());
 		gameLoop();
-
 	}
 
 	private void gameLoop() {
@@ -77,16 +85,7 @@ public class MainApplication extends GraphicsApplication {
 	    long wait;
 	    final int TARGET_FPS = 60;
 	    final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
-	    Mario = new Entity(100, 400, 50, 50, true, Id.player, playerGImage);
-        Physics = new PhysicsEngine (Mario);
-        for (Entity a: levelOne.hitboxes) {
-            Physics.addImmovable(a);
-        }
-        Mario.xVel = Mario.yVel = 0;
-        Mario.xVelMax = Mario.yVelMax = 10;
-        Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
-        GRect temp = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
-        
+
 	    while (true) {
 	    	now = System.nanoTime();
 	    	updateTime = System.nanoTime() - now;
@@ -95,14 +94,15 @@ public class MainApplication extends GraphicsApplication {
 	    	// Game code here
 	    	if (currScreen == "GameScreen") {
 	    		Boolean keysPressed[] = {w, a, s, d};
-	    		players = Mario.display();
-	    		add(players);
-	    		add(levelCompound);
-	    		add(temp); // Hitbox visualizer, can be deleted
-	    		players.sendToFront();
-	    		temp.sendToFront(); // Hitbox visualizer, can be deleted
 	    		Physics.update(keysPressed);
-	    		temp.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
+	    		Mario.display();
+	    		Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
+	    		/**
+	    		 * Something to worry about:
+	    		 * The hitboxes do not move when the GCompound is moved, we'll have to figure out how to move
+	    		 * the hitboxes. This wouldn't be too hard, but working on it might require the camera to be
+	    		 * somewhat functional, so we probably should get the camera working asap.  
+	    		 */
 	    		//levelCompound.move(-1, 0); //moves the camera 
 	    	}
 
@@ -155,8 +155,9 @@ public class MainApplication extends GraphicsApplication {
 			levelCompound.add(a);
 		}
 		add(levelCompound);
+		add(Mario.EntImage);
+		add(Mario_debug_hitbox);
 		currScreen = "GameScreen";
-		// gameLoop();
 	}
 	
 	public void switchToDead() {
