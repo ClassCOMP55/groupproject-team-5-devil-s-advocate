@@ -57,17 +57,22 @@ public class MainApplication extends GraphicsApplication {
 		}
 		MarioInit();	
 	}
+	
+	/**
+	 * Initializes the mario, physics and other stuff to be used in the game
+	 * Also used to reset the game when player wins/lose.
+	 */
 	public void MarioInit() {
-		// Moved most of the initialization stuff from other functions into here
-				Mario = new Entity(100, 400, 27, 50, true, Id.player, playerGImage);
-		        Physics = new PhysicsEngine (Mario);
-		        for (Entity a: levelOne.hitboxes) {
-		            Physics.addImmovable(a);
-		        }
-		        Mario.xVel = Mario.yVel = 0;
-		        Mario.xVelMax = Mario.yVelMax = 10;
-		        Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
-		        Mario_debug_hitbox = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
+		Mario = new Entity(100, 400, 27, 50, true, Id.player, playerGImage);
+		Physics = new PhysicsEngine (Mario);
+		Physics.setWinningSpace(levelOne.winningSpace);
+		for (Entity a: levelOne.hitboxes) {
+			Physics.addImmovable(a);
+		}
+		Mario.xVel = Mario.yVel = 0;
+		Mario.xVelMax = Mario.yVelMax = 10;
+		Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
+		Mario_debug_hitbox = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
 	}
 	public void run() {
 		System.out.println("Hello, world!");
@@ -99,6 +104,9 @@ public class MainApplication extends GraphicsApplication {
 	    		Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
 	    		if (Mario.getY() > 650) {
 	    			switchToDead();
+	    		}
+	    		if (Physics.won()) {
+	    			switchToWin();
 	    		}
 	    		/**
 	    		 * Something to worry about:
@@ -157,6 +165,9 @@ public class MainApplication extends GraphicsApplication {
 		for (GImage a : levelOne.allGImages) {
 			levelCompound.add(a);
 		}
+		for (GRect a : levelOne.hitboxes_debug) {
+			levelCompound.add(a);
+		}
 		add(levelCompound);
 		add(Mario.EntImage);
 		add(Mario_debug_hitbox);
@@ -191,7 +202,7 @@ public class MainApplication extends GraphicsApplication {
 			}
 			currScreen = "WinScreen";
 		}
-	
+		MarioInit();
 	}
 
 	

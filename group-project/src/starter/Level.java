@@ -16,6 +16,7 @@ public class Level {
 	private static Point[] arrayOfPoints;
 	public static ArrayList<GImage> allGImages = new ArrayList<GImage>();
 	public static ArrayList<Entity> hitboxes = new ArrayList<Entity>();
+	public static Entity winningSpace;
 	public static ArrayList<GRect> hitboxes_debug = new ArrayList<GRect>();
 	private static final int TILESET_WIDTH_AND_HEIGHT = 18; // This is the value to determine the margins for the tilemap we are using. Only change when using a new tilemap
 
@@ -95,7 +96,12 @@ public class Level {
 				for (TiledObject e : tileObjs) {
 					Entity temp = new Entity((e.getX() / 16) * tileSizeOnScreen, (e.getY() / 16) * tileSizeOnScreen, (e.getWidth() / 16) * tileSizeOnScreen, (e.getHeight() / 16) * tileSizeOnScreen, false, Id.immovable);
 					System.out.println("X: " + (e.getX() / 16) * tileSizeOnScreen + " Y: " + (e.getY() / 16) * tileSizeOnScreen + " Width: " + (e.getWidth() / 16) * tileSizeOnScreen + " Height: " + (e.getHeight() / 16) * tileSizeOnScreen);
-					hitboxes.add(temp);
+					if (layer.getName().equals("pole")) { // == operator for strings do not work cuz java
+						winningSpace = temp;
+						System.out.println(winningSpace);
+					} else {
+						hitboxes.add(temp);
+					}
 				}
 			}
 		}
@@ -114,6 +120,11 @@ public class Level {
 			 temp.setFillColor(new Color(240, 224, 46, 162));
 			 hitboxes_debug.add(temp);
 		 }
+		 
+		 temp = new GRect(winningSpace.getX(), winningSpace.getY(), winningSpace.getWidth(), winningSpace.getHeight());
+		 temp.setFilled(true);
+		 temp.setFillColor(new Color(45, 204, 20, 162));
+		 hitboxes_debug.add(temp);
 		 System.out.println("Debug hitbox overlays generated");
 	}
 }

@@ -4,12 +4,11 @@ import java.util.*;
 
 public class PhysicsEngine {
 	private Entity mainEntity; // Entity to be controlled with keyboard aka main character
+	private Entity winningSpace; // If player is in this region, the player wins and the game is over
 	private boolean enableXDecel = false;
 	private int jumpTime = 13; // Used to jump how long you are allowed to press the jump key
 	private int i = 0; // Used to track how long the jump key has been pressed
-	
-	// TODO Create an Entity/GRect/GRectangle for winningSpace, to see if player has passed the level
-	
+
 	/**
 	 * ArrayLists to store objects that are movable and immovable
 	 * movable - stores movable objects like enemies
@@ -41,6 +40,10 @@ public class PhysicsEngine {
 	}
 	public void removeImmovable(Entity Entity) {
 		immovable.remove(Entity);
+	}
+	
+	public void setWinningSpace(Entity ent) {
+		winningSpace = ent;
 	}
 	
 	/**
@@ -151,6 +154,10 @@ public class PhysicsEngine {
 			// TODO Add logic for collision detection for enemies and immovable, enemies and mainEntity
 			// 		and mainEntity and winningSpace
 		}	
+	}
+	
+	public Boolean won() {
+		return getHitbox(mainEntity).intersects(getHitbox(winningSpace));
 	}
 	
 	// Used to set movement directions for the mainEntity
