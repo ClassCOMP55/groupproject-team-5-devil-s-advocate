@@ -179,9 +179,15 @@ public class PhysicsEngine {
 					m.yDirection = "stop";
 					m.setLocation(m.getX(), e.getY() - m.getHeight() - 1);
 				}
+				
+				if (getBottomHitbox(mainEntity).intersects(getTopHitbox(m))) {
+					// TODO Implement death of goomba
+					System.out.println("Kill current goomba");
+				} else if (getHitbox(mainEntity).intersects(getHitbox(m))) {
+					// TODO Implement mario death
+					System.out.println("Mario dies");
+				}
 			}
-			
-			// TODO Add logic for collision detection for enemies and mainEntity
 		}	
 	}
 	
