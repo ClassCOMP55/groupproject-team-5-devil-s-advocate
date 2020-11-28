@@ -18,12 +18,11 @@ public class MainApplication extends GraphicsApplication {
 	private static final String DEAD = "in/dead.mp3";// imported a new .mp3 file for click sound...
 	private static final String WIN = "in/levelPass.mp3";
 	private static final String[] SOUND_FILES = { "in/theme.mp3", "in/dead.mp3" };
-	public static SpriteSheet sheet;
 	public static SpriteSheet sheetNew;
-	public static Sprite player;
-	public static Sprite playerNew;
 	public static Sprite playerArray[]= new Sprite[8];
 	public static GImage playerGImage[] = new GImage[8];
+	public static Sprite goombaArray[]= new Sprite[3];
+	public static GImage goombaGImage[] = new GImage[3];
 	private Graphics g;
 	private boolean w = false;
 	private boolean a = false;
@@ -36,8 +35,9 @@ public class MainApplication extends GraphicsApplication {
 	private WinScreen WinScreen; 
 	private GameScreen GameScreen; 
 	private PhysicsEngine Physics;
-	private Entity Mario;
+	private Entity Mario, Goomba;
 	private GRect Mario_debug_hitbox;
+	private GRect Goomba_debug_hitbox;
 	private int count;
 	
 	private String currScreen = "";
@@ -47,15 +47,17 @@ public class MainApplication extends GraphicsApplication {
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		sheet = new SpriteSheet("/SpriteSheet/SpriteChar.png");//Code to read in the first sprite sheet
 		sheetNew = new SpriteSheet("/SpriteSheet/MarioFinalChar.png");//C
-		player = new Sprite (sheet, 2,0);//Old code ***delete when animation works***
-		playerNew = new Sprite (sheetNew, 0, 1);
 		for (int i = 0; i < playerArray.length; i++) {
 			playerArray[i] = new Sprite (sheetNew, i, 0);
 			playerGImage[i] = new GImage (playerArray[i].getBufferedImage());
+			if (i < 3) {
+				goombaArray[i] = new Sprite (sheetNew, i, 1);
+				goombaGImage[i] = new GImage (goombaArray[i].getBufferedImage());
+			}
 		}
-		MarioInit();	
+		MarioInit();
+		GoombaInit();
 	}
 	
 	/**
@@ -69,13 +71,27 @@ public class MainApplication extends GraphicsApplication {
 		for (Entity a: levelOne.hitboxes) {
 			Physics.addImmovable(a);
 		}
-		Mario.xVel = Mario.yVel = 0;
-		Mario.xVelMax = Mario.yVelMax = 10;
+		Mario.xVel = 0;
+		Mario.yVel = 0;
+		Mario.xVelMax = 10;
+		Mario.yVelMax = 10;
 		Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
 		Mario_debug_hitbox = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
 	}
+	/**
+	 * Initializes 1 Goomba and variables for all associated actions.
+	 * 
+	 */
+	public void GoombaInit() {
+		Goomba = new Entity(400, 150, 25, 25, true, Id.enemy, goombaGImage);//setting goomba away from Mario for testing
+		Physics.addMovable(Goomba);
+		Goomba.yVel = 0;
+        Goomba.xVel = Goomba.xVelMax = 2;
+        Goomba.yVelMax = 10;
+        Goomba.xDirection = Goomba.yDirection = Goomba.lastDirection = "";
+		Goomba_debug_hitbox = new GRect(Goomba.getX(), Goomba.getY(), Goomba.getWidth(), Goomba.getHeight()); // Hitbox visualizer, can be deleted
+	}
 	public void run() {
-		System.out.println("Hello, world!");
 		InstructionsPane = new InstructionsPane();
 		DeadScreen = new DeadScreen();
 		WinScreen = new WinScreen();
@@ -100,8 +116,14 @@ public class MainApplication extends GraphicsApplication {
 	    	if (currScreen == "GameScreen") {
 	    		Boolean keysPressed[] = {w, a, s, d};
 	    		Physics.update(keysPressed);
-	    		Mario.display();
+	    		Mario.playerDisplay();
+	    		for (Entity m: Physics.movable) {
+	    			if (m.id.equals(Id.enemy)) {
+	    				m.enemyDisplay();
+	    			}
+	    		}
 	    		Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
+	    		Goomba_debug_hitbox.setLocation(Goomba.getX(), Goomba.getY()); // Hitbox visualizer, can be deleted
 	    		if (Mario.getY() > 650) {
 	    			switchToDead();
 	    		}
@@ -170,7 +192,13 @@ public class MainApplication extends GraphicsApplication {
 		}
 		add(levelCompound);
 		add(Mario.EntImage);
+		for (Entity m: Physics.movable) {
+			if (m.id.equals(Id.enemy)) {
+				add(m.EntImage);
+			}
+		}
 		add(Mario_debug_hitbox);
+		add(Goomba_debug_hitbox);
 		currScreen = "GameScreen";
 	}
 	
@@ -188,6 +216,7 @@ public class MainApplication extends GraphicsApplication {
 			currScreen = "DeadScreen";
 		}
 		MarioInit();
+		GoombaInit();
 	}
 	
 	public void switchToWin() {

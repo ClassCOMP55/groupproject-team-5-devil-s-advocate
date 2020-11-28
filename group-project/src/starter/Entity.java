@@ -8,7 +8,7 @@ import acm.graphics.*;
 public class Entity {
 	public double locationX, locationY;
 	public double width, height;
-	public double xVel, yVel;
+	public double xVel, yVel, testVel;//added for testing
     public double xVelMax, yVelMax;
     public String xDirection, yDirection;
     public String lastDirection = "right"; // Just initializied this to prevent null errors
@@ -17,10 +17,13 @@ public class Entity {
 	public Id id;
 	public GRect entity;
 	public GImage EntImage;
-	public static GImage EntImages[] = new GImage[8];
-	private static Image EntityImages[] = new Image[8]; // Stores the Images of the Mario's movement frames, NOT GImages
-	private static int rcount = 0;
-	private static int lcount = 4;
+	public GImage EntImages[] = new GImage[8];
+	public Image EntityImages[] = new Image[8]; // ***private*** Stores the Images of the Mario's movement frames, NOT GImages
+	private int rcount = 0;
+	private int lcount = 4;
+	private int gcount = 0;
+	public Boolean falling = true;//added to test falling
+
 
     Entity() {} // Constructor to not do anything
     
@@ -54,7 +57,9 @@ public class Entity {
 			/**
 			 * The line below is where the array of EntImages from the constructor is converted into Images.
 			 */
+		
 			this.EntityImages[i] = EntImages[i].getImage().getScaledInstance(50, 50, Image.SCALE_REPLICATE);
+			
 		}
 		EntImage = EntImages[0];
 		EntImage.setSize(50, 50);
@@ -73,61 +78,27 @@ public class Entity {
 	 * This function allows a GImage object to be returned for viewing on the screen in MainApplication.
 	 * Extra functionality added to ensure mario faces in the last direction moved.
 	 */
-//	public void display() { //maybe turn this into a case statment?
-//		if (lastDirection == "" || lastDirection == "right") {
-//			EntImage = EntImages[0];
-//			EntImage.setSize(50, 50);
-//			EntImage.setLocation(entity.getX(), entity.getY());
-//		}
-//		else {
-//			EntImage = EntImages[4];
-//			EntImage.setSize(50, 50);
-//			EntImage.setLocation(entity.getX(), entity.getY());
-//		}
-//		if (xDirection == "right") {
-//			EntImages[rcount].setSize(50, 50);
-//			EntImage = EntImages[rcount];
-//			rcount++;
-//			if (rcount > 3) {
-//				rcount = 0;
-//			}
-//			EntImage.setLocation(entity.getX(), entity.getY());
-//		}
-//		if (xDirection == "left") {
-//			EntImages[lcount].setSize(50, 50);
-//			EntImage = EntImages[lcount];
-//			lcount++;
-//			if (lcount > 7) {
-//				lcount = 4;
-//			}
-//			EntImage.setLocation(entity.getX(), entity.getY());
-//		}
-//	}
-	
-	public void display() {
+	public void playerDisplay() {
 		switch (xDirection) {
 		case "left":
-			
 			EntImage.setImage(EntityImages[lcount]);
 			lcount++;
 			lastDirection = "left";
 			if (lcount > 7) {
 				lcount = 4;
 			}
-			
 			break;
-		case "right":
 			
+		case "right":
 			EntImage.setImage(EntityImages[rcount]);
 			rcount++;
 			if (rcount > 3) {
 				rcount = 0;
 			}
 			lastDirection = "right";
-			
 			break;
-		case "stop":
 			
+		case "stop":
 			switch (lastDirection) {
 			case "left":
 				EntImage.setImage(EntityImages[4]);
@@ -136,17 +107,29 @@ public class Entity {
 				EntImage.setImage(EntityImages[0]);
 				break;
 			}
-			
 			break;
 		}
 		EntImage.setLocation(entity.getX()-14, entity.getY()+2);
+		
+		
+	}
+	
+	public void enemyDisplay() {
+		EntImage.setSize(50, 50);
+		EntImage.setImage(EntityImages[gcount % 2]);
+		System.out.println(gcount % 2);
+		gcount++;
+		if (gcount == 100) {
+			gcount = 0;
+		}
+		EntImage.setLocation(entity.getX()-12, entity.getY()-22);
 	}
 	
 	/**
 	 * This function passes to GObject's setFilled(), only applies if entity is GRect
 	 * @param a - whether object is filled with color or not
 	 */
-	public void setFilled(boolean a) {
+	public void setFilled(boolean a) { //*** This code is slated for deletion
 		entity.setFilled(a);
 	}
 	

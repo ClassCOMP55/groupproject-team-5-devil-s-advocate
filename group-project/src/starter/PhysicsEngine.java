@@ -14,7 +14,7 @@ public class PhysicsEngine {
 	 * movable - stores movable objects like enemies
 	 * immovable - stores immovable objects like walls and platforms
 	 */
-	private ArrayList<Entity> movable = new ArrayList<Entity>();
+	public ArrayList<Entity> movable = new ArrayList<Entity>();
 	private ArrayList<Entity> immovable = new ArrayList<Entity>();
 	
 	/**
@@ -58,7 +58,7 @@ public class PhysicsEngine {
 		detectCollision();
 		mainEntity.move(mainEntity.xVel, mainEntity.yVel);
 		for (Entity e : movable) {
-			e.move(e.xVel, e.yVel);
+			e.move(-e.xVel, e.yVel);//Remove the minus to have object go to the right
 		}
 		detectCollision();
 	}
@@ -120,6 +120,11 @@ public class PhysicsEngine {
 			mainEntity.yVel++;
 		}
 
+		for (Entity e : movable) {
+			if (e.yVel < e.yVelMax) {
+				e.yVel++;
+			}
+		}
 	}
 	
 	// Detects collision for movement blocking, enemies and 
@@ -151,8 +156,32 @@ public class PhysicsEngine {
 				mainEntity.yVel = 0;
 			}
 			
-			// TODO Add logic for collision detection for enemies and immovable, enemies and mainEntity
-			// 		and mainEntity and winningSpace
+			// Logic for Enemies and immovable
+			for (Entity m : movable) {
+				// Collision between the left side of movable and the right side of immovable objects
+				// Currently set up to change directions on collision with immovable objects
+				if (getLeftHitbox(m).intersects(getRightHitbox(e))) {
+					m.setLocation(e.getX() + e.getWidth() + 1, m.getY());
+					m.xVel = -m.xVel;
+					m.xDirection = "right";
+				}
+				
+				// Collision between the right side of movable and the left side of immovable objects
+				// Currently set up to change directions on collision with immovable objects
+				if (getRightHitbox(m).intersects(getLeftHitbox(e))) {
+					m.setLocation(e.getX() - m.getWidth() - 1, m.getY());
+					m.xVel = -m.xVel;
+					m.xDirection = "left";
+				}
+				
+				// Collision between the bottom side of movable and the top side of immovable objects
+				if (getBottomHitbox(m).intersects(getTopHitbox(e))) {
+					m.yDirection = "stop";
+					m.setLocation(m.getX(), e.getY() - m.getHeight() - 1);
+				}
+			}
+			
+			// TODO Add logic for collision detection for enemies and mainEntity
 		}	
 	}
 	
