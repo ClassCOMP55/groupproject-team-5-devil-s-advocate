@@ -148,9 +148,9 @@ public class MainApplication extends GraphicsApplication {
 	}
 	
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.stopSound(MUSIC_FOLDER, DEAD);
-		//audio.playSound(MUSIC_FOLDER, THEME);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, DEAD);
+		audio.playSound(MUSIC_FOLDER, THEME);
 									
 		if (currScreen != "MainMenu") {
 			removeAll();
@@ -164,9 +164,9 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToInstructions() {
-		//AudioPlayer audio = AudioPlayer.getInstance();
+		AudioPlayer audio = AudioPlayer.getInstance();
 		//audio.playSound(MUSIC_FOLDER, THEME);
-
+        audio.stopSound(MUSIC_FOLDER, THEME);
 		if (currScreen != "InstructionsPane") {
 			removeAll(); //removes all the contents of the previous screen
 			for (GObject a : InstructionsPane.objects) {
@@ -182,7 +182,8 @@ public class MainApplication extends GraphicsApplication {
 	
 	public void switchToGameScreen() {
 		count++;
-		//playRandomSound();
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, THEME);
 		removeAll();
 		for (GImage a : levelOne.allGImages) {
 			levelCompound.add(a);
@@ -203,9 +204,9 @@ public class MainApplication extends GraphicsApplication {
 	}
 	
 	public void switchToDead() {
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.stopSound(MUSIC_FOLDER, THEME);		// plays the in-game music...
-		//audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, THEME);		// plays the in-game music...
+		audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
 		playClickSound();
 		
 		if (currScreen != "DeadScreen") {
@@ -236,8 +237,8 @@ public class MainApplication extends GraphicsApplication {
 
 	
 	private void playRandomSound() {
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
 
 	public void stopRandomSound() {				// function to stop the random sound from being played...

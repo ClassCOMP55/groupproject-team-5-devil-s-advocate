@@ -6,6 +6,8 @@ public class PhysicsEngine {
 	private Entity mainEntity; // Entity to be controlled with keyboard aka main character
 	private Entity winningSpace; // If player is in this region, the player wins and the game is over
 	private boolean enableXDecel = false;
+	private static final String JUMP = "in/jump.mp3";
+	public static final String MUSIC_FOLDER = "sound";
 	private int jumpTime = 13; // Used to jump how long you are allowed to press the jump key
 	private int i = 0; // Used to track how long the jump key has been pressed
 
@@ -68,6 +70,7 @@ public class PhysicsEngine {
 	 * @param keysPressed - pass an array of Boolean values of which keys are pressed
 	 * [0] = W, [1] = A, [2] = S, [3] = D
 	 */
+
 	private void processKeys(Boolean[] keysPressed) {
 		boolean w = keysPressed[0];
 		boolean a = keysPressed[1];
@@ -76,6 +79,7 @@ public class PhysicsEngine {
 		
 		// These if statements are used to stop left and right keys being pressed simultaneously
 		if (a == true) {
+			
 			moveLeft();
 		} else if (d == true) {
 			moveRight();
@@ -86,6 +90,8 @@ public class PhysicsEngine {
 			moveStop();
 		}
 		if (w == true) {
+			AudioPlayer audio = AudioPlayer.getInstance();
+			audio.playSound(MUSIC_FOLDER, JUMP);
 			moveJump();
 		} else {
 			moveJumpStop();
