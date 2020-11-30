@@ -18,6 +18,7 @@ public class Level {
 	public static ArrayList<Entity> hitboxes = new ArrayList<Entity>();
 	public static Entity winningSpace;
 	public static ArrayList<GRect> hitboxes_debug = new ArrayList<GRect>();
+	public static ArrayList<GPoint> goomba_points = new ArrayList<GPoint>();
 	private static final int TILESET_WIDTH_AND_HEIGHT = 18; // This is the value to determine the margins for the tilemap we are using. Only change when using a new tilemap
 
 	
@@ -99,6 +100,9 @@ public class Level {
 					if (layer.getName().equals("pole")) { // == operator for strings do not work cuz java
 						winningSpace = temp;
 						System.out.println(winningSpace);
+					} else if (layer.getName().equals("goombas")) {
+						System.out.println("Goomba at X: " + (e.getX() / 16) * tileSizeOnScreen + ", Y: " + (e.getY() / 16) * tileSizeOnScreen);
+						goomba_points.add(new GPoint((e.getX() / 16) * tileSizeOnScreen, (e.getY() / 16) * tileSizeOnScreen));
 					} else {
 						hitboxes.add(temp);
 					}
