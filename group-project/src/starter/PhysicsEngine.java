@@ -6,7 +6,7 @@ public class PhysicsEngine {
 	private Entity mainEntity; // Entity to be controlled with keyboard aka main character
 	private Entity winningSpace; // If player is in this region, the player wins and the game is over
 	private boolean enableXDecel = false;
-	private static final String JUMP = "in/jump.mp3";
+	private static final String JUMP = "in/jumpShort.mp3";
 	public static final String MUSIC_FOLDER = "sound";
 	private int jumpTime = 13; // Used to jump how long you are allowed to press the jump key
 	private int i = 0; // Used to track how long the jump key has been pressed
@@ -26,7 +26,7 @@ public class PhysicsEngine {
 	PhysicsEngine(Entity mainEnt) {
 		mainEntity = mainEnt;
 	}
-	
+
 	public void addMovable(Entity... ent) {
 		for (Entity e : ent) {
 			movable.add(e);
@@ -90,8 +90,6 @@ public class PhysicsEngine {
 			moveStop();
 		}
 		if (w == true) {
-			AudioPlayer audio = AudioPlayer.getInstance();
-			audio.playSound(MUSIC_FOLDER, JUMP);
 			moveJump();
 		} else {
 			moveJumpStop();
@@ -118,6 +116,9 @@ public class PhysicsEngine {
 		if (mainEntity.yDirection == "jump") {
 			i++;
 			if (i < jumpTime) {
+				AudioPlayer audio = AudioPlayer.getInstance();
+				audio.stopSound(MUSIC_FOLDER, JUMP);
+				audio.playSound(MUSIC_FOLDER, JUMP);
 				mainEntity.yVel = -12;
 			}
 		}
