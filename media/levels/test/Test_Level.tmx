@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="50" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="14">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="50" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="22">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <layer id="1" name="background" width="50" height="13" locked="1">
   <data encoding="csv">
@@ -64,6 +64,22 @@
  </objectgroup>
  <objectgroup id="10" name="door" locked="1">
   <object id="9" x="736" y="144" width="16" height="48"/>
+ </objectgroup>
+ <objectgroup id="11" name="goombas" locked="1">
+  <object id="17" x="128" y="128">
+   <point/>
+  </object>
+  <object id="18" x="416" y="112">
+   <point/>
+  </object>
+  <object id="19" x="528" y="144">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="12" name="mario" locked="1">
+  <object id="21" x="48" y="160">
+   <point/>
+  </object>
  </objectgroup>
  <objectgroup id="9" name="pole" locked="1">
   <object id="11" x="656" y="64" width="16" height="128"/>
