@@ -43,6 +43,7 @@ public class Level {
 		hitboxes.clear();
 		hitboxes_debug.clear();
 		goomba_points.clear();
+		winningSpace.clear();
 		map = readFile(pathToTMX);
 		tileWidth = map.getWidth();
 		tileHeight = map.getHeight();
