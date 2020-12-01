@@ -19,9 +19,9 @@ public class Entity {
 	public GImage EntImage;
 	public GImage EntImages[] = new GImage[8];
 	public Image EntityImages[] = new Image[8]; // ***private*** Stores the Images of the Mario's movement frames, NOT GImages
-	private int rcount = 0;
-	private int lcount = 4;
-	private int gcount = 0;
+	private double rcount = 0;
+	private double lcount = 4;
+	private double gcount = 0;
 	public Boolean falling = true;//added to test falling
 
 
@@ -61,7 +61,7 @@ public class Entity {
 			this.EntityImages[i] = EntImages[i].getImage().getScaledInstance(50, 50, Image.SCALE_REPLICATE);
 			
 		}
-		EntImage = EntImages[0];
+		EntImage = new GImage(EntImages[0].getImage());
 		EntImage.setSize(50, 50);
 	}
 
@@ -81,8 +81,8 @@ public class Entity {
 	public void playerDisplay() {
 		switch (xDirection) {
 		case "left":
-			EntImage.setImage(EntityImages[lcount]);
-			lcount++;
+			EntImage.setImage(EntityImages[(int)lcount]);
+			lcount += 0.3;
 			lastDirection = "left";
 			if (lcount > 7) {
 				lcount = 4;
@@ -90,8 +90,8 @@ public class Entity {
 			break;
 			
 		case "right":
-			EntImage.setImage(EntityImages[rcount]);
-			rcount++;
+			EntImage.setImage(EntityImages[(int)rcount]);
+			rcount += 0.3;
 			if (rcount > 3) {
 				rcount = 0;
 			}
@@ -116,9 +116,9 @@ public class Entity {
 	
 	public void enemyDisplay() {
 		EntImage.setSize(50, 50);
-		EntImage.setImage(EntityImages[gcount % 2]);
-		System.out.println(gcount % 2);
-		gcount++;
+		EntImage.setImage(EntityImages[(int)gcount % 2]);
+		// System.out.println(gcount % 2);
+		gcount += 0.1; // Change this value to change speed
 		if (gcount == 100) {
 			gcount = 0;
 		}

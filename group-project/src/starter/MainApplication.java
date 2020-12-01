@@ -37,12 +37,12 @@ public class MainApplication extends GraphicsApplication {
 	private PhysicsEngine Physics;
 	private Entity Mario, Goomba;
 	private GRect Mario_debug_hitbox;
-	private GRect Goomba_debug_hitbox;
 	private int count;
 	
 	private String currScreen = "";
 	
-	private Level levelOne = new Level("/levels/test/Test_Level.tmx", "/SpriteSheet/tileset.png", WINDOW_HEIGHT);
+	private Level levelOne = new Level("/levels/OfficialLevel1/OfficialLevel1.tmx", "/SpriteSheet/tileset.png", WINDOW_HEIGHT);
+	private Level currentLevel;
 	private GCompound levelCompound = new GCompound();
 
 	public void init() {
@@ -56,8 +56,6 @@ public class MainApplication extends GraphicsApplication {
 				goombaGImage[i] = new GImage (goombaArray[i].getBufferedImage());
 			}
 		}
-		MarioInit();
-		GoombaInit();
 	}
 	
 	/**
@@ -65,32 +63,51 @@ public class MainApplication extends GraphicsApplication {
 	 * Also used to reset the game when player wins/lose.
 	 */
 	public void MarioInit() {
+		currentLevel = levelOne;
 		Mario = new Entity(100, 400, 27, 50, true, Id.player, playerGImage);
 		Physics = new PhysicsEngine (Mario);
-		Physics.setWinningSpace(levelOne.winningSpace);
-		for (Entity a: levelOne.hitboxes) {
+		Physics.setWinningSpace(currentLevel.winningSpace);
+		for (Entity a: currentLevel.hitboxes) {
 			Physics.addImmovable(a);
 		}
 		Mario.xVel = 0;
 		Mario.yVel = 0;
-		Mario.xVelMax = 10;
+		Mario.xVelMax = 8;
 		Mario.yVelMax = 10;
 		Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
 		Mario_debug_hitbox = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
 	}
 	/**
 	 * Initializes 1 Goomba and variables for all associated actions.
-	 * 
 	 */
-	public void GoombaInit() {
-		Goomba = new Entity(400, 150, 25, 25, true, Id.enemy, goombaGImage);//setting goomba away from Mario for testing
+	public void GoombaInit(double x, double y) {
+		Goomba = new Entity(x, y, 25, 25, true, Id.enemy, goombaGImage);//setting goomba away from Mario for testing
 		Physics.addMovable(Goomba);
 		Goomba.yVel = 0;
         Goomba.xVel = Goomba.xVelMax = 2;
         Goomba.yVelMax = 10;
         Goomba.xDirection = Goomba.yDirection = Goomba.lastDirection = "";
-		Goomba_debug_hitbox = new GRect(Goomba.getX(), Goomba.getY(), Goomba.getWidth(), Goomba.getHeight()); // Hitbox visualizer, can be deleted
 	}
+	
+	public void GameInit() {
+		levelCompound = new GCompound();
+		for (GImage a : currentLevel.allGImages) {
+			levelCompound.add(a);
+		}
+		for (GRect a : currentLevel.hitboxes_debug) {
+			levelCompound.add(a);
+		}
+		
+		add(levelCompound);
+		add(Mario.EntImage);
+		for (Entity m: Physics.movable) {
+			if (m.id.equals(Id.enemy)) {
+				add(m.EntImage);
+				add(m.entity);
+			}
+		}
+	}
+	
 	public void run() {
 		InstructionsPane = new InstructionsPane();
 		DeadScreen = new DeadScreen();
@@ -117,13 +134,19 @@ public class MainApplication extends GraphicsApplication {
 	    		Boolean keysPressed[] = {w, a, s, d};
 	    		Physics.update(keysPressed);
 	    		Mario.playerDisplay();
+	    		
+	    		// Demo code for test camera
+//	    		levelCompound.move(-1, 0);
+//	    		Physics.moveHitboxes(-1, 0);
+//	    		Mario.move(-1, 0);
+	    		processCamera();
+	    		
 	    		for (Entity m: Physics.movable) {
 	    			if (m.id.equals(Id.enemy)) {
 	    				m.enemyDisplay();
 	    			}
 	    		}
 	    		Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
-	    		Goomba_debug_hitbox.setLocation(Goomba.getX(), Goomba.getY()); // Hitbox visualizer, can be deleted
 	    		if (Mario.getY() > 650) {
 	    			switchToDead();
 	    		}
@@ -145,6 +168,15 @@ public class MainApplication extends GraphicsApplication {
 	    		e.printStackTrace();
 	    	}
 	    }
+	}
+	
+	public void processCamera() {
+		if (Mario.getX() > 300) {
+			levelCompound.move(-Mario.xVel, 0);
+    		Physics.moveHitboxes(-Mario.xVel, 0);
+    		Physics.moveEnemies(-Mario.xVel, 0);
+    		Mario.setLocation(299, Mario.getY());
+		}
 	}
 	
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
@@ -173,9 +205,7 @@ public class MainApplication extends GraphicsApplication {
 				add(a);
 			}
 			currScreen = "InstructionsPane";
-			
 		}
-		
 		playClickSound();					// called function to play click sound...
 		 					// to stop the theme sound before switching to menu page...
 	}
@@ -185,21 +215,12 @@ public class MainApplication extends GraphicsApplication {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, THEME);
 		removeAll();
-		for (GImage a : levelOne.allGImages) {
-			levelCompound.add(a);
+		levelOne.reset();
+		MarioInit();
+		for (GPoint p : levelOne.goomba_points) {
+			GoombaInit(p.getX(), p.getY());
 		}
-		for (GRect a : levelOne.hitboxes_debug) {
-			levelCompound.add(a);
-		}
-		add(levelCompound);
-		add(Mario.EntImage);
-		for (Entity m: Physics.movable) {
-			if (m.id.equals(Id.enemy)) {
-				add(m.EntImage);
-			}
-		}
-		add(Mario_debug_hitbox);
-		add(Goomba_debug_hitbox);
+		GameInit();
 		currScreen = "GameScreen";
 	}
 	
@@ -208,7 +229,6 @@ public class MainApplication extends GraphicsApplication {
 		audio.stopSound(MUSIC_FOLDER, THEME);		// plays the in-game music...
 		audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
 		playClickSound();
-		
 		if (currScreen != "DeadScreen") {
 			removeAll(); //removes all the contents of the previous screen
 			for (GObject a : DeadScreen.objects) {
@@ -216,15 +236,13 @@ public class MainApplication extends GraphicsApplication {
 			}
 			currScreen = "DeadScreen";
 		}
-		MarioInit();
-		GoombaInit();
+		
 	}
 	
 	public void switchToWin() {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, WIN);		// plays the Win-screen sound...
 		playClickSound();
-		
 		if (currScreen != "WinScreen") {
 			removeAll(); //removes all the contents of the previous screen
 			for (GObject a : WinScreen.objects) {
@@ -232,7 +250,6 @@ public class MainApplication extends GraphicsApplication {
 			}
 			currScreen = "WinScreen";
 		}
-		MarioInit();
 	}
 
 	

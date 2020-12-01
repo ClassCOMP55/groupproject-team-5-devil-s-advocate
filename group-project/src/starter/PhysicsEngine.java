@@ -4,7 +4,7 @@ import java.util.*;
 
 public class PhysicsEngine {
 	private Entity mainEntity; // Entity to be controlled with keyboard aka main character
-	private Entity winningSpace; // If player is in this region, the player wins and the game is over
+	private ArrayList<Entity> winningSpace; // If player is in this region, the player wins and the game is over
 	private boolean enableXDecel = false;
 	private static final String JUMP = "in/jumpShort.mp3";
 	public static final String MUSIC_FOLDER = "sound";
@@ -44,7 +44,7 @@ public class PhysicsEngine {
 		immovable.remove(Entity);
 	}
 	
-	public void setWinningSpace(Entity ent) {
+	public void setWinningSpace(ArrayList<Entity> ent) {
 		winningSpace = ent;
 	}
 	
@@ -163,6 +163,10 @@ public class PhysicsEngine {
 				mainEntity.yVel = 0;
 			}
 			
+			if (mainEntity.getX() < 0) {
+				mainEntity.setLocation(0, mainEntity.getY());
+			}
+			
 			// Logic for Enemies and immovable
 			for (Entity m : movable) {
 				// Collision between the left side of movable and the right side of immovable objects
@@ -199,9 +203,27 @@ public class PhysicsEngine {
 	}
 	
 	public Boolean won() {
-		return getHitbox(mainEntity).intersects(getHitbox(winningSpace));
+		for (Entity e : winningSpace) {
+			if (getHitbox(mainEntity).intersects(getHitbox(e))) return true;
+		}
+		return false;
 	}
 	
+	public void moveHitboxes(double x, double y) {
+		for (Entity e : immovable) {
+			e.move(x, y);
+		}
+		for (Entity w : winningSpace) {
+			w.move(x, y);
+		}
+	}
+	
+	public void moveEnemies(double x, double y) {
+		for (Entity e : movable) {
+			e.move(x, y);
+		}
+	}
+
 	// Used to set movement directions for the mainEntity
 	public void moveLeft() {
 		mainEntity.lastDirection = "left";
