@@ -8,6 +8,7 @@ public class PhysicsEngine {
 	private boolean enableXDecel = false;
 	private static final String JUMP = "in/jumpShort.mp3";
 	public static final String MUSIC_FOLDER = "sound";
+	public int windowWidth;
 	private int jumpTime = 13; // Used to jump how long you are allowed to press the jump key
 	private int i = 0; // Used to track how long the jump key has been pressed
 
@@ -60,7 +61,7 @@ public class PhysicsEngine {
 		detectCollision();
 		mainEntity.move(mainEntity.xVel, mainEntity.yVel);
 		for (Entity e : movable) {
-			e.move(-e.xVel, e.yVel);//Remove the minus to have object go to the right
+			if (e.getX() < windowWidth) e.move(-e.xVel, e.yVel);//Remove the minus to have object go to the right
 		}
 		detectCollision();
 	}

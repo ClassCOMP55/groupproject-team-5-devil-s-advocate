@@ -23,7 +23,7 @@ public class Entity {
 	private double lcount = 4;
 	private double gcount = 0;
 	public Boolean falling = true;//added to test falling
-
+	public Boolean dead = false;
 
     Entity() {} // Constructor to not do anything
     
