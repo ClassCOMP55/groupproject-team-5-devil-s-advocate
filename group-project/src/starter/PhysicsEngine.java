@@ -61,7 +61,12 @@ public class PhysicsEngine {
 		detectCollision();
 		mainEntity.move(mainEntity.xVel, mainEntity.yVel);
 		for (Entity e : movable) {
-			if (e.getX() < windowWidth) e.move(-e.xVel, e.yVel);//Remove the minus to have object go to the right
+			if (e.dead) {
+				e.setLocation(1000, 1000);
+			} else {
+				if (e.getX() < windowWidth) e.move(-e.xVel, e.yVel);//Remove the minus to have object go to the right	
+			}
+			
 		}
 		detectCollision();
 	}
@@ -195,12 +200,14 @@ public class PhysicsEngine {
 				if (getBottomHitbox(mainEntity).intersects(getTopHitbox(m))) {
 					// TODO Implement death of goomba
 					System.out.println("Kill current goomba");
+					m.dead = true;
 				} else if (getHitbox(mainEntity).intersects(getHitbox(m))) {
 					// TODO Implement mario death
 					System.out.println("Mario dies");
+					mainEntity.dead = true;
 				}
 			}
-		}	
+		}
 	}
 	
 	public Boolean won() {

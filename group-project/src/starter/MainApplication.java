@@ -148,7 +148,7 @@ public class MainApplication extends GraphicsApplication {
 	    			}
 	    		}
 	    		Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
-	    		if (Mario.getY() > 650) {
+	    		if (Mario.getY() > 650 || Mario.dead == true) {
 	    			switchToDead();
 	    		}
 	    		if (Physics.won()) {

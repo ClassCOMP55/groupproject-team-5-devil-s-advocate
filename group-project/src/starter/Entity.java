@@ -120,8 +120,7 @@ public class Entity {
 			break;
 		}
 		EntImage.setLocation(entity.getX()-14, entity.getY()+2);
-	}
-	
+
 	public void enemyDisplay() {
 		EntImage.setSize(50, 50);
 		EntImage.setImage(EntityImages[(int)gcount % 2]);
