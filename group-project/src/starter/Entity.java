@@ -109,9 +109,7 @@ public class Entity {
 			}
 			break;
 		}
-		EntImage.setLocation(entity.getX()-14, entity.getY()+2);
-		
-		
+		EntImage.setLocation(entity.getX()-14, entity.getY()+2);	
 	}
 	
 	public void enemyDisplay() {
