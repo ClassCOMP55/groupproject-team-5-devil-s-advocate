@@ -66,6 +66,7 @@ public class MainApplication extends GraphicsApplication {
 		currentLevel = levelOne;
 		Mario = new Entity(100, 400, 27, 50, true, Id.player, playerGImage);
 		Physics = new PhysicsEngine (Mario);
+		Physics.windowWidth = WINDOW_WIDTH;
 		Physics.setWinningSpace(currentLevel.winningSpace);
 		for (Entity a: currentLevel.hitboxes) {
 			Physics.addImmovable(a);
@@ -176,6 +177,10 @@ public class MainApplication extends GraphicsApplication {
     		Physics.moveHitboxes(-Mario.xVel, 0);
     		Physics.moveEnemies(-Mario.xVel, 0);
     		Mario.setLocation(299, Mario.getY());
+    		// Potential fix for mario getting stuck in corners of blocks
+//    		levelCompound.move(-2, 0);
+//    		Physics.moveHitboxes(-2, 0);
+//    		Physics.moveEnemies(-2, 0);
 		}
 	}
 	
