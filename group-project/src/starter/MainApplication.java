@@ -19,8 +19,8 @@ public class MainApplication extends GraphicsApplication {
 	private static final String WIN = "in/levelPass.mp3";
 	private static final String[] SOUND_FILES = { "in/theme.mp3", "in/dead.mp3" };
 	public static SpriteSheet sheetNew;
-	public static Sprite playerArray[]= new Sprite[8];
-	public static GImage playerGImage[] = new GImage[8];
+	public static Sprite playerArray[]= new Sprite[10];
+	public static GImage playerGImage[] = new GImage[10];
 	public static Sprite goombaArray[]= new Sprite[3];
 	public static GImage goombaGImage[] = new GImage[3];
 	private Graphics g;

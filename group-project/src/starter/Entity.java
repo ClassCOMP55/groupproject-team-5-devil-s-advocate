@@ -17,8 +17,8 @@ public class Entity {
 	public Id id;
 	public GRect entity;
 	public GImage EntImage;
-	public GImage EntImages[] = new GImage[8];
-	public Image EntityImages[] = new Image[8]; // ***private*** Stores the Images of the Mario's movement frames, NOT GImages
+	public GImage EntImages[] = new GImage[10];
+	public Image EntityImages[] = new Image[10]; // ***private*** Stores the Images of the Mario's movement frames, NOT GImages
 	private double rcount = 0;
 	private double lcount = 4;
 	private double gcount = 0;
@@ -109,15 +109,22 @@ public class Entity {
 			}
 			break;
 		}
+		switch (yDirection) {
+		case "jump":
+			if (lastDirection == "left") {
+				EntImage.setImage(EntityImages[8]);
+			}
+			else if (lastDirection == "right") {
+				EntImage.setImage(EntityImages[9]);
+			}
+			break;
+		}
 		EntImage.setLocation(entity.getX()-14, entity.getY()+2);
-		
-		
 	}
 	
 	public void enemyDisplay() {
 		EntImage.setSize(50, 50);
 		EntImage.setImage(EntityImages[(int)gcount % 2]);
-		// System.out.println(gcount % 2);
 		gcount += 0.1; // Change this value to change speed
 		if (gcount == 100) {
 			gcount = 0;
