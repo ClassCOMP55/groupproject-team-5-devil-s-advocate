@@ -116,9 +116,9 @@ public class PhysicsEngine {
 		if (mainEntity.yDirection == "jump") {
 			i++;
 			if (i < jumpTime) {
-				AudioPlayer audio = AudioPlayer.getInstance();
-				audio.stopSound(MUSIC_FOLDER, JUMP);
-				audio.playSound(MUSIC_FOLDER, JUMP);
+				//AudioPlayer audio = AudioPlayer.getInstance();
+				//audio.stopSound(MUSIC_FOLDER, JUMP);
+				//audio.playSound(MUSIC_FOLDER, JUMP);
 				mainEntity.yVel = -12;
 			}
 		}
