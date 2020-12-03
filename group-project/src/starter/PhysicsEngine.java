@@ -10,7 +10,7 @@ public class PhysicsEngine {
 	public static final String MUSIC_FOLDER = "sound";
 	public int windowWidth;
 	private int jumpTime = 13; // Used to jump how long you are allowed to press the jump key
-	private int i = 0; // Used to track how long the jump key has been pressed
+	private static int i = 0; // Used to track how long the jump key has been pressed
 
 	/**
 	 * ArrayLists to store objects that are movable and immovable
@@ -26,6 +26,9 @@ public class PhysicsEngine {
 	 */
 	PhysicsEngine(Entity mainEnt) {
 		mainEntity = mainEnt;
+	}
+	public static int returnI() {
+		return i;
 	}
 
 	public void addMovable(Entity... ent) {

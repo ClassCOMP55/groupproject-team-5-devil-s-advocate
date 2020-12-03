@@ -109,15 +109,13 @@ public class Entity {
 			}
 			break;
 		}
-		switch (yDirection) {
-		case "jump":
+		if (PhysicsEngine.returnI() != 0) {
 			if (lastDirection == "left") {
 				EntImage.setImage(EntityImages[8]);
 			}
 			else if (lastDirection == "right") {
 				EntImage.setImage(EntityImages[9]);
 			}
-			break;
 		}
 		EntImage.setLocation(entity.getX()-14, entity.getY()+2);
 	}
