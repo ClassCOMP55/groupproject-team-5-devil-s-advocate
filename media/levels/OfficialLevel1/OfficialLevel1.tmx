@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="250" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="103">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="250" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="113">
  <editorsettings>
   <export target="OfficialLevel1.tmx" format="tmx"/>
  </editorsettings>
@@ -127,16 +127,28 @@
   <object id="83" x="1008" y="96">
    <point/>
   </object>
-  <object id="84" x="1984" y="160">
-   <point/>
-  </object>
-  <object id="85" x="2160" y="160">
-   <point/>
-  </object>
   <object id="89" x="3168" y="176">
    <point/>
   </object>
   <object id="90" x="3072" y="176">
+   <point/>
+  </object>
+  <object id="103" x="480" y="112">
+   <point/>
+  </object>
+  <object id="105" x="944" y="96">
+   <point/>
+  </object>
+  <object id="109" x="2832" y="176">
+   <point/>
+  </object>
+  <object id="110" x="2208" y="176">
+   <point/>
+  </object>
+  <object id="111" x="2000" y="176">
+   <point/>
+  </object>
+  <object id="112" x="1792" y="176">
    <point/>
   </object>
  </objectgroup>
