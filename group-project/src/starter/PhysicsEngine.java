@@ -215,6 +215,7 @@ public class PhysicsEngine {
 				if (getBottomHitbox(mainEntity).intersects(getTopHitbox(m))) {
 					// TODO Implement death of goomba
 					System.out.println("Kill current goomba");
+					mainEntity.yVel = -mainEntity.yVel;
 					AudioPlayer audio = AudioPlayer.getInstance();
 					audio.stopSound(MUSIC_FOLDER, STOMP);
 					m.dead = true;
