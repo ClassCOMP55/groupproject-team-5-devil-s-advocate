@@ -28,7 +28,7 @@ public class MainApplication extends GraphicsApplication {
 	private boolean a = false;
 	private boolean s = false;
 	private boolean d = false;
-	
+
 	private InstructionsPane InstructionsPane;
 	private MainMenu menu;
 	private DeadScreen DeadScreen;
@@ -38,9 +38,9 @@ public class MainApplication extends GraphicsApplication {
 	private Entity Mario, Goomba;
 	private GRect Mario_debug_hitbox;
 	private int count;
-	
+
 	private String currScreen = "";
-	
+
 	private Level levelOne = new Level("/levels/OfficialLevel1/OfficialLevel1.tmx", "/SpriteSheet/tileset.png", WINDOW_HEIGHT);
 	private Level currentLevel;
 	private GCompound levelCompound = new GCompound();
@@ -57,7 +57,7 @@ public class MainApplication extends GraphicsApplication {
 			}
 		}
 	}
-	
+
 	/**
 	 * Initializes the mario, physics and other stuff to be used in the game
 	 * Also used to reset the game when player wins/lose.
@@ -73,7 +73,7 @@ public class MainApplication extends GraphicsApplication {
 		}
 		Mario.xVel = 0;
 		Mario.yVel = 0;
-		Mario.xVelMax = 8;
+		Mario.xVelMax = 6;
 		Mario.yVelMax = 10;
 		Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
 		Mario_debug_hitbox = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
@@ -85,11 +85,11 @@ public class MainApplication extends GraphicsApplication {
 		Goomba = new Entity(x, y, 25, 25, true, Id.enemy, goombaGImage);//setting goomba away from Mario for testing
 		Physics.addMovable(Goomba);
 		Goomba.yVel = 0;
-        Goomba.xVel = Goomba.xVelMax = 2;
-        Goomba.yVelMax = 10;
-        Goomba.xDirection = Goomba.yDirection = Goomba.lastDirection = "";
+		Goomba.xVel = Goomba.xVelMax = 2;
+		Goomba.yVelMax = 10;
+		Goomba.xDirection = Goomba.yDirection = Goomba.lastDirection = "";
 	}
-	
+
 	public void GameInit() {
 		levelCompound = new GCompound();
 		for (GImage a : currentLevel.allGImages) {
@@ -98,7 +98,7 @@ public class MainApplication extends GraphicsApplication {
 		for (GRect a : currentLevel.hitboxes_debug) {
 			levelCompound.add(a);
 		}
-		
+
 		add(levelCompound);
 		add(Mario.EntImage);
 		for (Entity m: Physics.movable) {
@@ -108,7 +108,7 @@ public class MainApplication extends GraphicsApplication {
 			}
 		}
 	}
-	
+
 	public void run() {
 		InstructionsPane = new InstructionsPane();
 		DeadScreen = new DeadScreen();
@@ -120,75 +120,63 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	private void gameLoop() {
-	    long now;
-	    long updateTime;
-	    long wait;
-	    final int TARGET_FPS = 60;
-	    final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
-	    while (true) {
-	    	now = System.nanoTime();
-	    	updateTime = System.nanoTime() - now;
-	    	wait = (OPTIMAL_TIME - updateTime) / 1000000;
-	    	
-	    	// Game code here
-	    	if (currScreen == "GameScreen") {
-	    		Boolean keysPressed[] = {w, a, s, d};
-	    		Physics.update(keysPressed);
-	    		Mario.playerDisplay();
-	    		
-	    		// Demo code for test camera
-//	    		levelCompound.move(-1, 0);
-//	    		Physics.moveHitboxes(-1, 0);
-//	    		Mario.move(-1, 0);
-	    		processCamera();
-	    		
-	    		for (Entity m: Physics.movable) {
-	    			if (m.id.equals(Id.enemy)) {
-	    				m.enemyDisplay();
-	    			}
-	    		}
-	    		Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
-	    		if (Mario.getY() > 650 || Mario.dead == true) {
-	    			switchToDead();
-	    		}
-	    		if (Physics.won()) {
-	    			switchToWin();
-	    		}
-	    		/**
-	    		 * Something to worry about:
-	    		 * The hitboxes do not move when the GCompound is moved, we'll have to figure out how to move
-	    		 * the hitboxes. This wouldn't be too hard, but working on it might require the camera to be
-	    		 * somewhat functional, so we probably should get the camera working asap.  
-	    		 */
-	    		//levelCompound.move(-1, 0); //moves the camera 
-	    	}
+		long now;
+		long updateTime;
+		long wait;
+		final int TARGET_FPS = 60;
+		final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+		while (true) {
+			now = System.nanoTime();
+			updateTime = System.nanoTime() - now;
+			wait = (OPTIMAL_TIME - updateTime) / 1000000;
 
-	    	try {
-	    		Thread.sleep(wait);
-	    	} catch (Exception e) {
-	    		e.printStackTrace();
-	    	}
-	    }
+			// Game code here
+			if (currScreen == "GameScreen") {
+				Boolean keysPressed[] = {w, a, s, d};
+				Physics.update(keysPressed);
+				Mario.playerDisplay();
+				processCamera();
+
+				for (Entity m: Physics.movable) {
+					if (m.id.equals(Id.enemy)) {
+						m.enemyDisplay();
+					}
+				}
+				Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
+				if (Mario.getY() > 650 || Mario.dead == true) {
+					switchToDead();
+				}
+				if (Physics.won()) {
+					switchToWin();
+				}
+			}
+
+			try {
+				Thread.sleep(wait);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
-	
+
 	public void processCamera() {
 		if (Mario.getX() > 300) {
 			levelCompound.move(-Mario.xVel, 0);
-    		Physics.moveHitboxes(-Mario.xVel, 0);
-    		Physics.moveEnemies(-Mario.xVel, 0);
-    		Mario.setLocation(299, Mario.getY());
-    		
-    		levelCompound.move(-1, 0);
-    		Physics.moveHitboxes(-1, 0);
-    		Physics.moveEnemies(-1, 0);
+			Physics.moveHitboxes(-Mario.xVel, 0);
+			Physics.moveEnemies(-Mario.xVel, 0);
+			Mario.setLocation(299, Mario.getY());
+
+			levelCompound.move(-3, 0);
+			Physics.moveHitboxes(-3, 0);
+			Physics.moveEnemies(-3, 0);
 		}
 	}
-	
+
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.stopSound(MUSIC_FOLDER, DEAD);
 		audio.playSound(MUSIC_FOLDER, THEME);
-									
+
 		if (currScreen != "MainMenu") {
 			removeAll();
 			for (GObject a : menu.objects) {
@@ -209,15 +197,15 @@ public class MainApplication extends GraphicsApplication {
 			}
 			currScreen = "InstructionsPane";
 		}
-		playClickSound();					// called function to play click sound...
+		playClickSound();	// called function to play click sound...
 	}
-	
+
 	public void switchToGameScreen() {
 		removeAll();
-		
+
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.stopSound(MUSIC_FOLDER, THEME);
-		
+
 		levelOne.reset();
 		MarioInit();
 		for (GPoint p : levelOne.goomba_points) {
@@ -226,12 +214,12 @@ public class MainApplication extends GraphicsApplication {
 		GameInit();
 		currScreen = "GameScreen";
 	}
-	
+
 	public void switchToDead() {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.stopSound(MUSIC_FOLDER, THEME);// plays the in-game music...
 		audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
-		
+
 		if (currScreen != "DeadScreen") {
 			removeAll(); //removes all the contents of the previous screen
 			for (GObject a : DeadScreen.objects) {
@@ -239,9 +227,9 @@ public class MainApplication extends GraphicsApplication {
 			}
 			currScreen = "DeadScreen";
 		}
-		
+
 	}
-	
+
 	public void switchToWin() {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, WIN);		// plays the Win-screen sound...
@@ -255,7 +243,7 @@ public class MainApplication extends GraphicsApplication {
 		}
 	}
 
-	
+
 	private void playRandomSound() {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
@@ -265,7 +253,7 @@ public class MainApplication extends GraphicsApplication {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
-	
+
 	public void playClickSound() {				//function to play the button sound...
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, CLICK);
@@ -274,7 +262,7 @@ public class MainApplication extends GraphicsApplication {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, THEME);
 	}
-	
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = getElementAt(e.getX(), e.getY());
@@ -285,20 +273,20 @@ public class MainApplication extends GraphicsApplication {
 		if(obj == menu.exitButton) {  //exiting from the application...
 			System.exit(0);
 		}
-		
+
 		if (obj == InstructionsPane.returnIcon) {
 			playClickSound();  
 			playThemeSound();//play the clique.mp3 sound on button click...
 			switchToMenu();
-					
+
 		}
-		
+
 		if(obj == InstructionsPane.continueButton) {
 			playClickSound();		//play the clique.mp3 sound on button click...
 			switchToGameScreen();
 			stopRandomSound();     //stop the ongoing sound...
 		}
-		
+
 		if (obj == DeadScreen.quitButton) { 
 			playClickSound();
 			switchToMenu();   //If you quit the game, why are we calling the menu again?
@@ -315,13 +303,13 @@ public class MainApplication extends GraphicsApplication {
 			switchToMenu();
 			playThemeSound();
 		}
-        if (obj == WinScreen.quitButton) {
-        	playClickSound();
+		if (obj == WinScreen.quitButton) {
+			playClickSound();
 			stopRandomSound();  	//stop the ongoing sound...
 			System.exit(0);
-            //switchToInstructions();
-        }
-    }
+			//switchToInstructions();
+		}
+	}
 	private class Input implements KeyListener {
 		public void keyPressed(KeyEvent e) {
 			switch (e.getKeyCode()) {
@@ -360,13 +348,7 @@ public class MainApplication extends GraphicsApplication {
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
-			
-		}
-	
-}
-	
-}
 
-	
-
-	
+		}	
+	}
+}
