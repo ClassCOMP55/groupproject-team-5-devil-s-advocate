@@ -73,6 +73,13 @@ public class PhysicsEngine {
 			}
 			
 		}
+//		for (Entity e : movable) {
+//			if (!e.dead) {	
+//				if (e.getX() < windowWidth) {
+//					e.move(-e.xVel, e.yVel);//Remove the minus to have object go to the right	
+//				}
+//			}
+//		}
 		detectCollision();
 	}
 	
@@ -127,9 +134,9 @@ public class PhysicsEngine {
 		if (mainEntity.yDirection == "jump") {
 			i++;
 			if (i < jumpTime) {
-				AudioPlayer audio = AudioPlayer.getInstance();
-				audio.stopSound(MUSIC_FOLDER, JUMP);
-				audio.playSound(MUSIC_FOLDER, JUMP);
+				//AudioPlayer audio = AudioPlayer.getInstance();
+				//audio.stopSound(MUSIC_FOLDER, JUMP);
+				//audio.playSound(MUSIC_FOLDER, JUMP);
 				mainEntity.yVel = -12;
 			}
 		}
@@ -216,13 +223,13 @@ public class PhysicsEngine {
 					// TODO Implement death of goomba
 					System.out.println("Kill current goomba");
 					mainEntity.yVel = -mainEntity.yVel;
-					AudioPlayer audio = AudioPlayer.getInstance();
-					audio.stopSound(MUSIC_FOLDER, STOMP);
+					//AudioPlayer audio = AudioPlayer.getInstance();
+					//audio.stopSound(MUSIC_FOLDER, STOMP);
 					m.dead = true;
 				} else if (getHitbox(mainEntity).intersects(getHitbox(m))) {
 					// TODO Implement mario death
-					AudioPlayer audio = AudioPlayer.getInstance();
-					audio.stopSound(MUSIC_FOLDER, GOOMBA);
+					//AudioPlayer audio = AudioPlayer.getInstance();
+					//audio.stopSound(MUSIC_FOLDER, GOOMBA);
 					System.out.println("Mario dies");
 					mainEntity.dead = true;
 				}
@@ -248,6 +255,9 @@ public class PhysicsEngine {
 	
 	public void moveEnemies(double x, double y) {
 		for (Entity e : movable) {
+			if (e.dead) {
+				e.EntImage.move(x,y);
+			}
 			e.move(x, y);
 		}
 	}

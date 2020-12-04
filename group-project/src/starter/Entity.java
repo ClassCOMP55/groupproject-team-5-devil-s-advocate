@@ -22,6 +22,7 @@ public class Entity {
 	private double rcount = 0;
 	private double lcount = 4;
 	private double gcount = 0;
+	private double dcount = 0;
 	public Boolean falling = true;//added to test falling
 	public Boolean dead = false;
 
@@ -127,7 +128,20 @@ public class Entity {
 		if (gcount == 100) {
 			gcount = 0;
 		}
-		EntImage.setLocation(entity.getX()-12, entity.getY()-22);
+		if (dead) {
+			dcount++;
+			if (dcount < 50) {
+				EntImage.setImage(EntityImages[2]);
+				xVel = 0;
+			}
+			else {
+				dcount = 55;
+				EntImage.setLocation(1000, 1000);
+			}
+		}
+		else {
+			EntImage.setLocation(entity.getX()-12, entity.getY()-22);
+		}
 	}
 	
 	/**
