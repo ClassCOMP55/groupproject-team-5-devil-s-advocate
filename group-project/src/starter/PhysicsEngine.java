@@ -7,6 +7,8 @@ public class PhysicsEngine {
 	private ArrayList<Entity> winningSpace; // If player is in this region, the player wins and the game is over
 	private boolean enableXDecel = false;
 	private static final String JUMP = "in/jumpShort.mp3";
+	private static final String STOMP = "in/stomp.mp3";
+	private static final String GOOMBA = "in/goomba.mp3";
 	public static final String MUSIC_FOLDER = "sound";
 	public int windowWidth;
 	private int jumpTime = 13; // Used to jump how long you are allowed to press the jump key
@@ -125,9 +127,9 @@ public class PhysicsEngine {
 		if (mainEntity.yDirection == "jump") {
 			i++;
 			if (i < jumpTime) {
-				//AudioPlayer audio = AudioPlayer.getInstance();
-				//audio.stopSound(MUSIC_FOLDER, JUMP);
-				//audio.playSound(MUSIC_FOLDER, JUMP);
+				AudioPlayer audio = AudioPlayer.getInstance();
+				audio.stopSound(MUSIC_FOLDER, JUMP);
+				audio.playSound(MUSIC_FOLDER, JUMP);
 				mainEntity.yVel = -12;
 			}
 		}
@@ -151,7 +153,17 @@ public class PhysicsEngine {
 				mainEntity.setLocation(e.getX() + e.getWidth() + 1, mainEntity.getY());
 				mainEntity.xVel = 0;
 			}
-			
+				
+// 			Partial bug fix when Mario could'nt pass the immovable object from the top side...		
+// 			Code need to be fixed when Mario crosses the immovable object but cannot move further until jumped...
+//			Logic: If the right  hitbox of the main entity intersects the right hitbox of the immovable object. We didn't have any for this so i created one...
+// 			This removed the bug of mario getting stuck on the top right of the immovable objects...			
+//			if (getRightHitbox(mainEntity).intersects(getRightHitbox(e))) {
+//				mainEntity.setLocation(e.getX() + e.getWidth()+1, mainEntity.getY());
+//				mainEntity.xVel = mainEntity.xVel;
+//				mainEntity.xDirection = "right";
+//			}
+					
 			// Collision between the right side of mainEntity and the left side of immovable objects
 			if (getRightHitbox(mainEntity).intersects(getLeftHitbox(e))) {
 				mainEntity.setLocation(e.getX() - mainEntity.getWidth() - 1, mainEntity.getY());
@@ -203,9 +215,13 @@ public class PhysicsEngine {
 				if (getBottomHitbox(mainEntity).intersects(getTopHitbox(m))) {
 					// TODO Implement death of goomba
 					System.out.println("Kill current goomba");
+					AudioPlayer audio = AudioPlayer.getInstance();
+					audio.stopSound(MUSIC_FOLDER, STOMP);
 					m.dead = true;
 				} else if (getHitbox(mainEntity).intersects(getHitbox(m))) {
 					// TODO Implement mario death
+					AudioPlayer audio = AudioPlayer.getInstance();
+					audio.stopSound(MUSIC_FOLDER, GOOMBA);
 					System.out.println("Mario dies");
 					mainEntity.dead = true;
 				}

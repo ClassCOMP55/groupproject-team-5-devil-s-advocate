@@ -11,7 +11,7 @@ public class Entity {
 	public double xVel, yVel, testVel;//added for testing
     public double xVelMax, yVelMax;
     public String xDirection, yDirection;
-    public String lastDirection = "right"; // Just initializied this to prevent null errors
+    public String lastDirection = "right"; // Just initialized this to prevent null errors
 	public boolean movable;
     public boolean hitTop = false, hitBottom = false, hitLeft = false, hitRight = false;
 	public Id id;

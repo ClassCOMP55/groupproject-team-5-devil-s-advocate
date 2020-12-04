@@ -15,7 +15,7 @@ public class MainApplication extends GraphicsApplication {
 	public static final String MUSIC_FOLDER = "sound";
 	private static final String CLICK = "in/clique.mp3"; 	
 	private static final String THEME = "in/theme.mp3";
-	private static final String DEAD = "in/dead.mp3";// imported a new .mp3 file for click sound...
+	private static final String DEAD = "in/dead.mp3";		// imported a new .mp3 file for click sound...
 	private static final String WIN = "in/levelPass.mp3";
 	private static final String[] SOUND_FILES = { "in/theme.mp3", "in/dead.mp3" };
 	public static SpriteSheet sheetNew;
@@ -177,17 +177,17 @@ public class MainApplication extends GraphicsApplication {
     		Physics.moveHitboxes(-Mario.xVel, 0);
     		Physics.moveEnemies(-Mario.xVel, 0);
     		Mario.setLocation(299, Mario.getY());
-    		// Potential fix for mario getting stuck in corners of blocks
-//    		levelCompound.move(-2, 0);
-//    		Physics.moveHitboxes(-2, 0);
-//    		Physics.moveEnemies(-2, 0);
+    		
+    		levelCompound.move(-1, 0);
+    		Physics.moveHitboxes(-1, 0);
+    		Physics.moveEnemies(-1, 0);
 		}
 	}
 	
 	public void switchToMenu() { // change/time the audio in the switchTo functions 
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.stopSound(MUSIC_FOLDER, DEAD);
-		//audio.playSound(MUSIC_FOLDER, THEME);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, DEAD);
+		audio.playSound(MUSIC_FOLDER, THEME);
 									
 		if (currScreen != "MainMenu") {
 			removeAll();
@@ -196,14 +196,12 @@ public class MainApplication extends GraphicsApplication {
 			}
 			currScreen = "MainMenu";
 		}
-		
-		//audio.playSound(MUSIC_FOLDER, THEME);
+		audio.playSound(MUSIC_FOLDER, THEME);
 	}
 
 	public void switchToInstructions() {
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.playSound(MUSIC_FOLDER, THEME);
-        //audio.stopSound(MUSIC_FOLDER, THEME);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, THEME);
 		if (currScreen != "InstructionsPane") {
 			removeAll(); //removes all the contents of the previous screen
 			for (GObject a : InstructionsPane.objects) {
@@ -212,14 +210,14 @@ public class MainApplication extends GraphicsApplication {
 			currScreen = "InstructionsPane";
 		}
 		playClickSound();					// called function to play click sound...
-		 					// to stop the theme sound before switching to menu page...
 	}
 	
 	public void switchToGameScreen() {
-		count++;
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.playSound(MUSIC_FOLDER, THEME);
 		removeAll();
+		
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, THEME);
+		
 		levelOne.reset();
 		MarioInit();
 		for (GPoint p : levelOne.goomba_points) {
@@ -230,10 +228,10 @@ public class MainApplication extends GraphicsApplication {
 	}
 	
 	public void switchToDead() {
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.stopSound(MUSIC_FOLDER, THEME);		// plays the in-game music...
-		//audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
-		playClickSound();
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, THEME);// plays the in-game music...
+		audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
+		
 		if (currScreen != "DeadScreen") {
 			removeAll(); //removes all the contents of the previous screen
 			for (GObject a : DeadScreen.objects) {
@@ -245,8 +243,8 @@ public class MainApplication extends GraphicsApplication {
 	}
 	
 	public void switchToWin() {
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.playSound(MUSIC_FOLDER, WIN);		// plays the Win-screen sound...
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, WIN);		// plays the Win-screen sound...
 		playClickSound();
 		if (currScreen != "WinScreen") {
 			removeAll(); //removes all the contents of the previous screen
@@ -259,22 +257,22 @@ public class MainApplication extends GraphicsApplication {
 
 	
 	private void playRandomSound() {
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
 
 	public void stopRandomSound() {				// function to stop the random sound from being played...
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.stopSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
 	
 	public void playClickSound() {				//function to play the button sound...
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.playSound(MUSIC_FOLDER, CLICK);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, CLICK);
 	}
 	public void playThemeSound() {				//function to play the theme sound...
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.playSound(MUSIC_FOLDER, THEME);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, THEME);
 	}
 	
 	@Override
