@@ -36,7 +36,7 @@ public class DeadScreen {
 		Mario_Dead.setColor(Color.RED);
         Mario_Dead.setFont("Arial-48");
 		
-		playAgainButton = new GButton("Play Again", 250, 375, 300, 75);
+		playAgainButton = new GButton("Home", 250, 375, 300, 75);
 		playAgainButton.setFillColor(Color.RED);
 		
 		quitButton = new GButton("Exit", 250, 475, 300, 75);

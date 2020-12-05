@@ -24,7 +24,7 @@ public class WinScreen {
         Mario_Win = new GLabel("You have passed the level!", 100, 100);
         Mario_Win.setFont("Arial-48");
         Mario_Win.setColor(Color.RED);
-        playAgainButton = new GButton("Play Again", 250, 375, 300, 75);
+        playAgainButton = new GButton("Home", 250, 375, 300, 75);
 		playAgainButton.setFillColor(Color.RED);
 		quitButton = new GButton("Quit", 250, 475, 300, 75);
 		quitButton.setFillColor(Color.RED);

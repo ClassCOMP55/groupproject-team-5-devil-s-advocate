@@ -11,9 +11,18 @@ public class PhysicsEngine {
 	private static final String GOOMBA = "in/goomba.mp3";
 	public static final String MUSIC_FOLDER = "sound";
 	public int windowWidth;
-	private int jumpTime = 13; // Used to jump how long you are allowed to press the jump key
-	private static int i = 0; // Used to track how long the jump key has been pressed
-
+	private int jumpTime = 13; 					// Used to jump how long you are allowed to press the jump key
+	private static int i = 0; 					// Used to track how long the jump key has been pressed
+	
+	public void playGoombaSound() {				//function to play the GOOMBA sound...
+//		AudioPlayer audio = AudioPlayer.getInstance();
+//		audio.playSound(MUSIC_FOLDER, GOOMBA);
+	}
+	
+	public void playStompSound() {				//function to play the STOMP sound...
+//		AudioPlayer audio = AudioPlayer.getInstance();
+//		audio.playSound(MUSIC_FOLDER, STOMP);
+	}
 	/**
 	 * ArrayLists to store objects that are movable and immovable
 	 * movable - stores movable objects like enemies
@@ -134,9 +143,9 @@ public class PhysicsEngine {
 		if (mainEntity.yDirection == "jump") {
 			i++;
 			if (i < jumpTime) {
-				//AudioPlayer audio = AudioPlayer.getInstance();
-				//audio.stopSound(MUSIC_FOLDER, JUMP);
-				//audio.playSound(MUSIC_FOLDER, JUMP);
+				AudioPlayer audio = AudioPlayer.getInstance();
+				audio.stopSound(MUSIC_FOLDER, JUMP);
+				audio.playSound(MUSIC_FOLDER, JUMP);
 				mainEntity.yVel = -12;
 			}
 		}
@@ -221,16 +230,15 @@ public class PhysicsEngine {
 				
 				if (getBottomHitbox(mainEntity).intersects(getTopHitbox(m))) {
 					// TODO Implement death of goomba
+					playStompSound();			//play Stomp sound when MArio kills Goomba...
 					System.out.println("Kill current goomba");
 					mainEntity.yVel = -mainEntity.yVel;
-					//AudioPlayer audio = AudioPlayer.getInstance();
-					//audio.stopSound(MUSIC_FOLDER, STOMP);
+					
 					m.dead = true;
 				} else if (getHitbox(mainEntity).intersects(getHitbox(m))) {
 					// TODO Implement mario death
-					//AudioPlayer audio = AudioPlayer.getInstance();
-					//audio.stopSound(MUSIC_FOLDER, GOOMBA);
 					System.out.println("Mario dies");
+					playGoombaSound();			//play Goomba kill effect...
 					mainEntity.dead = true;
 				}
 			}
