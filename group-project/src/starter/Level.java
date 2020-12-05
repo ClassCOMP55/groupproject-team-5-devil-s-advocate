@@ -112,7 +112,7 @@ public class Level {
 					tileObjs.add(e);
 				}
 				for (TiledObject e : tileObjs) {
-					Entity temp = new Entity((e.getX() / 16) * tileSizeOnScreen, (e.getY() / 16) * tileSizeOnScreen, (e.getWidth() / 16) * tileSizeOnScreen, (e.getHeight() / 16) * tileSizeOnScreen, false, Id.immovable);
+					Entity temp = new Entity((e.getX() / 16) * tileSizeOnScreen, (e.getY() / 16) * tileSizeOnScreen, (e.getWidth() / 16) * tileSizeOnScreen, (e.getHeight() / 16) * tileSizeOnScreen, Id.immovable);
 					System.out.println("X: " + (e.getX() / 16) * tileSizeOnScreen + " Y: " + (e.getY() / 16) * tileSizeOnScreen + " Width: " + (e.getWidth() / 16) * tileSizeOnScreen + " Height: " + (e.getHeight() / 16) * tileSizeOnScreen);
 					if (layer.getName().equals("pole")) { // == operator for strings do not work cuz java
 						winningSpace.add(temp);

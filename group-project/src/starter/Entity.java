@@ -8,11 +8,10 @@ import acm.graphics.*;
 public class Entity {
 	public double locationX, locationY;
 	public double width, height;
-	public double xVel, yVel, testVel;//added for testing
+	public double xVel, yVel;//added for testing
     public double xVelMax, yVelMax;
     public String xDirection, yDirection;
     public String lastDirection = "right"; // Just initialized this to prevent null errors
-	public boolean movable;
     public boolean hitTop = false, hitBottom = false, hitLeft = false, hitRight = false;
 	public Id id;
 	public GRect entity;
@@ -28,26 +27,24 @@ public class Entity {
 
     Entity() {} // Constructor to not do anything
     
-	Entity(double x, double y, double width, double height, boolean movable, Id id) {
+	Entity(double x, double y, double width, double height, Id id) {
 		entity = new GRect(x, y, width, height);
 		setLocation(x, y);
 		locationX = x;
 		locationY = y;
 		this.width = width;
 		this.height = height;
-		this.movable = movable;
 		this.id = id;
 	}
 	
 	
-	Entity(double x, double y, double width, double height, boolean movable, Id id, GImage EntImages[]) {
+	Entity(double x, double y, double width, double height, Id id, GImage EntImages[]) {
 		entity = new GRect(x, y, width, height);
 		setLocation(x, y);
 		locationX = x;
 		locationY = y;
 		this.width = width;
 		this.height = height;
-		this.movable = movable;
 		this.id = id;
 		for (int i = 0; i < EntImages.length; i++) {
 			/**
@@ -148,25 +145,6 @@ public class Entity {
 	 * This function passes to GObject's setFilled(), only applies if entity is GRect
 	 * @param a - whether object is filled with color or not
 	 */
-	public void setFilled(boolean a) { //*** This code is slated for deletion
-		entity.setFilled(a);
-	}
-	
-	/**
-	 * This function passes to GObject's setColor()
-	 * @param c - Color
-	 */
-	public void setColor(Color c) {
-		entity.setColor(c);
-	}
-	
-	/**
-	 * This function passes to GObject's setFillColor()
-	 * @param c - Color
-	 */
-	public void setFillColor(Color c) {
-		entity.setColor(c);
-	}
 	
 	/**
 	 * This function passes to GObject's setLocation()

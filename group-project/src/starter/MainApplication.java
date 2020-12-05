@@ -37,7 +37,7 @@ public class MainApplication extends GraphicsApplication {
 	private GameScreen GameScreen; 
 	private PhysicsEngine Physics;
 	private Entity Mario, Goomba;
-private String currScreen = "";
+	private String currScreen = "";
 
 	private Level levelOne = new Level("/levels/OfficialLevel1/OfficialLevel1.tmx", "/SpriteSheet/tileset.png", WINDOW_HEIGHT);
 	private Level currentLevel;
@@ -62,7 +62,7 @@ private String currScreen = "";
 	 */
 	public void MarioInit() {
 		currentLevel = levelOne;
-		Mario = new Entity(100, 400, 27, 50, true, Id.player, playerGImage);
+		Mario = new Entity(100, 400, 27, 50, Id.player, playerGImage);
 		Physics = new PhysicsEngine (Mario);
 		Physics.windowWidth = WINDOW_WIDTH;
 		Physics.setWinningSpace(currentLevel.winningSpace);
@@ -80,7 +80,7 @@ private String currScreen = "";
 	 * Initializes 1 Goomba and variables for all associated actions.
 	 */
 	public void GoombaInit(double x, double y) {
-		Goomba = new Entity(x, y, 25, 25, true, Id.enemy, goombaGImage);//setting goomba away from Mario for testing
+		Goomba = new Entity(x, y, 25, 25, Id.enemy, goombaGImage);//setting goomba away from Mario for testing
 		Physics.addMovable(Goomba);
 		Goomba.yVel = 0;
 		Goomba.xVel = Goomba.xVelMax = 2;
