@@ -36,7 +36,7 @@ public class MainApplication extends GraphicsApplication {
 	private GameScreen GameScreen; 
 	private PhysicsEngine Physics;
 	private Entity Mario, Goomba;
-	private GRect Mario_debug_hitbox;
+//	private GRect Mario_debug_hitbox;
 	private int count;
 
 	private String currScreen = "";
@@ -76,7 +76,7 @@ public class MainApplication extends GraphicsApplication {
 		Mario.xVelMax = 6;
 		Mario.yVelMax = 10;
 		Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
-		Mario_debug_hitbox = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
+		// Mario_debug_hitbox = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
 	}
 	/**
 	 * Initializes 1 Goomba and variables for all associated actions.
@@ -95,16 +95,16 @@ public class MainApplication extends GraphicsApplication {
 		for (GImage a : currentLevel.allGImages) {
 			levelCompound.add(a);
 		}
-		for (GRect a : currentLevel.hitboxes_debug) {
-			levelCompound.add(a);
-		}
+//		for (GRect a : currentLevel.hitboxes_debug) {
+//			levelCompound.add(a);
+//		}
 
 		add(levelCompound);
 		add(Mario.EntImage);
 		for (Entity m: Physics.movable) {
 			if (m.id.equals(Id.enemy)) {
 				add(m.EntImage);
-				add(m.entity);
+				// add(m.entity); // Adds the Entity GRect or the hitbox of the goombas
 			}
 		}
 	}
@@ -142,7 +142,8 @@ public class MainApplication extends GraphicsApplication {
 						m.enemyDisplay();
 					}
 				}
-				Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
+				
+				// Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
 				if (Mario.getY() > 650 || Mario.dead == true) {
 					switchToDead();
 				}
