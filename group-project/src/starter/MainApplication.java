@@ -136,7 +136,7 @@ public class MainApplication extends GraphicsApplication {
 						m.enemyDisplay();
 					}
 				}
-				
+
 				// Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
 				if (Mario.getY() > 650 || Mario.dead == true) {
 					playDeadSound();		// Play Dead Screen Music...
@@ -178,7 +178,7 @@ public class MainApplication extends GraphicsApplication {
 			}
 			currScreen = "MainMenu";
 		}
-		
+
 	}
 
 	public void switchToInstructions() {
@@ -207,13 +207,13 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToDead() {
-//		AudioPlayer audio = AudioPlayer.getInstance();
-//		audio.stopSound(MUSIC_FOLDER, THEME);				// plays the theme...
-//		audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, THEME);				// plays the theme...
+		audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
 
 		if (currScreen != "DeadScreen")
 		{
-			
+
 			removeAll(); //removes all the contents of the previous screen
 			for (GObject a : DeadScreen.objects) {
 				add(a);
@@ -239,30 +239,30 @@ public class MainApplication extends GraphicsApplication {
 
 
 	public void stopRandomSound() {				// function to stop the random sound from being played...
-		//AudioPlayer audio = AudioPlayer.getInstance();
-		//audio.stopSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[SOUND_FILES.length]);
 	}
 
 	public void playClickSound() {				//function to play the button click sound...
-//		AudioPlayer audio = AudioPlayer.getInstance();
-//		audio.playSound(MUSIC_FOLDER, CLICK);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, CLICK);
 	}
 	public void playThemeSound() {				//function to play the theme sound...
-//		AudioPlayer audio = AudioPlayer.getInstance();
-//		audio.playSound(MUSIC_FOLDER, THEME);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, THEME);
 	}
 	public void playDeadSound() {				//function to play the DEAD sound...
-//		AudioPlayer audio = AudioPlayer.getInstance();
-//		audio.playSound(MUSIC_FOLDER, DEAD);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, DEAD);
 	}
 	public void playGoombaSound() {				//function to play the GOOMBA sound...
-//		AudioPlayer audio = AudioPlayer.getInstance();
-//		audio.playSound(MUSIC_FOLDER, GOOMBA);
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, GOOMBA);
 	}
 	public void stopThemeSound() {             //function to stop THEME sound...
-//		AudioPlayer audio = AudioPlayer.getInstance();
-//		audio.stopSound(MUSIC_FOLDER, THEME);
-		
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.stopSound(MUSIC_FOLDER, THEME);
+
 	}
 
 	@Override
@@ -270,7 +270,7 @@ public class MainApplication extends GraphicsApplication {
 		GObject obj = getElementAt(e.getX(), e.getY());
 		if (obj == menu.playButton) {
 			playClickSound();  
-		    playThemeSound();
+			playThemeSound();
 			switchToInstructions();
 		}
 
@@ -300,7 +300,7 @@ public class MainApplication extends GraphicsApplication {
 		if (obj== DeadScreen.playAgainButton) {
 			playClickSound();
 			switchToMenu();
-			
+
 		} 
 		if (obj== WinScreen.playAgainButton) {
 			playClickSound();
