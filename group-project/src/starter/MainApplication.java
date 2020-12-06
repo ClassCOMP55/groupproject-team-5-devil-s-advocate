@@ -34,7 +34,6 @@ public class MainApplication extends GraphicsApplication {
 	private MainMenu menu;
 	private DeadScreen DeadScreen;
 	private WinScreen WinScreen; 
-	private GameScreen GameScreen; 
 	private PhysicsEngine Physics;
 	private Entity Mario, Goomba;
 	private String currScreen = "";
