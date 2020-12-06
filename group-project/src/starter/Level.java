@@ -23,20 +23,20 @@ public class Level {
 	String pathToTMX;
 	String pathToSpriteSheet;
 	int windowHeight;
-	
+
 	/**
 	 * Constructor for the TMXLevelReader class
 	 * @param pathToTMX - Path to tmx files under levels folder
 	 * @param pathToSpriteSheet - Path to sprite sheet, MUST BE UNDER /SpriteSheet/ FOLDER, because java is dumb when it comes to file paths
 	 */
-	
+
 	Level(String pathToTMX, String pathToSpriteSheet, int windowHeight) {
 		this.pathToTMX = pathToTMX;
 		this.pathToSpriteSheet = pathToSpriteSheet;
 		this.windowHeight = windowHeight;
 		reset();
 	}
-	
+
 	public void reset() {
 		allLayers.clear();
 		allGImages.clear();
@@ -52,7 +52,7 @@ public class Level {
 		System.out.println("Size of map: " + map.getWidth() + " wide, " + map.getHeight() + " high.");
 		System.out.println("Size of tiles: " + map.getTileWidth() + " wide, " + map.getTileHeight() + " high.");
 		System.out.println("Available layers: ");
-		
+
 		for (TiledLayer a : map.getTopLevelLayers()) {
 			allLayers.add(a);
 			System.out.println("name: " + a.getName() + ", type: " + a.toString());
@@ -60,7 +60,7 @@ public class Level {
 		sheet = new SpriteSheet(pathToSpriteSheet);
 		processLayers();
 	}
-	
+
 	// For the path put in folder name and name of .TMX file e.g. test/Test_Level.tmx
 	private static TiledMap readFile(String path) {
 		String actualPath = reader.getCanonicalPath("../media/" + path);
@@ -68,17 +68,17 @@ public class Level {
 		TiledMap temp = reader.getMap(actualPath);
 		return temp;
 	}
-	
+
 	public GImage getSubGImage(int x, int y, int w, int h) {
 		return new GImage(sheet.getSprite(x, y, w, h));
 	}
-	
+
 	private static void processLayers() {
 		int tilesetX, tilesetY;
 		ArrayTileLayer tempATL;
 		HashTileLayer tempHTL;
 		TiledObjectLayer tempTOL;
-		
+
 		for (TiledLayer layer : allLayers) { 
 			if (layer instanceof ArrayTileLayer) {
 				tempATL = (ArrayTileLayer)layer;
@@ -89,7 +89,7 @@ public class Level {
 						tilesetY = tempATL.getTile(point.x, point.y).getTilesetY();
 						GImage temp = new GImage(sheet.getSprite(tilesetX, tilesetY, TILESET_WIDTH_AND_HEIGHT, TILESET_WIDTH_AND_HEIGHT), point.x * tileSizeOnScreen, point.y * tileSizeOnScreen);
 						temp.setSize(tileSizeOnScreen, tileSizeOnScreen);
-						
+
 						allGImages.add(temp);
 					}
 				}
@@ -134,20 +134,20 @@ public class Level {
 	}
 
 	public static void generateHitboxesDebug() {
-		 GRect temp;
-		 for (Entity e : hitboxes) {
-			 temp = new GRect(e.getX(), e.getY(), e.getWidth(), e.getHeight());
-			 temp.setFilled(true);
-			 temp.setFillColor(new Color(240, 224, 46, 162));
-			 hitboxes_debug.add(temp);
-		 }
-		 
-		 for (Entity e : winningSpace) {
-			 temp = new GRect(e.getX(), e.getY(), e.getWidth(), e.getHeight());
-			 temp.setFilled(true);
-			 temp.setFillColor(new Color(45, 204, 20, 162));
-			 hitboxes_debug.add(temp);
-		 }
-		 System.out.println("Debug hitbox overlays generated");
+		GRect temp;
+		for (Entity e : hitboxes) {
+			temp = new GRect(e.getX(), e.getY(), e.getWidth(), e.getHeight());
+			temp.setFilled(true);
+			temp.setFillColor(new Color(240, 224, 46, 162));
+			hitboxes_debug.add(temp);
+		}
+
+		for (Entity e : winningSpace) {
+			temp = new GRect(e.getX(), e.getY(), e.getWidth(), e.getHeight());
+			temp.setFilled(true);
+			temp.setFillColor(new Color(45, 204, 20, 162));
+			hitboxes_debug.add(temp);
+		}
+		System.out.println("Debug hitbox overlays generated");
 	}
 }

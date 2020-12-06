@@ -76,6 +76,7 @@ public class GParagraph extends GCompound {
 			labels.get(i).setFont(labels.get(0).getFont());
 			labels.get(i).setLocation(startX, startY + i * labelHeight);
 		}
+		
 		int numToAdd = numLabels - previousSize;
 		for (int j = 0; j < numToAdd; j++) {
 			GLabel temp = new GLabel("", startX, startY + ((i + j) * labelHeight));

@@ -11,7 +11,7 @@ public class WinScreen {
     private GImage background;
     private GImage Mario;
     private GLabel Mario_Win; 
-    public GButton playAgainButton;// keep buttons
+    public GButton playAgainButton;
     public GButton quitButton;
     public ArrayList<GObject> objects = new ArrayList<GObject>();
 

@@ -50,7 +50,7 @@ public class Entity {
 			 * Commented the line below out because switching images no longer use GImages,
 			 * Images are used instead.
 			 */
-			// this.EntImages[i] = EntImages[i];
+			
 			/**
 			 * The line below is where the array of EntImages from the constructor is converted into Images.
 			 */

@@ -1,6 +1,5 @@
 package starter;
 
-
 /*
  * File: GButton.java
  * ------------------

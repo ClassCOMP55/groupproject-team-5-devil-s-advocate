@@ -92,9 +92,6 @@ public class MainApplication extends GraphicsApplication {
 		for (GImage a : currentLevel.allGImages) {
 			levelCompound.add(a);
 		}
-//		for (GRect a : currentLevel.hitboxes_debug) {
-//			levelCompound.add(a);
-//		}
 
 		add(levelCompound);
 		add(Mario.EntImage);
