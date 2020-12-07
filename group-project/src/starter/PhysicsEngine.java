@@ -15,13 +15,13 @@ public class PhysicsEngine {
 	private static int i = 0; 					// Used to track how long the jump key has been pressed
 
 	public void playGoombaSound() {				//function to play the GOOMBA sound...
-		//		AudioPlayer audio = AudioPlayer.getInstance();
-		//		audio.playSound(MUSIC_FOLDER, GOOMBA);
+			AudioPlayer audio = AudioPlayer.getInstance();
+			audio.playSound(MUSIC_FOLDER, GOOMBA);
 	}
 
 	public void playStompSound() {				//function to play the STOMP sound...
-		//		AudioPlayer audio = AudioPlayer.getInstance();
-		//		audio.playSound(MUSIC_FOLDER, STOMP);
+			AudioPlayer audio = AudioPlayer.getInstance();
+			audio.playSound(MUSIC_FOLDER, STOMP);
 	}
 	/**
 	 * ArrayLists to store objects that are movable and immovable
