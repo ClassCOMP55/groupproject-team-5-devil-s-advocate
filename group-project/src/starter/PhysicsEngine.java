@@ -13,7 +13,15 @@ public class PhysicsEngine {
 	public int windowWidth;
 	private int jumpTime = 13; 					// Used to jump how long you are allowed to press the jump key
 	private static int i = 0; 					// Used to track how long the jump key has been pressed
-
+	
+	/**
+	 * ArrayLists to store objects that are movable and immovable
+	 * movable - stores movable objects like enemies
+	 * immovable - stores immovable objects like walls and platforms
+	 */
+	public ArrayList<Entity> movable = new ArrayList<Entity>();
+	private ArrayList<Entity> immovable = new ArrayList<Entity>();
+	
 	public void playGoombaSound() {				//function to play the GOOMBA sound...
 			AudioPlayer audio = AudioPlayer.getInstance();
 			audio.playSound(MUSIC_FOLDER, GOOMBA);
@@ -23,13 +31,6 @@ public class PhysicsEngine {
 			AudioPlayer audio = AudioPlayer.getInstance();
 			audio.playSound(MUSIC_FOLDER, STOMP);
 	}
-	/**
-	 * ArrayLists to store objects that are movable and immovable
-	 * movable - stores movable objects like enemies
-	 * immovable - stores immovable objects like walls and platforms
-	 */
-	public ArrayList<Entity> movable = new ArrayList<Entity>();
-	private ArrayList<Entity> immovable = new ArrayList<Entity>();
 
 	/**
 	 * Constructor
@@ -38,6 +39,7 @@ public class PhysicsEngine {
 	PhysicsEngine(Entity mainEnt) {
 		mainEntity = mainEnt;
 	}
+	
 	public static int returnI() {
 		return i;
 	}
@@ -47,14 +49,17 @@ public class PhysicsEngine {
 			movable.add(e);
 		}
 	}
+	
 	public void addImmovable(Entity... ent) {
 		for (Entity e : ent) {
 			immovable.add(e);
 		}
 	}
+	
 	public void removeMovable(Entity Entity) {
 		movable.remove(Entity);
 	}
+	
 	public void removeImmovable(Entity Entity) {
 		immovable.remove(Entity);
 	}
@@ -78,17 +83,10 @@ public class PhysicsEngine {
 			if (e.dead) {
 				e.setLocation(1000, 1000);
 			} else {
-				if (e.getX() < windowWidth) e.move(-e.xVel, e.yVel);//Remove the minus to have object go to the right	
+				if (e.getX() < windowWidth) e.move(-e.xVel, e.yVel); //Remove the minus to have object go to the right	
 			}
 
 		}
-		//		for (Entity e : movable) {
-		//			if (!e.dead) {	
-		//				if (e.getX() < windowWidth) {
-		//					e.move(-e.xVel, e.yVel);//Remove the minus to have object go to the right	
-		//				}
-		//			}
-		//		}
 		detectCollision();
 	}
 
@@ -97,16 +95,17 @@ public class PhysicsEngine {
 	 * @param keysPressed - pass an array of Boolean values of which keys are pressed
 	 * [0] = W, [1] = A, [2] = S, [3] = D
 	 */
-
 	private void processKeys(Boolean[] keysPressed) {
 		boolean w = keysPressed[0];
 		boolean a = keysPressed[1];
 		boolean s = keysPressed[2];
 		boolean d = keysPressed[3];
 
-		// These if statements are used to stop left and right keys being pressed simultaneously
+		/**
+		 * These if statements are used to stop left and right keys being pressed simultaneously
+		 * Otherwise just moves according to keys pressed
+		 */
 		if (a == true) {
-
 			moveLeft();
 		} else if (d == true) {
 			moveRight();
@@ -170,16 +169,6 @@ public class PhysicsEngine {
 				mainEntity.xVel = 0;
 			}
 
-			// 			Partial bug fix when Mario could'nt pass the immovable object from the top side...		
-			// 			Code need to be fixed when Mario crosses the immovable object but cannot move further until jumped...
-			//			Logic: If the right  hitbox of the main entity intersects the right hitbox of the immovable object. We didn't have any for this so i created one...
-			// 			This removed the bug of mario getting stuck on the top right of the immovable objects...			
-			//			if (getRightHitbox(mainEntity).intersects(getRightHitbox(e))) {
-			//				mainEntity.setLocation(e.getX() + e.getWidth()+1, mainEntity.getY());
-			//				mainEntity.xVel = mainEntity.xVel;
-			//				mainEntity.xDirection = "right";
-			//			}
-
 			// Collision between the right side of mainEntity and the left side of immovable objects
 			if (getRightHitbox(mainEntity).intersects(getLeftHitbox(e))) {
 				mainEntity.setLocation(e.getX() - mainEntity.getWidth() - 1, mainEntity.getY());
@@ -229,14 +218,11 @@ public class PhysicsEngine {
 				}
 
 				if (getBottomHitbox(mainEntity).intersects(getTopHitbox(m))) {
-					// TODO Implement death of goomba
 					playStompSound();			//play Stomp sound when MArio kills Goomba...
 					System.out.println("Kill current goomba");
 					mainEntity.yVel = -mainEntity.yVel;
-
 					m.dead = true;
 				} else if (getHitbox(mainEntity).intersects(getHitbox(m))) {
-					// TODO Implement mario death
 					System.out.println("Mario dies");
 					playGoombaSound();			//play Goomba kill effect...
 					mainEntity.dead = true;
@@ -245,6 +231,7 @@ public class PhysicsEngine {
 		}
 	}
 
+	// Checks whether mainEntity is colliding with winningSpace
 	public Boolean won() {
 		for (Entity e : winningSpace) {
 			if (getHitbox(mainEntity).intersects(getHitbox(e))) return true;
@@ -252,6 +239,7 @@ public class PhysicsEngine {
 		return false;
 	}
 
+	// Used in conjunction with processCamera() in main
 	public void moveHitboxes(double x, double y) {
 		for (Entity e : immovable) {
 			e.move(x, y);
@@ -261,6 +249,7 @@ public class PhysicsEngine {
 		}
 	}
 
+	// Used in conjunction with processCamera() in main
 	public void moveEnemies(double x, double y) {
 		for (Entity e : movable) {
 			if (e.dead) {

@@ -1,47 +1,47 @@
 package starter;
 
-import java.awt.Canvas;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.*;
-import java.awt.image.BufferStrategy;
-import java.awt.Component;
 import acm.graphics.*;
-import jdk.internal.util.xml.impl.Input;
 
 public class MainApplication extends GraphicsApplication {
+	// Window Options
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
+	
+	// Sound Files
 	public static final String MUSIC_FOLDER = "sound";
 	private static final String CLICK = "in/clique.mp3"; 	
 	private static final String THEME = "in/theme.mp3";
 	private static final String GOOMBA = "in/goomba.mp3";
-	private static final String DEAD = "in/dead.mp3";		// imported a new .mp3 file for click sound...
+	private static final String DEAD = "in/dead.mp3";
 	private static final String WIN = "in/levelPass.mp3";
 	private static final String[] SOUND_FILES = { "in/theme.mp3", "in/dead.mp3" };
+	
+	// Graphics, Entities, and Panes
 	public static SpriteSheet sheetNew;
 	public static Sprite playerArray[]= new Sprite[10];
 	public static GImage playerGImage[] = new GImage[10];
 	public static Sprite goombaArray[]= new Sprite[3];
 	public static GImage goombaGImage[] = new GImage[3];
-	private Graphics g;
-	private boolean w = false;
-	private boolean a = false;
-	private boolean s = false;
-	private boolean d = false;
-
 	private InstructionsPane InstructionsPane;
 	private MainMenu menu;
 	private DeadScreen DeadScreen;
 	private WinScreen WinScreen; 
-	private PhysicsEngine Physics;
 	private Entity Mario, Goomba;
 	private String currScreen = "";
-
-	private Level levelOne = new Level("/levels/OfficialLevel1/OfficialLevel1.tmx", "/SpriteSheet/tileset.png", WINDOW_HEIGHT);
-	private Level currentLevel;
 	private GCompound levelCompound = new GCompound();
 
+	// Physics and level
+	private PhysicsEngine Physics;
+	private Level levelOne = new Level("/levels/OfficialLevel1/OfficialLevel1.tmx", "/SpriteSheet/tileset.png", WINDOW_HEIGHT);
+	private Level currentLevel;
+
+	// Boolean for inputs
+	private boolean w = false;
+	private boolean a = false;
+	private boolean s = false;
+	private boolean d = false;
+	
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		sheetNew = new SpriteSheet("/SpriteSheet/MarioFinalChar.png");//C
@@ -73,13 +73,13 @@ public class MainApplication extends GraphicsApplication {
 		Mario.xVelMax = 6;
 		Mario.yVelMax = 10;
 		Mario.xDirection = Mario.yDirection = Mario.lastDirection = "";
-		// Mario_debug_hitbox = new GRect(Mario.getX(), Mario.getY(), Mario.getWidth(), Mario.getHeight()); // Hitbox visualizer, can be deleted
 	}
+	
 	/**
 	 * Initializes 1 Goomba and variables for all associated actions.
 	 */
 	public void GoombaInit(double x, double y) {
-		Goomba = new Entity(x, y, 25, 25, Id.enemy, goombaGImage);//setting goomba away from Mario for testing
+		Goomba = new Entity(x, y, 25, 25, Id.enemy, goombaGImage);
 		Physics.addMovable(Goomba);
 		Goomba.yVel = 0;
 		Goomba.xVel = Goomba.xVelMax = 2;
@@ -98,7 +98,6 @@ public class MainApplication extends GraphicsApplication {
 		for (Entity m: Physics.movable) {
 			if (m.id.equals(Id.enemy)) {
 				add(m.EntImage);
-				// add(m.entity); // Adds the Entity GRect or the hitbox of the goombas
 			}
 		}
 	}
@@ -137,11 +136,13 @@ public class MainApplication extends GraphicsApplication {
 					}
 				}
 
-				// Mario_debug_hitbox.setLocation(Mario.getX(), Mario.getY()); // Hitbox visualizer, can be deleted
+				// Check if Mario is dead, either falling of the screen or Mario.dead == true
 				if (Mario.getY() > 650 || Mario.dead == true) {
 					playDeadSound();		// Play Dead Screen Music...
 					switchToDead();
 				}
+				
+				// Check if Mario has touched the flag pole and won
 				if (Physics.won()) {
 					switchToWin();
 				}
@@ -155,6 +156,9 @@ public class MainApplication extends GraphicsApplication {
 		}
 	}
 
+	/**
+	 * Moves camera according to Mario's position on the screen
+	 */
 	public void processCamera() {
 		if (Mario.getX() > 300) {
 			levelCompound.move(-Mario.xVel, 0);
@@ -168,9 +172,8 @@ public class MainApplication extends GraphicsApplication {
 		}
 	}
 
-	public void switchToMenu() { // change/time the audio in the switchTo functions 
+	public void switchToMenu() {
 		playThemeSound();
-
 		if (currScreen != "MainMenu") {
 			removeAll();
 			for (GObject a : menu.objects) {
@@ -178,26 +181,24 @@ public class MainApplication extends GraphicsApplication {
 			}
 			currScreen = "MainMenu";
 		}
-
 	}
 
 	public void switchToInstructions() {
-		playThemeSound();	//play Theme Sound...
+		playThemeSound(); // play Theme Sound...
 		if (currScreen != "InstructionsPane") {
-			removeAll(); //removes all the contents of the previous screen
+			removeAll(); // removes all the contents of the previous screen
 			for (GObject a : InstructionsPane.objects) {
 				add(a);
 			}
 			currScreen = "InstructionsPane";
 		}
-		playClickSound();	// called function to play click sound...
+		playClickSound(); // called function to play click sound...
 	}
 
 	public void switchToGameScreen() {
-		playThemeSound();		//play theme sound...
+		playThemeSound(); // play theme sound...
 		removeAll();
-
-		levelOne.reset();
+		levelOne.reset(); // Reloads the TMX File to reset positions and stuff
 		MarioInit();
 		for (GPoint p : levelOne.goomba_points) {
 			GoombaInit(p.getX(), p.getY());
@@ -208,13 +209,12 @@ public class MainApplication extends GraphicsApplication {
 
 	public void switchToDead() {
 		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.stopSound(MUSIC_FOLDER, THEME);				// plays the theme...
-		audio.playSound(MUSIC_FOLDER, DEAD);		// plays the dead-screen sound...
+		audio.stopSound(MUSIC_FOLDER, THEME); // plays the theme...
+		audio.playSound(MUSIC_FOLDER, DEAD); // plays the dead-screen sound...
 
 		if (currScreen != "DeadScreen")
 		{
-
-			removeAll(); //removes all the contents of the previous screen
+			removeAll(); // removes all the contents of the previous screen
 			for (GObject a : DeadScreen.objects) {
 				add(a);
 			}
@@ -224,12 +224,12 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToWin() {
-		stopThemeSound();		//stop theme sound...
+		stopThemeSound(); // stop theme sound...
 		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, WIN);		// plays the Win-screen sound...
+		audio.playSound(MUSIC_FOLDER, WIN); // plays the Win-screen sound...
 		playClickSound();
 		if (currScreen != "WinScreen") {
-			removeAll(); //removes all the contents of the previous screen
+			removeAll(); // removes all the contents of the previous screen
 			for (GObject a : WinScreen.objects) {
 				add(a);
 			}
@@ -238,28 +238,28 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 
-	public void stopRandomSound() {				// function to stop the random sound from being played...
+	public void stopRandomSound() { // function to stop the random sound from being played...
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[SOUND_FILES.length - 1]);
 	}
 
-	public void playClickSound() {				//function to play the button click sound...
+	public void playClickSound() { //function to play the button click sound...
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, CLICK);
 	}
-	public void playThemeSound() {				//function to play the theme sound...
+	public void playThemeSound() { //function to play the theme sound...
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, THEME);
 	}
-	public void playDeadSound() {				//function to play the DEAD sound...
+	public void playDeadSound() { //function to play the DEAD sound...
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, DEAD);
 	}
-	public void playGoombaSound() {				//function to play the GOOMBA sound...
+	public void playGoombaSound() { //function to play the GOOMBA sound...
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, GOOMBA);
 	}
-	public void stopThemeSound() {             //function to stop THEME sound...
+	public void stopThemeSound() { //function to stop THEME sound...
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.stopSound(MUSIC_FOLDER, THEME);
 
@@ -274,27 +274,26 @@ public class MainApplication extends GraphicsApplication {
 			switchToInstructions();
 		}
 
-		if(obj == menu.exitButton) {  //exiting from the application...
+		if(obj == menu.exitButton) { // Exit from the application
 			System.exit(0);
 		}
 
 		if (obj == InstructionsPane.returnIcon) {
 			playClickSound();  
-			playThemeSound();//play the clique.mp3 sound on button click...
+			playThemeSound(); // Play the clique.mp3 sound on button click
 			switchToMenu();
 
 		}
 
 		if(obj == InstructionsPane.continueButton) {
-			playClickSound();		//play the clique.mp3 sound on button click...
+			playClickSound(); // Play the clique.mp3 sound on button click
 			switchToGameScreen();
-			playThemeSound();    //stop the ongoing sound...
+			playThemeSound(); // Stop the ongoing sound
 		}
 
 		if (obj == DeadScreen.quitButton) { 
 			playClickSound();
-			switchToMenu();   //If you quit the game, why are we calling the menu again?
-			stopRandomSound();  	//stop the ongoing sound...
+			stopRandomSound(); // Stop the ongoing sound
 			System.exit(0);
 		}
 		if (obj== DeadScreen.playAgainButton) {
@@ -309,11 +308,12 @@ public class MainApplication extends GraphicsApplication {
 		}
 		if (obj == WinScreen.quitButton) {
 			playClickSound();
-			stopRandomSound();  	//stop the ongoing sound...
+			stopRandomSound(); // Stop the ongoing sound
 			System.exit(0);
 		}
 	}
 	private class Input implements KeyListener {
+		// Sets key pressed status for keyboard
 		public void keyPressed(KeyEvent e) {
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_W:
@@ -350,8 +350,7 @@ public class MainApplication extends GraphicsApplication {
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-
+			// Blank but needs to be implemented as there would be an error without this
 		}	
 	}
 }

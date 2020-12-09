@@ -7,9 +7,9 @@ import java.awt.image.BufferedImage;
  */
 
 public class Sprite {
-
 	public SpriteSheet sheet;
 	public BufferedImage image;
+	
 	/*
 	 * Sprite() is used to read in image from a sprite sheet
 	 * After the sprite sheet is obtained, this class turns it into a buffered image

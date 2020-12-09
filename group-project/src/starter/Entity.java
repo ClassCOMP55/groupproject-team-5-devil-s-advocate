@@ -1,28 +1,28 @@
 package starter;
 
-import java.awt.Color;
 import java.awt.Image;
-
 import acm.graphics.*;
 
 public class Entity {
-	public double locationX, locationY;
-	public double width, height;
-	public double xVel, yVel;//added for testing
-    public double xVelMax, yVelMax;
-    public String xDirection, yDirection;
-    public String lastDirection = "right"; // Just initialized this to prevent null errors
-    public boolean hitTop = false, hitBottom = false, hitLeft = false, hitRight = false;
+	public double locationX, locationY; // Coords
+	public double width, height; // Width and height of entity
+	public double xVel, yVel; // Velocities for x and y
+    public double xVelMax, yVelMax; // Velocity limits for x and y
+    public String xDirection, yDirection; // Direction of movement of entity
+    public String lastDirection = "right"; // Last direction of movement of entity
 	public Id id;
 	public GRect entity;
-	public GImage EntImage;
+	public GImage EntImage; // The initial image added to the screen
 	public GImage EntImages[] = new GImage[10];
 	public Image EntityImages[] = new Image[10]; // ***private*** Stores the Images of the Mario's movement frames, NOT GImages
+	
+	// Counting for setting sprites for Mario and Goomba during movement
 	private double rcount = 0;
 	private double lcount = 4;
 	private double gcount = 0;
 	private double dcount = 0;
-	public Boolean dead = false;
+	
+	public Boolean dead = false; // Checks if Entity is dead or not
 
     Entity() {} // Constructor to not do anything
     
@@ -36,7 +36,6 @@ public class Entity {
 		this.id = id;
 	}
 	
-	
 	Entity(double x, double y, double width, double height, Id id, GImage EntImages[]) {
 		entity = new GRect(x, y, width, height);
 		setLocation(x, y);
@@ -47,16 +46,9 @@ public class Entity {
 		this.id = id;
 		for (int i = 0; i < EntImages.length; i++) {
 			/**
-			 * Commented the line below out because switching images no longer use GImages,
-			 * Images are used instead.
-			 */
-			
-			/**
 			 * The line below is where the array of EntImages from the constructor is converted into Images.
 			 */
-		
 			this.EntityImages[i] = EntImages[i].getImage().getScaledInstance(50, 50, Image.SCALE_REPLICATE);
-			
 		}
 		EntImage = new GImage(EntImages[0].getImage());
 		EntImage.setSize(50, 50);
@@ -73,7 +65,7 @@ public class Entity {
 	
 	/**
 	 * This function allows a GImage object to be returned for viewing on the screen in MainApplication.
-	 * Extra functionality added to ensure mario faces in the last direction moved.
+	 * Extra functionality added to ensure Mario faces in the last direction moved.
 	 */
 	public void playerDisplay() {
 		switch (xDirection) {
@@ -120,7 +112,7 @@ public class Entity {
 	public void enemyDisplay() {
 		EntImage.setSize(50, 50);
 		EntImage.setImage(EntityImages[(int)gcount % 2]);
-		gcount += 0.1; // Change this value to change speed
+		gcount += 0.1; // Change this value to change speed of image switching
 		if (gcount == 100) {
 			gcount = 0;
 		}
@@ -139,12 +131,7 @@ public class Entity {
 			EntImage.setLocation(entity.getX()-12, entity.getY()-22);
 		}
 	}
-	
-	/**
-	 * This function passes to GObject's setFilled(), only applies if entity is GRect
-	 * @param a - whether object is filled with color or not
-	 */
-	
+		
 	/**
 	 * This function passes to GObject's setLocation()
 	 * @param x - X coordinate

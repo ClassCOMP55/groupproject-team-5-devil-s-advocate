@@ -4,22 +4,23 @@ import org.tiledreader.*;
 import acm.graphics.*;
 import java.awt.*;
 import java.util.*;
-import java.awt.color.*;
 
 public class Level {
-	private static FileSystemTiledReader reader = new FileSystemTiledReader(); //reads in the TMX file 
+	private static FileSystemTiledReader reader = new FileSystemTiledReader(); // Reader to read TMX files
 	private static TiledMap map; //stores the TMX file
-	private static ArrayList<TiledLayer> allLayers = new ArrayList<TiledLayer>();
-	private static SpriteSheet sheet;
+	private static ArrayList<TiledLayer> allLayers = new ArrayList<TiledLayer>(); // Stores all the layers from the map file
+	private static SpriteSheet sheet; // Sprite sheet to reference
+	private static final int TILESET_WIDTH_AND_HEIGHT = 18; // This is the value to determine the margins for the tilemap we are using. Only change when using a new tilemap
 	private static int tileWidth, tileHeight;
-	private static double tileSizeOnScreen;
-	private static Point[] arrayOfPoints;
+	private static double tileSizeOnScreen; // Size of the tiles on the screen, calculated by using window height
+	private static Point[] arrayOfPoints; // Location of the tiles on screen
+	
 	public static ArrayList<GImage> allGImages = new ArrayList<GImage>();
 	public static ArrayList<Entity> hitboxes = new ArrayList<Entity>();
 	public static ArrayList<Entity> winningSpace = new ArrayList<Entity>();
 	public static ArrayList<GRect> hitboxes_debug = new ArrayList<GRect>();
 	public static ArrayList<GPoint> goomba_points = new ArrayList<GPoint>();
-	private static final int TILESET_WIDTH_AND_HEIGHT = 18; // This is the value to determine the margins for the tilemap we are using. Only change when using a new tilemap
+	
 	String pathToTMX;
 	String pathToSpriteSheet;
 	int windowHeight;
@@ -37,6 +38,7 @@ public class Level {
 		reset();
 	}
 
+	// Reloads the TMX and resets everything
 	public void reset() {
 		allLayers.clear();
 		allGImages.clear();
@@ -57,6 +59,7 @@ public class Level {
 			allLayers.add(a);
 			System.out.println("name: " + a.getName() + ", type: " + a.toString());
 		}
+		
 		sheet = new SpriteSheet(pathToSpriteSheet);
 		processLayers();
 	}

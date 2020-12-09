@@ -1,6 +1,5 @@
 package starter;
 
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Color;
 import acm.graphics.GImage;
@@ -15,8 +14,6 @@ public class WinScreen {
     public GButton quitButton;
     public ArrayList<GObject> objects = new ArrayList<GObject>();
 
-
-    
     public WinScreen() {
         background = new GImage("background/WinScreen.png", 0, 0);
         Mario = new GImage("Mario/Mario_S_R.png", 365, 250);
@@ -30,9 +27,8 @@ public class WinScreen {
 		quitButton.setFillColor(Color.RED);
 		objects.add(background);
 	    objects.add(Mario_Win);
-	    objects.add(Mario); 
+	    objects.add(Mario);
 	    objects.add(playAgainButton);
-	    objects.add(quitButton);  
+	    objects.add(quitButton);
     }
-      
 }

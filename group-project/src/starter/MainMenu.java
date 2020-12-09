@@ -11,10 +11,8 @@ public class MainMenu {
 	private GImage ground;
 	private GImage cloud1;
 	private GImage cloud2;
-	
 	public GButton playButton;
 	public GButton exitButton;
-
 	public ArrayList<GObject> objects = new ArrayList<GObject>();
 	
 	public MainMenu() {
@@ -38,6 +36,4 @@ public class MainMenu {
 		objects.add(playButton);
 		objects.add(exitButton);
 	}
-
-
 }
