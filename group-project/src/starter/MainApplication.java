@@ -240,7 +240,7 @@ public class MainApplication extends GraphicsApplication {
 
 	public void stopRandomSound() {				// function to stop the random sound from being played...
 		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[SOUND_FILES.length]);
+		audio.stopSound(MUSIC_FOLDER, SOUND_FILES[SOUND_FILES.length - 1]);
 	}
 
 	public void playClickSound() {				//function to play the button click sound...
