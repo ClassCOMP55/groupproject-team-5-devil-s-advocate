@@ -1,2 +1,2 @@
-# groupproject-team-5-devil-s-advocate
-groupproject-team-5-devil-s-advocate created by GitHub Classroom
+# Super Mario Run - Lite
+A group project for application developement class purely based on the old school mario.
