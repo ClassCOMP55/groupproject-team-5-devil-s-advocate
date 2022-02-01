@@ -145,7 +145,7 @@ public class PhysicsEngine {
 				AudioPlayer audio = AudioPlayer.getInstance();
 				audio.stopSound(MUSIC_FOLDER, JUMP);
 				audio.playSound(MUSIC_FOLDER, JUMP);
-				mainEntity.yVel = -12;
+				mainEntity.yVel = -20;
 			}
 		}
 
