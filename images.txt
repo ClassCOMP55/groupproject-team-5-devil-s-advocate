@@ -1,5 +1,21 @@
-Implementations:
+Yoshi: 
+Connect standing images to movement: 
+- images.Character2/Yoshi_S_R.png
+- images.Character2/Yoshi_S_L.png
 
+Connect forward moving images to movement: 
+- images.Character2/Yoshi_R1_R.png
+- images.Character2/Yoshi_R2_R.png
+- images.Character2/Yoshi_R1_L.png
+- images.Character2/Yoshi_R2_L.png
+    
+Connect barkward moving images to movement
+- images.Character2/Yoshi_R1_L.png
+- images.Character2/Yoshi_R2_L.png
 
-forceOfJump = 5
+Connect jump foward moving images to movement
+- images.Character2/Yoshi_J_R.png
+
+Connect jump backward moving images to movement
+- images.Character2/Yoshi_J_L.png
 
