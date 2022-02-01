@@ -1,6 +1,9 @@
 package starter;
 import acm.graphics.*;
+
 import java.util.*;
+import java.io.*;
+
 
 public class PhysicsEngine {
 	private Entity mainEntity; // Entity to be controlled with keyboard aka main character
@@ -145,7 +148,8 @@ public class PhysicsEngine {
 				AudioPlayer audio = AudioPlayer.getInstance();
 				audio.stopSound(MUSIC_FOLDER, JUMP);
 				audio.playSound(MUSIC_FOLDER, JUMP);
-				mainEntity.yVel = -20;
+				mainEntity.yVel = -12; //<-- *** Affects the Jump Force ***
+				// mainEntity.yVel = -20; manipulates the jump Force
 			}
 		}
 
